@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" />
+    <fragment
+        android:id="@+id/listEventFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.ListEventFragment"
+        android:label="fragment_list_event"
+        tools:layout="@layout/fragment_list_event" >
+        <action
+            android:id="@+id/action_listEventFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_listEventFragment"
+            app:destination="@id/listEventFragment" />
+    </fragment>
+</navigation>
