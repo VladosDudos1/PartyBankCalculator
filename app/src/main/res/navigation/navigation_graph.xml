@@ -26,6 +26,8 @@
         tools:layout="@layout/fragment_start" >
         <action
             android:id="@+id/action_startFragment_to_listEventFragment"
-            app:destination="@id/listEventFragment" />
+            app:destination="@id/listEventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PartyBankCalculator"
 include(":app")
- 
+include(":domain")

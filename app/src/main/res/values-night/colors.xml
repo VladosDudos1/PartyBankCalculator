@@ -10,6 +10,5 @@
     <color name="additionalGrey">#646d6e</color>
     <color name="mainGrey">#222222</color>
     <color name="hintColor">#444848</color>
-    <color name="iconTIntColor">@color/white</color>
-    <color name="secondColor">#FFFF4B21</color>
+    <color name="iconTIntColor">@color/black</color>
 </resources>

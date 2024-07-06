@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import vlados.dudos.party.bank.calculator.databinding.FragmentListEventBinding
+import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 
-class ListEventFragment : Fragment() {
+class ListEventFragment : BaseFragment() {
 
     private val binding: FragmentListEventBinding by lazy { FragmentListEventBinding.inflate(layoutInflater) }
 
@@ -16,5 +17,14 @@ class ListEventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyClick()
+    }
+
+    override fun applyClick() {
+
     }
 }
