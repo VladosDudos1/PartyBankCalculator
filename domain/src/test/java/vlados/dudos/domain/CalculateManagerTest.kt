@@ -44,6 +44,7 @@ class CalculateManagerTest {
         val purchase3 = Purchase(3, "Notebook", 200.0, participant3, listOf(participant1, participant2, participant4))
         val purchase4 = Purchase(4, "Laptop", 1000.0, participant4, listOf(participant3, participant5))
         val purchase5 = Purchase(5, "Phone", 500.0, participant5, listOf(participant1, participant4))
+        val purchase6 = Purchase(6, "Phone2", 3500.0, participant3, listOf(participant1, participant2))
 
         val event1 = Event(
             id = 1,
@@ -57,7 +58,7 @@ class CalculateManagerTest {
         val event2 = Event(
             id = 2,
             name = "Event 2",
-            participants = listOf(participant3, participant4, participant5),
+            participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 1700,
             owner = participant3,
             listPurchases = listOf(purchase3, purchase4)
@@ -66,16 +67,16 @@ class CalculateManagerTest {
         val event3 = Event(
             id = 3,
             name = "Event 3",
-            participants = listOf(participant1, participant2, participant3, participant4),
-            sum = 1350,
+            participants = listOf(participant1, participant2, participant3, participant4, participant5),
+            sum = 4300,
             owner = participant4,
-            listPurchases = listOf(purchase1, purchase3, purchase5)
+            listPurchases = listOf(purchase1, purchase3, purchase5, purchase6)
         )
 
         val event4 = Event(
             id = 4,
             name = "Event 4",
-            participants = listOf(participant2, participant3, participant4, participant5),
+            participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 1550,
             owner = participant5,
             listPurchases = listOf(purchase2, purchase4, purchase5)
@@ -84,7 +85,7 @@ class CalculateManagerTest {
         val event5 = Event(
             id = 5,
             name = "Event 5",
-            participants = listOf(participant1, participant3, participant5),
+            participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 800,
             owner = participant1,
             listPurchases = listOf(purchase1, purchase3, purchase5)
