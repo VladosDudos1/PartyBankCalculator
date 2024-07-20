@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Калькулятор общака</string>
     <string name="hello_blank_fragment">Пустой фрагмент</string>
+    <string name="add_event">Добавить собитие</string>
 </resources>
