@@ -33,11 +33,14 @@ class ListEventFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         applyClick()
         setObservers()
-        setupRecyclerView()
     }
 
     override fun applyClick() {
-
+        with(binding){
+            addEventButton.setOnClickListener {
+                showAddEventDialog()
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -60,9 +63,13 @@ class ListEventFragment : BaseFragment() {
 
     override fun setObservers() {
         viewModel.isFirstLaunch.observe(viewLifecycleOwner){
-            if (it) {
-                showEnterNameDialog()
-            }
+            if (it) showEnterNameDialog()
+            else setupRecyclerView()
         }
+    }
+
+    override fun updateUI() {
+        viewModel.isFirstLaunch.value = App.sharedManager.isFirstLaunch()
+        binding.eventRecyclerView.adapter = EventAdapter(context(), App.sharedManager.getListEvents())
     }
 }

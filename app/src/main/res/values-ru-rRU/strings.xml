@@ -9,8 +9,15 @@
     <string name="participants">Участники: %1$s</string>
     <string name="ok">OK</string>
     <string name="enter_your_name">Введите ваше имя</string>
+    <string name="enter_event_name">Введите название мероприятия</string>
     <string name="rubble">₽</string>
     <string name="required_field">Обязательное поле*</string>
     <string name="awesome_name">Прекрасное имя</string>
+    <string name="event_name">Название мероприятия</string>
     <string name="name_cant_be_empty">Имя не может быть пустым</string>
+    <string name="event_name_cant_be_empty">Название не может быть пустым</string>
+    <string name="enter_participant_name">Введите имя участника</string>
+    <string name="add_participant">Добавить участника</string>
+    <string name="add_to_friends_list">Добавить в друзья</string>
+    <string name="start">Начать</string>
 </resources>

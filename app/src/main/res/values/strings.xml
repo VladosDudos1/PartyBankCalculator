@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PartyBankCalculator</string>
+    <string name="app_name">Event Calculator</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_event">Add event</string>
     <string name="no_active_events">You don`t have any active events yet</string>
@@ -9,8 +9,15 @@
     <string name="participants">Participants: %1$s</string>
     <string name="ok">OK</string>
     <string name="enter_your_name">Enter your name</string>
+    <string name="enter_event_name">Enter event name</string>
     <string name="rubble">₽</string>
     <string name="required_field">Required*</string>
     <string name="awesome_name">Awesome name</string>
+    <string name="event_name">Event name</string>
     <string name="name_cant_be_empty">Name could`t be empty</string>
+    <string name="event_name_cant_be_empty">Event name could`t be empty</string>
+    <string name="enter_participant_name">Enter name of participant</string>
+    <string name="add_participant">Add participant</string>
+    <string name="add_to_friends_list">Add to friends list</string>
+    <string name="start">Start</string>
 </resources>

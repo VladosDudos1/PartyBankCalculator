@@ -25,6 +25,10 @@
     <style name="CustomDialogTheme" parent="Theme.MaterialComponents.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@drawable/card_form</item>
+    </style>
+
+    <style name="InputLayoutStyle" parent="Base.Theme.PartyBankCalculator">
         <item name="hintTextColor">@color/secondColor</item>
         <item name="android:textColorHint">@color/hintColor</item>
         <item name="boxStrokeColor">@color/secondColor</item>
@@ -32,4 +36,10 @@
     </style>
 
     <style name="Theme.PartyBankCalculator" parent="Base.Theme.PartyBankCalculator" />
+
+    <style name="CheckBoxStyle" parent="Base.Theme.PartyBankCalculator">
+        <item name="android:textColor">@color/alternative</item>
+        <item name="boxStrokeColor">@color/alternative</item>
+        <item name="buttonTint">@color/alternative</item>
+    </style>
 </resources>

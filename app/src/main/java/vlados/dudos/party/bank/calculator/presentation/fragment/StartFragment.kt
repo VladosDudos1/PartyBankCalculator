@@ -40,4 +40,5 @@ class StartFragment : BaseFragment() {
     }
 
     override fun setObservers() {}
+    override fun updateUI() {}
 }

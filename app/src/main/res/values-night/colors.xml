@@ -9,11 +9,13 @@
     <color name="mainColor">#adff54</color>
     <color name="additionalGrey">#646d6e</color>
     <color name="mainGrey">#222222</color>
-    <color name="hintColor">#444848</color>
+    <color name="hintColor">#AAAAAA</color>
     <color name="iconTIntColor">@color/black</color>
     <color name="secondColor">#FFFF4B21</color>
 
+    <color name="alternative">@color/mainColor</color>
+
     <color name="eventCardColor">#BB222222</color>
-    <color name="eventCardStroke">@color/mainColor</color>
+    <color name="eventCardStroke">@color/hintColor</color>
 <!--    <color name="eventCardStroke">#848d8e</color>-->
 </resources>

@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import vlados.dudos.domain.R
 import vlados.dudos.domain.model.Event
-import vlados.dudos.domain.model.Friend
+import vlados.dudos.domain.model.Participant
 
 class SharedManager(val baseContext: Context) {
     private val shared: SharedPreferences =
@@ -33,38 +33,46 @@ class SharedManager(val baseContext: Context) {
     fun getListEvents(): MutableList<Event> {
         val listEventType = object : TypeToken<MutableList<Event>>() {}.type
         val listEvent = Gson().fromJson<MutableList<Event>>(
-            shared.getString("EventList", mutableListOf<Event>().toString()) ?: mutableListOf<Event>().toString(),
+            shared.getString("EventList", mutableListOf<Event>().toString())
+                ?: mutableListOf<Event>().toString(),
             listEventType
         )
         return listEvent
     }
-    fun getEvent(idEvent: Int) : Event{
-        return getListEvents().first { it.id ==  idEvent}
+
+    fun getEvent(idEvent: Int): Event {
+        return getListEvents().first { it.id == idEvent }
     }
 
-    fun saveFriends(friend: Friend, isDelete: Boolean){
+    fun saveFriends(friend: Participant, isDelete: Boolean) {
         val listFriends = getFriendsList()
-        if (isDelete) listFriends.remove(friend) else listFriends.add(friend)
+        if (isDelete) listFriends.remove(listFriends.first { it.name == friend.name })
+        else if (!listFriends.map { it.name }.contains(friend.name)) listFriends.add(friend)
         val saveString = Gson().toJson(listFriends)
         shared.edit().putString("FriendsList", saveString).apply()
     }
 
-    fun getFriendsList() : MutableList<Friend>{
-        val listFriendType = object : TypeToken<MutableList<Friend>>() {}.type
-        val listFriend = Gson().fromJson<MutableList<Friend>>(
-            shared.getString("FriendsList", mutableListOf<Friend>().toString()) ?: mutableListOf<Friend>().toString(),
+    fun getFriendsList(): MutableList<Participant> {
+        val listFriendType = object : TypeToken<MutableList<Participant>>() {}.type
+        val listFriend = Gson().fromJson<MutableList<Participant>>(
+            shared.getString("FriendsList", mutableListOf<Participant>().toString())
+                ?: mutableListOf<Participant>().toString(),
             listFriendType
         )
         return listFriend
     }
-    fun isFirstLaunch() : Boolean {
+
+    fun isFirstLaunch(): Boolean {
         return shared.getBoolean("isFirstLaunch", true)
     }
-    fun endFirstLaunch(ownerName: String){
+
+    fun endFirstLaunch(ownerName: String) {
         shared.edit().putBoolean("isFirstLaunch", false).apply()
         shared.edit().putString("ownerName", ownerName).apply()
     }
-    fun getOwnerName() : String {
-        return shared.getString("ownerName", baseContext.getString(R.string.you)) ?: baseContext.getString(R.string.you)
+
+    fun getOwnerName(): String {
+        return shared.getString("ownerName", baseContext.getString(R.string.you))
+            ?: baseContext.getString(R.string.you)
     }
 }
