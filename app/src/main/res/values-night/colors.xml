@@ -11,4 +11,8 @@
     <color name="mainGrey">#222222</color>
     <color name="hintColor">#444848</color>
     <color name="iconTIntColor">@color/black</color>
+    <color name="secondColor">#FFFF4B21</color>
+
+    <color name="eventCardColor">#BB444d4e</color>
+    <color name="eventCardStroke">#848d8e</color>
 </resources>

@@ -10,5 +10,10 @@
         <item name="android:iconTint">@color/white</item>
     </style>
 
+    <style name="TitleText" parent="Base.Theme.PartyBankCalculator">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Theme.PartyBankCalculator" parent="Base.Theme.PartyBankCalculator" />
 </resources>

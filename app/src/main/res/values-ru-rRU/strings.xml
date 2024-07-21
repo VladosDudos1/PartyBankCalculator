@@ -3,4 +3,8 @@
     <string name="app_name">Калькулятор общака</string>
     <string name="hello_blank_fragment">Пустой фрагмент</string>
     <string name="add_event">Добавить собитие</string>
+    <string name="no_active_events">У вас пока нет активных событий</string>
+    <string name="sum">Сумма: %1$s</string>
+    <string name="organizer">Организатор: %1$s</string>
+    <string name="participants">Участники: %1$s</string>
 </resources>

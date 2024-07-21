@@ -2,4 +2,8 @@
     <string name="app_name">PartyBankCalculator</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_event">Add event</string>
+    <string name="no_active_events">You don`t have any active events yet</string>
+    <string name="sum">Sum: %1$s</string>
+    <string name="organizer">Organizer: %1$s</string>
+    <string name="participants">Participants: %1$s</string>
 </resources>
