@@ -13,6 +13,6 @@
     <color name="iconTIntColor">@color/white</color>
     <color name="secondColor">#FFFF4B21</color>
 
-    <color name="eventCardColor">#BBEFEFEF</color>
-    <color name="eventCardStroke">#FFEEEEEE</color>
+    <color name="eventCardColor">#BBFAFAFA</color>
+    <color name="eventCardStroke">#FFAAAAAA</color>
 </resources>

@@ -32,6 +32,7 @@ class ListEventFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         applyClick()
+        setObservers()
         setupRecyclerView()
     }
 
@@ -54,6 +55,14 @@ class ListEventFragment : BaseFragment() {
             eventRecyclerView.layoutManager = LinearLayoutManager(context())
             eventRecyclerView.adapter = EventAdapter(context(), events)
             noEventsTxt.visibility = View.GONE
+        }
+    }
+
+    override fun setObservers() {
+        viewModel.isFirstLaunch.observe(viewLifecycleOwner){
+            if (it) {
+                showEnterNameDialog()
+            }
         }
     }
 }

@@ -4,7 +4,13 @@
     <string name="hello_blank_fragment">Пустой фрагмент</string>
     <string name="add_event">Добавить собитие</string>
     <string name="no_active_events">У вас пока нет активных событий</string>
-    <string name="sum">Сумма: %1$s</string>
+    <string name="sum">Сумма: %1$s %2$s</string>
     <string name="organizer">Организатор: %1$s</string>
     <string name="participants">Участники: %1$s</string>
+    <string name="ok">OK</string>
+    <string name="enter_your_name">Введите ваше имя</string>
+    <string name="rubble">₽</string>
+    <string name="required_field">Обязательное поле*</string>
+    <string name="awesome_name">Прекрасное имя</string>
+    <string name="name_cant_be_empty">Имя не может быть пустым</string>
 </resources>

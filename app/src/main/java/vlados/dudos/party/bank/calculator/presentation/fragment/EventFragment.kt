@@ -28,7 +28,7 @@ class EventFragment : BaseFragment() {
         applyClick()
     }
 
-    override fun applyClick() {
+    override fun applyClick() {}
 
-    }
+    override fun setObservers() {}
 }

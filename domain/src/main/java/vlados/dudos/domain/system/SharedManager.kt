@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import vlados.dudos.domain.R
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Friend
 
-class SharedManager(baseContext: Context) {
+class SharedManager(val baseContext: Context) {
     private val shared: SharedPreferences =
         baseContext.getSharedPreferences(
             "PartyBankCalculatorSharedPreferences",
@@ -55,5 +56,15 @@ class SharedManager(baseContext: Context) {
             listFriendType
         )
         return listFriend
+    }
+    fun isFirstLaunch() : Boolean {
+        return shared.getBoolean("isFirstLaunch", true)
+    }
+    fun endFirstLaunch(ownerName: String){
+        shared.edit().putBoolean("isFirstLaunch", false).apply()
+        shared.edit().putString("ownerName", ownerName).apply()
+    }
+    fun getOwnerName() : String {
+        return shared.getString("ownerName", baseContext.getString(R.string.you)) ?: baseContext.getString(R.string.you)
     }
 }
