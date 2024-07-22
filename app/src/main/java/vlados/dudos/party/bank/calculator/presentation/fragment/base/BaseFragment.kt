@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
@@ -16,10 +17,11 @@ import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.AddEventLayoutBinding
 import vlados.dudos.party.bank.calculator.databinding.FriendAddLayoutBinding
 import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
+import vlados.dudos.party.bank.calculator.interfaces.IUpdateUi
 import vlados.dudos.party.bank.calculator.presentation.adapter.ParticipantAdapter
 import kotlin.math.truncate
 
-abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
+abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi {
     protected fun showToast(message: String) {
         Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
     }
@@ -38,7 +40,7 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
                 val ownerName = dialogBinding.nameEditText.text.toString()
                 if (ownerName.isNotEmpty()) {
                     App.sharedManager.endFirstLaunch(ownerName)
-                    updateUI()
+                    updateUi()
                     dismiss()
                 } else dialogBinding.inputLayout.helperText =
                     context().getString(R.string.name_cant_be_empty)
@@ -136,7 +138,12 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
             with(dialogBinding) {
                 participantRecycler.layoutManager = LinearLayoutManager(context())
                 participantRecycler.adapter =
-                    ParticipantAdapter(listParticipant, context(), this@BaseFragment, participantRecycler)
+                    ParticipantAdapter(
+                        listParticipant,
+                        context(),
+                        this@BaseFragment,
+                        participantRecycler
+                    )
                 addParticipantLayout.setOnClickListener {
                     showAddParticipantDialog(listParticipant, participantRecycler)
                 }
@@ -157,28 +164,36 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
             }
         }
         dialog.setOnDismissListener {
-            updateUI()
+            updateUi()
         }
         dialog.show()
     }
 
-    override fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant) {
+    override fun clickDelete(
+        list: MutableList<Participant>,
+        recyclerView: RecyclerView,
+        participant: Participant
+    ) {
         list.remove(participant)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    override fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, participant: Participant) {
+    override fun clickEdit(
+        list: List<Participant>,
+        recyclerView: RecyclerView,
+        participant: Participant
+    ) {
         showEditParticipantDialog(list.toMutableList(), recyclerView, participant)
     }
 
-    private fun deleteFriend(friendName: String){
+    private fun deleteFriend(friendName: String) {
         App.sharedManager.saveFriends(
             friend = App.sharedManager.getFriendsList().first { it.name == friendName },
             isDelete = true
         )
     }
 
-    abstract fun updateUI()
-    abstract fun applyClick()   // Вынести в интерфейс
-    abstract fun setObservers()   // Вынести в интерфейс
+    protected fun navigate(action: Int) {
+        findNavController().navigate(action)
+    }
 }

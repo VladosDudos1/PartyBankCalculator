@@ -25,11 +25,8 @@ class StartFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyClick()
         setSettings()
     }
-
-    override fun applyClick() {}
 
     private fun setSettings(){
         App.localeManager.setLocaleCurrentLanguage()
@@ -38,7 +35,5 @@ class StartFragment : BaseFragment() {
     private fun goNextPage(){
         findNavController().navigate(R.id.action_startFragment_to_listEventFragment)
     }
-
-    override fun setObservers() {}
-    override fun updateUI() {}
+    override fun updateUi() {}
 }

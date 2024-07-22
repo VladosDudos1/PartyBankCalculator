@@ -23,7 +23,6 @@ class EventAdapter(private val context: Context, private val listEvents: List<Ev
         )
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         with(holder.binding){
             sumTxt.text = context.getString(R.string.sum, listEvents[position].sum.toString(), context.getString(R.string.rubble))
@@ -34,7 +33,7 @@ class EventAdapter(private val context: Context, private val listEvents: List<Ev
                 listParticipantsToString(listEvents[position].participants)
             )
             parentLayout.setOnClickListener {
-                onClick.clickOnEvent()
+                onClick.clickOnEvent(listEvents[position])
             }
         }
     }
@@ -42,7 +41,7 @@ class EventAdapter(private val context: Context, private val listEvents: List<Ev
     override fun getItemCount(): Int = listEvents.size
 
     interface OnClick{
-        fun clickOnEvent()
+        fun clickOnEvent(event: Event)
     }
 
     class EventViewHolder(val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root)

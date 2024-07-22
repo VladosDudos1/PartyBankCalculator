@@ -5,16 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import vlados.dudos.domain.model.Event
 import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
+import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.EventViewModel
+import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 
 
-class EventFragment : BaseFragment() {
+class EventFragment : BaseFragment(), IActiveFragment {
 
     private val binding: FragmentEventBinding by lazy { FragmentEventBinding.inflate(layoutInflater) }
     private val viewModel: EventViewModel by viewModels()
+    private val hostViewModel: HostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +33,17 @@ class EventFragment : BaseFragment() {
         applyClick()
     }
 
-    override fun applyClick() {}
+    override fun applyClick() {
 
-    override fun setObservers() {}
-    override fun updateUI() {}
+    }
+
+    override fun setObservers() {
+
+    }
+    override fun updateUi() {
+
+    }
+    private fun getCurrentEvent() : Event{
+        return hostViewModel.selectedItem.value!!
+    }
 }

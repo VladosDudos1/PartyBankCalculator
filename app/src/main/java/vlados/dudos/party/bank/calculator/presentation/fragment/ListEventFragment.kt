@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.model.Event
+import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentListEventBinding
+import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.presentation.adapter.EventAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
+import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.ListEventViewModel
 
-class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
-    override fun clickOnEvent() {
-
+class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment {
+    override fun clickOnEvent(event: Event) {
+        hostViewModel.selectItem(event)
+        navigate(R.id.action_listEventFragment_to_eventFragment)
     }
 
     private val binding: FragmentListEventBinding by lazy {
@@ -24,6 +30,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
         )
     }
     private val viewModel: ListEventViewModel by viewModels()
+    private val hostViewModel: HostViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +75,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
         }
     }
 
-    override fun updateUI() {
+    override fun updateUi() {
         viewModel.isFirstLaunch.value = App.sharedManager.isFirstLaunch()
         viewModel.updateEventList()
     }
