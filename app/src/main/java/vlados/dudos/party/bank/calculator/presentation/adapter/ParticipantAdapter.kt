@@ -32,7 +32,7 @@ class ParticipantAdapter(
                 onClick.clickEdit(list, rv, list[position + 1])
             }
             deleteBtn.setOnClickListener {
-                onClick.clickDelete(list, rv, list[position + 1])
+                onClick.clickDelete(list, rv, list[position+1])
             }
         }
     }
@@ -43,7 +43,7 @@ class ParticipantAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     interface OnClick {
-        fun clickDelete(list: List<Participant>, recyclerView: RecyclerView, participant: Participant)
+        fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant)
         fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, participant: Participant)
     }
 }

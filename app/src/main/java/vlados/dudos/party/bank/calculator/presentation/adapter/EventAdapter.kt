@@ -11,7 +11,7 @@ import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.databinding.EventListItemBinding
 
-class EventAdapter(private val context: Context, private val listEvents: List<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>(){
+class EventAdapter(private val context: Context, private val listEvents: List<Event>, private val onClick: OnClick) : RecyclerView.Adapter<EventAdapter.EventViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(
@@ -33,10 +33,17 @@ class EventAdapter(private val context: Context, private val listEvents: List<Ev
                 R.string.participants,
                 listParticipantsToString(listEvents[position].participants)
             )
+            parentLayout.setOnClickListener {
+                onClick.clickOnEvent()
+            }
         }
     }
 
     override fun getItemCount(): Int = listEvents.size
+
+    interface OnClick{
+        fun clickOnEvent()
+    }
 
     class EventViewHolder(val binding: EventListItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

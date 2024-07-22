@@ -13,7 +13,10 @@ import vlados.dudos.party.bank.calculator.presentation.adapter.EventAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.ListEventViewModel
 
-class ListEventFragment : BaseFragment() {
+class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
+    override fun clickOnEvent() {
+
+    }
 
     private val binding: FragmentListEventBinding by lazy {
         FragmentListEventBinding.inflate(
@@ -36,40 +39,37 @@ class ListEventFragment : BaseFragment() {
     }
 
     override fun applyClick() {
-        with(binding){
+        with(binding) {
             addEventButton.setOnClickListener {
                 showAddEventDialog()
             }
         }
     }
-
-    private fun setupRecyclerView() {
-        val events = App.sharedManager.getListEvents()
-        with(binding) {
-            if (events.isEmpty()) {
-                eventRecyclerView.visibility = View.GONE
-                noEventsTxt.visibility = View.VISIBLE
-            } else setAdapter(events)
-        }
-    }
-
     private fun setAdapter(events: List<Event>) {
         with(binding) {
             eventRecyclerView.layoutManager = LinearLayoutManager(context())
-            eventRecyclerView.adapter = EventAdapter(context(), events)
-            noEventsTxt.visibility = View.GONE
+            eventRecyclerView.adapter = EventAdapter(context(), events, this@ListEventFragment)
         }
     }
 
     override fun setObservers() {
-        viewModel.isFirstLaunch.observe(viewLifecycleOwner){
-            if (it) showEnterNameDialog()
-            else setupRecyclerView()
+        with(binding){
+            viewModel.isFirstLaunch.observe(viewLifecycleOwner) {
+                if (it) showEnterNameDialog()
+            }
+            viewModel.eventsList.observe(viewLifecycleOwner){
+                if (it.size == 0)
+                    noEventsTxt.visibility = View.VISIBLE
+                else {
+                    noEventsTxt.visibility = View.GONE
+                }
+                setAdapter(it)
+            }
         }
     }
 
     override fun updateUI() {
         viewModel.isFirstLaunch.value = App.sharedManager.isFirstLaunch()
-        binding.eventRecyclerView.adapter = EventAdapter(context(), App.sharedManager.getListEvents())
+        viewModel.updateEventList()
     }
 }

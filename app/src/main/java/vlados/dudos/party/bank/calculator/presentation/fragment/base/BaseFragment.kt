@@ -108,10 +108,7 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
                             isDelete = false
                         )
                     } else if (!dialogBinding.addFriendCheckBox.isChecked && isInFriends) {
-                        App.sharedManager.saveFriends(
-                            friend = App.sharedManager.getFriendsList().first { it.name == participant.name },
-                            isDelete = true
-                        )
+                        deleteFriend(participant.name)
                     }
                     listParticipant.forEach {
                         if (it.id == participant.id) {
@@ -125,7 +122,6 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
         }
         dialog.setOnDismissListener {
             recyclerView.adapter?.notifyDataSetChanged()
-            println(App.sharedManager.getFriendsList())
         }
         dialog.show()
     }
@@ -166,12 +162,20 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick {
         dialog.show()
     }
 
-    override fun clickDelete(list: List<Participant>, recyclerView: RecyclerView, participant: Participant) {
-
+    override fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant) {
+        list.remove(participant)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     override fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, participant: Participant) {
         showEditParticipantDialog(list.toMutableList(), recyclerView, participant)
+    }
+
+    private fun deleteFriend(friendName: String){
+        App.sharedManager.saveFriends(
+            friend = App.sharedManager.getFriendsList().first { it.name == friendName },
+            isDelete = true
+        )
     }
 
     abstract fun updateUI()
