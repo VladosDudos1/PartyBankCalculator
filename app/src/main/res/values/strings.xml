@@ -20,4 +20,8 @@
     <string name="add_participant">Add participant</string>
     <string name="add_to_friends_list">Add to friends list</string>
     <string name="start">Start</string>
+    <string name="settings">Settings</string>
+    <string name="friends">Friends</string>
+    <string name="more_info">More</string>
+    <string name="and_other">and other</string>
 </resources>

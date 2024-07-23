@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_listEventFragment_to_eventFragment"
             app:destination="@id/eventFragment" />
+        <action
+            android:id="@+id/action_listEventFragment_to_friendsListFragment"
+            app:destination="@id/friendsListFragment" />
+        <action
+            android:id="@+id/action_listEventFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -30,4 +36,14 @@
             app:popUpTo="@id/navigation_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/friendsListFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.FriendsListFragment"
+        android:label="fragment_friends_list"
+        tools:layout="@layout/fragment_friends_list" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

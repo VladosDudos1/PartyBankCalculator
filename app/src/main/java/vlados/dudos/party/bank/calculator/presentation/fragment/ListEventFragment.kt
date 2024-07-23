@@ -50,6 +50,12 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
             addEventButton.setOnClickListener {
                 showAddEventDialog()
             }
+            settingsOpenLayout.setOnClickListener {
+                navigate(R.id.action_listEventFragment_to_settingsFragment)
+            }
+            friendsOpenLayout.setOnClickListener {
+                navigate(R.id.action_listEventFragment_to_friendsListFragment)
+            }
         }
     }
     private fun setAdapter(events: List<Event>) {
