@@ -3,6 +3,7 @@ package vlados.dudos.party.bank.calculator.presentation.fragment.base
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,6 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
     protected fun showToast(message: String) {
         Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
     }
-
 
     protected fun context(): Context = requireContext()
 

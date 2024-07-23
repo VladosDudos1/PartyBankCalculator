@@ -8,11 +8,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventRecyclerView"
+        style="@style/RecyclerBase"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="32dp"
-        android:fadingEdgeLength="32dp"
-        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineRecyclerTop"
         tools:listitem="@layout/event_list_item" />

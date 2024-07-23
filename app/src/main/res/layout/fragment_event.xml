@@ -71,13 +71,12 @@
                 app:layout_constraintStart_toStartOf="@+id/participantsTxt"
                 app:layout_constraintTop_toBottomOf="@+id/participantsTxt" />
 
-            <TextView
-                android:id="@+id/listPurchases"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listPurchasesRecycler"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="4dp"
-                android:text=";sdkijfv;lsdkhfgv';osdrihgv;owaeSihgfv;owsihfg;oweisrhfv;osikwhjfg;oweirhgv'owsikjhgv;owishfgv;oeiakhfngv;'owISAHJgf;"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/purchaseText" />
@@ -111,6 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/addPurchaseBtn"
             style="@style/ConstantButtonStyle1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -119,6 +119,7 @@
             app:icon="@drawable/add_purchase_24" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/addParticipantBtn"
             style="@style/ConstantButtonStyle2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
