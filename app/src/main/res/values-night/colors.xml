@@ -14,8 +14,9 @@
     <color name="secondColor">#FFFF4B21</color>
 
     <color name="alternative">@color/mainColor</color>
+    <color name="alternativeMain">@color/secondColor</color>
     <color name="vectorImageSoftColor">#BBFAFAFA</color>
-
+    <color name="softMainColor">#CC222222</color>
     <color name="eventCardColor">#BB222222</color>
     <color name="eventCardStroke">@color/hintColor</color>
 <!--    <color name="eventCardStroke">#848d8e</color>-->

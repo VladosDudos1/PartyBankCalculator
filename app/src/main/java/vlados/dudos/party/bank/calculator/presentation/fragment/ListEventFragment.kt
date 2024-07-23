@@ -83,6 +83,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
 
     override fun updateUi() {
         viewModel.isFirstLaunch.value = App.sharedManager.isFirstLaunch()
+        App.sharedManager.setBaseValue()
         viewModel.updateEventList()
     }
 }

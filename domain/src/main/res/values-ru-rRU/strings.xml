@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="you">Вы</string>
+    <string name="Ruble">Рубль</string>
+    <string name="Dollar">Доллар</string>
+    <string name="Pound">Фунт</string>
+    <string name="Euro">Евро</string>
+    <string name="Yen">Йена</string>
 </resources>

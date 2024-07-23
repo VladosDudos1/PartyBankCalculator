@@ -1,8 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.EventFragment">
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdgeLength="16dp"
+        android:orientation="vertical"
+        android:requiresFadingEdge="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageEvent"
+                android:layout_width="0dp"
+                android:layout_height="256dp"
+                android:background="@drawable/image_bottom_round_form"
+                android:scaleType="centerCrop"
+                android:src="@drawable/no_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/eventNameTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:text="EventИвент1"
+                android:theme="@style/TitleText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageEvent" />
+
+            <TextView
+                android:id="@+id/ownerTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:text="Организатор: Владосик"
+                android:theme="@style/SubTitleText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventNameTxt" />
+
+            <TextView
+                android:id="@+id/participantsTxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:text="Участники: Владосик, Андрюшка, Женечка, Хаку"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ownerTxt"
+                app:layout_constraintTop_toBottomOf="@+id/ownerTxt" />
+
+            <TextView
+                android:id="@+id/purchaseText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/purchases"
+                android:theme="@style/TitleText"
+                app:layout_constraintStart_toStartOf="@+id/participantsTxt"
+                app:layout_constraintTop_toBottomOf="@+id/participantsTxt" />
+
+            <TextView
+                android:id="@+id/listPurchases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="4dp"
+                android:text=";sdkijfv;lsdkhfgv';osdrihgv;owaeSihgfv;owsihfg;oweisrhfv;osikwhjfg;oweirhgv'owsikjhgv;owishfgv;oeiakhfngv;'owISAHJgf;"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/purchaseText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/secondColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/layoutAddContainer" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/mainColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutAddContainer" />
+
+    <LinearLayout
+        android:id="@+id/layoutAddContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/ConstantButtonStyle1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/add_purchase"
+            app:icon="@drawable/add_purchase_24" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/ConstantButtonStyle2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/add_participant"
+            android:textAlignment="center"
+            app:icon="@drawable/baseline_add_24" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/sumTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:text="Сумма: 3000000₽"
+        android:textAlignment="center"
+        android:theme="@style/TitleText"
+        app:layout_constraintBottom_toTopOf="@+id/layoutAddContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/deleteEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:backgroundTint="@color/red"
+        app:icon="@drawable/baseline_delete_forever_24"
+        app:iconSize="32dp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/sumTxt"
+        app:layout_constraintEnd_toEndOf="@id/sumTxt"
+        app:rippleColor="@color/white" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import vlados.dudos.domain.model.Event
+import vlados.dudos.party.bank.calculator.R
+import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
@@ -30,6 +32,7 @@ class EventFragment : BaseFragment(), IActiveFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupEvent(getCurrentEvent())
         applyClick()
     }
 
@@ -42,6 +45,13 @@ class EventFragment : BaseFragment(), IActiveFragment {
     }
     override fun updateUi() {
 
+    }
+    private fun setupEvent(event: Event) {
+        with(binding){
+            eventNameTxt.text = event.name
+            ownerTxt.text = getString(R.string.organizer, event.owner.name)
+            sumTxt.text = getString(R.string.sum, event.sum.toString(), App.sharedManager.getBaseValue())
+        }
     }
     private fun getCurrentEvent() : Event{
         return hostViewModel.selectedItem.value!!

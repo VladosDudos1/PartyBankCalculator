@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import vlados.dudos.domain.R
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
+import vlados.dudos.domain.utils.MapHolder.getValueSign
 
 class SharedManager(val baseContext: Context) {
     private val shared: SharedPreferences =
@@ -74,5 +75,16 @@ class SharedManager(val baseContext: Context) {
     fun getOwnerName(): String {
         return shared.getString("ownerName", baseContext.getString(R.string.you))
             ?: baseContext.getString(R.string.you)
+    }
+
+    fun setBaseValue(valueName: String) {
+        shared.edit().putString("value", getValueSign(baseContext, valueName)).apply()
+    }
+    fun setBaseValue() {
+        shared.edit().putString("value", getValueSign(baseContext, baseContext.getString(R.string.Ruble))).apply()
+    }
+
+    fun getBaseValue() : String {
+        return shared.getString("value", "₽") ?: "₽"
     }
 }

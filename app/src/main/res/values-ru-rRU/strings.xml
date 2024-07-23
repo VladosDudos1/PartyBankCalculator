@@ -24,4 +24,6 @@
     <string name="friends">Друзья</string>
     <string name="more_info">Подробнее</string>
     <string name="and_other">и ещё</string>
+    <string name="add_purchase">Добавить покупку</string>
+    <string name="purchases">Покупки:</string>
 </resources>

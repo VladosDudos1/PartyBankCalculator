@@ -12,13 +12,17 @@
     <color name="hintColor">#444848</color>
     <color name="iconTIntColor">@color/white</color>
     <color name="secondColor">#FFFF4B21</color>
+    <color name="textColor">#5E5E5E</color>
 
     <color name="vectorImageSoftColor">#BB222222</color>
 
-    <color name="eventCardColor">#BBFAFAFA</color>
+    <color name="eventCardColor">#BBF2F2F2</color>
     <color name="eventCardStroke">#FFAAAAAA</color>
 
+    <color name="softMainColor">#CCF2F2F2</color>
+
     <color name="alternative">@color/secondColor</color>
+    <color name="alternativeMain">@color/mainColor</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#AAA</color>
 </resources>
