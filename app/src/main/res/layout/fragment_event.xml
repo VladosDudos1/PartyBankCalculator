@@ -25,6 +25,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/no_image"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +37,7 @@
                 android:layout_marginVertical="16dp"
                 android:text="EventИвент1"
                 android:theme="@style/TitleText"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/optionsEventButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageEvent" />
 
@@ -81,6 +82,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/purchaseText" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/optionsEventButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/eventNameTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/eventNameTxt" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -141,19 +150,6 @@
         app:layout_constraintBottom_toTopOf="@+id/layoutAddContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/deleteEventButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:backgroundTint="@color/red"
-        app:icon="@drawable/baseline_delete_forever_24"
-        app:iconSize="32dp"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/sumTxt"
-        app:layout_constraintEnd_toEndOf="@id/sumTxt"
-        app:rippleColor="@color/white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
