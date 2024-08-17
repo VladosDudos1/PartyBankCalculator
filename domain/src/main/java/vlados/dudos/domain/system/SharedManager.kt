@@ -31,6 +31,17 @@ class SharedManager(val baseContext: Context) {
         shared.edit().putString("EventList", saveString).apply()
     }
 
+    fun changeCurrentEvent(event: Event) {
+        val listEvents = getListEvents()
+        listEvents.forEachIndexed { index, nEvent ->
+            if (nEvent.name == event.name) {
+                listEvents[index] = event
+            }
+        }
+        val saveString = Gson().toJson(listEvents)
+        shared.edit().putString("EventList", saveString).apply()
+    }
+
     fun getListEvents(): MutableList<Event> {
         val listEventType = object : TypeToken<MutableList<Event>>() {}.type
         val listEvent = Gson().fromJson<MutableList<Event>>(
@@ -80,11 +91,14 @@ class SharedManager(val baseContext: Context) {
     fun setBaseValue(valueName: String) {
         shared.edit().putString("value", getValueSign(baseContext, valueName)).apply()
     }
+
     fun setBaseValue() {
-        shared.edit().putString("value", getValueSign(baseContext, baseContext.getString(R.string.Ruble))).apply()
+        shared.edit()
+            .putString("value", getValueSign(baseContext, baseContext.getString(R.string.Ruble)))
+            .apply()
     }
 
-    fun getBaseValue() : String {
+    fun getBaseValue(): String {
         return shared.getString("value", "₽") ?: "₽"
     }
 }

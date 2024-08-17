@@ -1,5 +1,6 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,11 +10,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.model.Event
+import vlados.dudos.domain.model.Participant
+import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
+import vlados.dudos.party.bank.calculator.databinding.AddEventLayoutBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
+import vlados.dudos.party.bank.calculator.databinding.ListParticipantDialogBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
+import vlados.dudos.party.bank.calculator.presentation.adapter.ParticipantAdapter
 import vlados.dudos.party.bank.calculator.presentation.adapter.PurchaseAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.EventViewModel
@@ -52,6 +58,7 @@ class EventFragment : BaseFragment(), IActiveFragment {
                 listParticipantsToString(event.participants)
             )
         }
+        setAdapter(event)
     }
 
     private fun getCurrentEvent(): Event {
@@ -61,10 +68,10 @@ class EventFragment : BaseFragment(), IActiveFragment {
     override fun applyClick() {
         with(binding) {
             addPurchaseBtn.setOnClickListener {
-
+                updateAdapter()
             }
             addParticipantBtn.setOnClickListener {
-
+                openParticipantDialog()
             }
             imageEvent.setOnClickListener {
 
@@ -77,7 +84,7 @@ class EventFragment : BaseFragment(), IActiveFragment {
     }
 
     override fun updateUi() {
-
+        setupEvent(getCurrentEvent())
     }
 
     private fun setAdapter(event: Event) {
@@ -91,5 +98,39 @@ class EventFragment : BaseFragment(), IActiveFragment {
         with(binding) {
             listPurchasesRecycler.adapter?.notifyDataSetChanged()
         }
+    }
+    private fun openParticipantDialog(){
+        val listParticipant = getCurrentEvent().participants.toMutableList()
+        val dialogBinding = ListParticipantDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setContentView(dialogBinding.root)
+            with(dialogBinding) {
+                participantRecycler.layoutManager = LinearLayoutManager(context())
+                participantRecycler.adapter =
+                    ParticipantAdapter(
+                        listParticipant,
+                        context(),
+                        this@EventFragment,
+                        participantRecycler
+                    )
+                addParticipantBtn.setOnClickListener {
+                    showAddParticipantDialog(listParticipant, participantRecycler)
+                }
+            }
+        }
+        dialog.setOnDismissListener {
+            val event = getCurrentEvent()
+            event.participants = listParticipant
+            App.sharedManager.changeCurrentEvent(event)
+            updateUi()
+        }
+        dialog.show()
+    }
+    private fun openChangeNameDialog(){
+
+    }
+    private fun openPopupMenuOptions(){
+
     }
 }

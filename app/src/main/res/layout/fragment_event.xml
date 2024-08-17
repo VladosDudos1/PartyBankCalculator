@@ -25,7 +25,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/no_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,11 +65,11 @@
                 android:id="@+id/purchaseText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/purchases"
                 android:theme="@style/TitleText"
+                app:layout_constraintBottom_toBottomOf="@+id/optionsEventButton"
                 app:layout_constraintStart_toStartOf="@+id/participantsTxt"
-                app:layout_constraintTop_toBottomOf="@+id/participantsTxt" />
+                app:layout_constraintTop_toTopOf="@+id/optionsEventButton" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listPurchasesRecycler"
@@ -84,12 +83,17 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/optionsEventButton"
+                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/eventNameTxt"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/options"
+                app:icon="@drawable/options_vector"
+                app:iconGravity="textEnd"
+                app:iconSize="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/eventNameTxt" />
+                app:layout_constraintTop_toBottomOf="@+id/participantsTxt" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -133,7 +137,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/add_participant"
+            android:text="@string/participant_list"
             android:textAlignment="center"
             app:icon="@drawable/baseline_add_24" />
     </LinearLayout>

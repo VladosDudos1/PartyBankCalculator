@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Purchase
+import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
 import vlados.dudos.party.bank.calculator.databinding.EventListItemBinding
 import vlados.dudos.party.bank.calculator.databinding.PurchaseListItemBinding
+import kotlin.math.cos
 
 class PurchaseAdapter(private val context: Context, private val list: List<Purchase>) :
     RecyclerView.Adapter<PurchaseAdapter.PurchaseViewHolder>() {
@@ -22,7 +24,9 @@ class PurchaseAdapter(private val context: Context, private val list: List<Purch
 
     override fun onBindViewHolder(holder: PurchaseViewHolder, position: Int) {
         with(holder.binding){
-
+            purchaseNameText.text = list[position].name
+            listParticipantsText.text = listParticipantsToString(list[position].listDebtors)
+            costText.text = list[position].cost.toString()
         }
     }
 
