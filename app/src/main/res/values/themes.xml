@@ -71,4 +71,14 @@
         <item name="colorControlActivated">@color/alternative</item>
         <item name="buttonTint">@color/alternative</item>
     </style>
+
+    <style name="popupMenuStyle">
+        <item name="android:divider">@color/mainGrey</item>
+        <item name="android:dividerHeight">2dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="popUpBackgroundStyle" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@drawable/card_form</item>
+    </style>
 </resources>

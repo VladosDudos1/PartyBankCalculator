@@ -1,11 +1,14 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +19,7 @@ import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.AddEventLayoutBinding
+import vlados.dudos.party.bank.calculator.databinding.ChangeEventNameDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
 import vlados.dudos.party.bank.calculator.databinding.ListParticipantDialogBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
@@ -68,32 +72,36 @@ class EventFragment : BaseFragment(), IActiveFragment {
     override fun applyClick() {
         with(binding) {
             addPurchaseBtn.setOnClickListener {
-                updateAdapter()
+                addPurchase()
             }
             addParticipantBtn.setOnClickListener {
                 openParticipantDialog()
             }
             imageEvent.setOnClickListener {
-
+                selectPhoto()
+            }
+            optionsEventButton.setOnClickListener {
+                openPopupMenuOptions()
             }
         }
     }
 
-    override fun setObservers() {
+    private fun addPurchase(){
+        navigate(R.id.action_eventFragment_to_purchaseFragment)
+    }
+    private fun selectPhoto(){
 
     }
-
+    override fun setObservers() {}
     override fun updateUi() {
         setupEvent(getCurrentEvent())
     }
-
     private fun setAdapter(event: Event) {
         with(binding) {
             listPurchasesRecycler.layoutManager = LinearLayoutManager(context())
             listPurchasesRecycler.adapter = PurchaseAdapter(context(), getCurrentEvent().listPurchases)
         }
     }
-
     private fun updateAdapter() {
         with(binding) {
             listPurchasesRecycler.adapter?.notifyDataSetChanged()
@@ -128,9 +136,41 @@ class EventFragment : BaseFragment(), IActiveFragment {
         dialog.show()
     }
     private fun openChangeNameDialog(){
-
+        val event = getCurrentEvent()
+        val dialogBinding = ChangeEventNameDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setContentView(dialogBinding.root)
+            with(dialogBinding) {
+                positiveButton.setOnClickListener {
+                    if (nameEditText.text.toString().isNotEmpty()) {
+                        dismiss()
+                    } else dialogBinding.inputLayout.helperText =
+                        context().getString(R.string.name_cant_be_empty)
+                }
+            }
+        }
+        dialog.setOnDismissListener {
+            event.name = dialogBinding.nameEditText.text.toString()
+            App.sharedManager.changeCurrentEvent(event)
+            updateUi()
+        }
+        dialog.show()
     }
     private fun openPopupMenuOptions(){
+        val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.popupMenuStyle)
+        val popup = PopupMenu(wrapper, binding.optionsEventButton)
 
+        popup.inflate(R.menu.options_menu)
+        popup.setOnMenuItemClickListener {
+            optionProcessing(it.toString())
+            true
+        }
+        popup.show()
+    }
+    private fun optionProcessing(option: String){
+        when(option){
+            getString(R.string.change_event_name) -> openChangeNameDialog()
+        }
     }
 }

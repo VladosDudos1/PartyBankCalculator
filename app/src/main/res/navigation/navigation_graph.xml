@@ -9,7 +9,11 @@
         android:id="@+id/eventFragment"
         android:name="vlados.dudos.party.bank.calculator.presentation.fragment.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listEventFragment"
         android:name="vlados.dudos.party.bank.calculator.presentation.fragment.ListEventFragment"
@@ -46,4 +50,9 @@
         android:name="vlados.dudos.party.bank.calculator.presentation.fragment.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/purchaseFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.PurchaseFragment"
+        android:label="fragment_purchase"
+        tools:layout="@layout/fragment_purchase" />
 </navigation>

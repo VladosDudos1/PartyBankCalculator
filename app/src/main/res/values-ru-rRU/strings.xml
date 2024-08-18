@@ -29,7 +29,11 @@
     <string name="options">Опции</string>
     <string name="debtors">Должники:</string>
     <string name="purchase_name">Название покупки:</string>
+    <string name="purchase_name_no_ending">Название покупки</string>
     <string name="participant_list">Список участников</string>
     <string name="change_event_name">Сменить название</string>
     <string name="accept">Подтвердить</string>
+    <string name="choose_buyer">Выберите оплатившего участника</string>
+    <string name="purchase_creating">Создание покупки</string>
+    <string name="select_debtors_multiple_choice">Укажите должников (множественный выбор)</string>
 </resources>

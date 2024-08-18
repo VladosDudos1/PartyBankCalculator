@@ -34,7 +34,7 @@ class SharedManager(val baseContext: Context) {
     fun changeCurrentEvent(event: Event) {
         val listEvents = getListEvents()
         listEvents.forEachIndexed { index, nEvent ->
-            if (nEvent.name == event.name) {
+            if (nEvent.id == event.id) {
                 listEvents[index] = event
             }
         }

@@ -29,7 +29,11 @@
     <string name="options">OPTIONS</string>
     <string name="debtors">Debtors:</string>
     <string name="purchase_name">Purchase name:</string>
+    <string name="purchase_name_no_ending">Purchase name</string>
     <string name="participant_list">List participants</string>
     <string name="change_event_name">Change event name</string>
     <string name="accept">Accept</string>
+    <string name="choose_buyer">Select buyer</string>
+    <string name="purchase_creating">Purchase creation</string>
+    <string name="select_debtors_multiple_choice">Select debtors (multiple choice)</string>
 </resources>
