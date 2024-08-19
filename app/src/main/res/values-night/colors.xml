@@ -13,6 +13,8 @@
     <color name="hintColor">#AAAAAA</color>
     <color name="iconTIntColor">@color/black</color>
     <color name="secondColor">#FFFF4B21</color>
+    <color name="textColor">@color/white</color>
+    <color name="textColorAlternative">@color/softMainColor</color>
 
     <color name="alternative">@color/mainColor</color>
     <color name="alternativeMain">@color/secondColor</color>

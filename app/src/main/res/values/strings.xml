@@ -39,4 +39,9 @@
     <string name="cost">Cost</string>
     <string name="zero">0</string>
     <string name="numbers">0123456789</string>
+    <string name="confirm">Confirm</string>
+    <string name="Next">Next</string>
+    <string name="enter_name_of_purchase">Enter name of purchase</string>
+    <string name="enter_cost_of_the_purchase">Enter cost of the purchase</string>
+    <string name="purchase_must_have_buyer_and_debtors">Purchase must have buyer and debtors</string>
 </resources>

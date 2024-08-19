@@ -69,6 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:clipToPadding="true"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/selectBuyerText" />
 
             <TextView
@@ -86,6 +88,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:clipToPadding="true"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/selectDebtorsText" />
 
             <TextView
@@ -102,15 +106,15 @@
                 android:id="@+id/costEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:elevation="4dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/cost_edit_text_background"
-                android:paddingVertical="5dp"
                 android:digits="@string/numbers"
+                android:elevation="4dp"
                 android:fontFamily="@font/lato_regular"
                 android:inputType="number"
                 android:lines="1"
                 android:maxLength="5"
+                android:paddingVertical="5dp"
                 android:text="@string/zero"
                 android:textAlignment="center"
                 android:textSize="32sp"
@@ -146,20 +150,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.80"/>
+                app:layout_constraintGuide_percent="0.80" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/acceptButton"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/softMainColor"
         android:paddingHorizontal="32dp"
         android:paddingVertical="8dp"
-        android:text="@string/accept"
+        android:text="@string/Next"
         android:textColor="@color/alternative"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -168,7 +172,6 @@
         app:iconTint="@color/alternative"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/alternativeMain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@
     <color name="iconTIntColor">@color/white</color>
     <color name="secondColor">#FFFF4B21</color>
     <color name="textColor">#5E5E5E</color>
+    <color name="textColorAlternative">@color/white</color>
 
     <color name="vectorImageSoftColor">#BB222222</color>
 

@@ -38,4 +38,10 @@
     <string name="select_debtors_multiple_choice">Укажите должников (множественный выбор)</string>
     <string name="cost">Цена</string>
     <string name="zero">0</string>
+    <string name="numbers">0123456789</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="Next">Далее</string>
+    <string name="enter_name_of_purchase">Введите название покупки</string>
+    <string name="enter_cost_of_the_purchase">Введите цену покупки</string>
+    <string name="purchase_must_have_buyer_and_debtors">Обязательно укажите купившего и должников</string>
 </resources>

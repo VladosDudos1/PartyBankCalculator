@@ -27,7 +27,7 @@ import kotlin.math.truncate
 
 abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi {
     protected fun showToast(message: String) {
-        Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     protected fun context(): Context = requireContext()
