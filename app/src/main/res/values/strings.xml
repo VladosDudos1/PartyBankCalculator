@@ -36,4 +36,7 @@
     <string name="choose_buyer">Select buyer</string>
     <string name="purchase_creating">Purchase creation</string>
     <string name="select_debtors_multiple_choice">Select debtors (multiple choice)</string>
+    <string name="cost">Cost</string>
+    <string name="zero">0</string>
+    <string name="numbers">0123456789</string>
 </resources>

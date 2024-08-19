@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="bg_color">#DE181818</color>
     <color name="red">#FF0000</color>
     <color name="blue">#0000FF</color>
     <color name="green">#00FF00</color>
@@ -19,5 +20,9 @@
     <color name="softMainColor">#CC222222</color>
     <color name="eventCardColor">#BB222222</color>
     <color name="eventCardStroke">@color/hintColor</color>
-<!--    <color name="eventCardStroke">#848d8e</color>-->
+    <color name="thumb_stroke_color">#88181818</color>
+
+    <color name="seek_start_progress_color">#EEFFFFFF</color>
+    <color name="seek_center_progress_color">#BBFFFFFF</color>
+    <color name="seek_end_progress_color">#BBFFFFFF</color>
 </resources>

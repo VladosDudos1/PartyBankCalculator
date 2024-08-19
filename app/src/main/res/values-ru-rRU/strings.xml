@@ -36,4 +36,6 @@
     <string name="choose_buyer">Выберите оплатившего участника</string>
     <string name="purchase_creating">Создание покупки</string>
     <string name="select_debtors_multiple_choice">Укажите должников (множественный выбор)</string>
+    <string name="cost">Цена</string>
+    <string name="zero">0</string>
 </resources>

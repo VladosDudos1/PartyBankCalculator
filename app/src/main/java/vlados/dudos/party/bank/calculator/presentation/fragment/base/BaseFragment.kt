@@ -4,6 +4,9 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.text.TextWatcher
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -195,5 +198,8 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
 
     protected fun navigate(action: Int) {
         findNavController().navigate(action)
+    }
+    protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher){
+        editText.addTextChangedListener(textWatcher)
     }
 }

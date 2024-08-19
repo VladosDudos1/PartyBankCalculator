@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_color">#EEFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
     <color name="blue">#0000FF</color>
@@ -19,10 +20,14 @@
     <color name="eventCardColor">#BBF2F2F2</color>
     <color name="eventCardStroke">#FFAAAAAA</color>
 
-    <color name="softMainColor">#CCF2F2F2</color>
+    <color name="softMainColor">#CCFFFFFF</color>
 
     <color name="alternative">@color/secondColor</color>
     <color name="alternativeMain">@color/mainColor</color>
+    <color name="thumb_stroke_color">#99FFFFFF</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#AAA</color>
+    <color name="seek_start_progress_color">#33000000</color>
+    <color name="seek_center_progress_color">#11000000</color>
+    <color name="seek_end_progress_color">#11000000</color>
 </resources>
