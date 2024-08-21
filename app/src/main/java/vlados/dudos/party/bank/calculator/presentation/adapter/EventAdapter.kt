@@ -30,7 +30,6 @@ class EventAdapter(private val context: Context, private val listEvents: List<Ev
             sumTxt.text = context.getString(R.string.sum, listEvents[position].sum.toString(), App.sharedManager.getBaseValue())
             eventNameTxt.text = listEvents[position].name
             ownerTxt.text = context.getString(R.string.organizer, listEvents[position].owner.name)
-
             if (listEvents[position].participants.size >= 4){
                 participantsTxt.text = (context.getString(
                     R.string.participants,

@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_event" >
         <action
             android:id="@+id/action_eventFragment_to_purchaseFragment"
-            app:destination="@id/purchaseFragment" />
+            app:destination="@id/purchaseFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_eventFragment_to_listEventFragment"
+            app:destination="@id/listEventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/listEventFragment"
@@ -21,7 +28,9 @@
         tools:layout="@layout/fragment_list_event" >
         <action
             android:id="@+id/action_listEventFragment_to_eventFragment"
-            app:destination="@id/eventFragment" />
+            app:destination="@id/eventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_listEventFragment_to_friendsListFragment"
             app:destination="@id/friendsListFragment" />
@@ -54,5 +63,25 @@
         android:id="@+id/purchaseFragment"
         android:name="vlados.dudos.party.bank.calculator.presentation.fragment.PurchaseFragment"
         android:label="fragment_purchase"
-        tools:layout="@layout/fragment_purchase" />
+        tools:layout="@layout/fragment_purchase" >
+        <action
+            android:id="@+id/action_purchaseFragment_to_additionalPriceFragment"
+            app:destination="@id/additionalPriceFragment" />
+        <action
+            android:id="@+id/action_purchaseFragment_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/additionalPriceFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.AdditionalPriceFragment"
+        android:label="fragment_additional_price"
+        tools:layout="@layout/fragment_additional_price" >
+        <action
+            android:id="@+id/action_additionalPriceFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

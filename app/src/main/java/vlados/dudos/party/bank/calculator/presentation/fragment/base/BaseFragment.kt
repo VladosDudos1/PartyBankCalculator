@@ -8,6 +8,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -199,7 +201,8 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
     protected fun navigate(action: Int) {
         findNavController().navigate(action)
     }
-    protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher){
+
+    protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher) {
         editText.addTextChangedListener(textWatcher)
     }
 }

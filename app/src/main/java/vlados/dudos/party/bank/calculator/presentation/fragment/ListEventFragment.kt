@@ -43,6 +43,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
         super.onViewCreated(view, savedInstanceState)
         applyClick()
         setObservers()
+        binding.eventRecyclerView.clearFocus()
     }
 
     override fun applyClick() {

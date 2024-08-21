@@ -8,6 +8,6 @@ data class Event(
     var participants: List<Participant>,
     var sum: Int,
     var owner: Participant,
-    var listPurchases: List<Purchase>,
+    var listPurchases: MutableList<Purchase>,
     var image: Bitmap? = null
 )

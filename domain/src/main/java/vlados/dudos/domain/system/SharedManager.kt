@@ -30,6 +30,12 @@ class SharedManager(val baseContext: Context) {
         val saveString = Gson().toJson(listEvents)
         shared.edit().putString("EventList", saveString).apply()
     }
+    fun deleteEvent(event: Event){
+        val listEvents = getListEvents()
+        listEvents.remove(event)
+        val saveString = Gson().toJson(listEvents)
+        shared.edit().putString("EventList", saveString).apply()
+    }
 
     fun changeCurrentEvent(event: Event) {
         val listEvents = getListEvents()

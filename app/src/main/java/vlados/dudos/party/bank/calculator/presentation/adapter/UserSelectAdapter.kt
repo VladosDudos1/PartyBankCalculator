@@ -8,14 +8,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Participant
+import vlados.dudos.domain.utils.ListOperationsSupport.changeListParticipant
+import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
 import vlados.dudos.party.bank.calculator.R
-import vlados.dudos.party.bank.calculator.databinding.PurchaseListItemBinding
 import vlados.dudos.party.bank.calculator.databinding.SelectUserLayoutBinding
 
 class UserSelectAdapter(
     val context: Context,
-    val list: List<Participant>,
-    private val onClick: OnClick
+    val list: List<Participant>
 ) :
     RecyclerView.Adapter<UserSelectAdapter.UserSelectViewHolder>() {
 
@@ -30,31 +30,28 @@ class UserSelectAdapter(
     }
 
     override fun onBindViewHolder(holder: UserSelectViewHolder, position: Int) {
-        val listParticipants = mutableListOf<Participant>()
         with(holder.binding) {
             nameParticipant.text = list[position].name
+            if (list[position] in getTransList()){
+                holder.setColors(false, root, nameParticipant, context)
+            }
             root.setOnClickListener {
-                if (list[position] in listParticipants) {
-                    listParticipants.remove(list[position])
+                if (list[position] in getTransList()) {
+                    changeListParticipant(true, list[position])
                     holder.setColors(true, root, nameParticipant, context)
                 } else {
-                    listParticipants.add(list[position])
+                    changeListParticipant(false, list[position])
                     holder.setColors(false, root, nameParticipant, context)
                 }
-                onClick.selectParticipant(listDebtors = listParticipants)
             }
         }
     }
 
     override fun getItemCount(): Int = list.size
 
-    interface OnClick {
-        fun selectParticipant(listDebtors: List<Participant>)
-    }
-
-
     class UserSelectViewHolder(val binding: SelectUserLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun setColors(isActive: Boolean, cardView: CardView, textView: TextView, context: Context) {
             cardView.setCardBackgroundColor(context.getColor(if (!isActive) R.color.alternative else R.color.softMainColor))
             textView.setBackgroundColor(context.getColor(if (!isActive) R.color.alternative else R.color.softMainColor))

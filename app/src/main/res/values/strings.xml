@@ -36,7 +36,7 @@
     <string name="choose_buyer">Select buyer</string>
     <string name="purchase_creating">Purchase creation</string>
     <string name="select_debtors_multiple_choice">Select debtors (multiple choice)</string>
-    <string name="cost">Cost</string>
+    <string name="cost">Cost (max 99999)</string>
     <string name="zero">0</string>
     <string name="numbers">0123456789</string>
     <string name="confirm">Confirm</string>
@@ -44,4 +44,7 @@
     <string name="enter_name_of_purchase">Enter name of purchase</string>
     <string name="enter_cost_of_the_purchase">Enter cost of the purchase</string>
     <string name="purchase_must_have_buyer_and_debtors">Purchase must have buyer and debtors</string>
+    <string name="skip">Skip</string>
+    <string name="additional_cost">Additional spending</string>
+    <string name="delete_event">Delete event</string>
 </resources>
