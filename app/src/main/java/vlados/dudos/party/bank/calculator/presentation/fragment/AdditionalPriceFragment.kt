@@ -10,6 +10,7 @@ import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
 import vlados.dudos.domain.utils.MapHolder.getMapAdditionalSpending
+import vlados.dudos.domain.utils.MapHolder.setFullMapAdditionalSpending
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentAdditionalPriceBinding
@@ -50,6 +51,7 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
     private fun setAdapter(){
         with(binding){
             additionalSpendRecycler.layoutManager = LinearLayoutManager(context())
+            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) setFullMapAdditionalSpending(hostViewModel.getCurrentPurchase().additionalDebts)
             additionalSpendRecycler.adapter =
                 AdditionalSpendsAdapter(context(), getMapAdditionalSpending())
         }

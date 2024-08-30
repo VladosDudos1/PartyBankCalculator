@@ -6,7 +6,7 @@ import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Participant
 
 object MapHolder {
-    private val mapOfAdditionalSpend = mutableListOf<DebtPair>()
+    private var mapOfAdditionalSpend = mutableListOf<DebtPair>()
     fun getValueSign(context: Context, valueName: String): String {
         val mapOfValues = mapOf(
             context.getString(R.string.Ruble) to "₽",
@@ -28,6 +28,10 @@ object MapHolder {
                 if (it.debtor == participant) it.moneySum = price
             }
         }
+    }
+
+    fun setFullMapAdditionalSpending(list: List<DebtPair>){
+        mapOfAdditionalSpend = list.toMutableList()
     }
 
     fun removeDebtorFromAdditionalMap(participant: Participant) {

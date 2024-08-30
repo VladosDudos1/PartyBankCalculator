@@ -2,6 +2,7 @@ package vlados.dudos.domain
 
 import org.junit.Test
 import vlados.dudos.domain.calculating.CalculateManager
+import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.model.Purchase
@@ -39,7 +40,9 @@ class CalculateManagerTest {
         val participant4 = Participant(4, "David")
         val participant5 = Participant(5, "Eve")
 
-        val purchase1 = Purchase(1, "Book", 100.0, participant1, listOf(participant1, participant2, participant3))
+        val purchase1 = Purchase(1, "Book", 100.0, participant1, listOf(participant1, participant2, participant3), mutableListOf(
+            DebtPair(100.0, participant2), DebtPair(1000.0, participant1), DebtPair(429.0, participant3)
+        ))
         val purchase2 = Purchase(2, "Pen", 50.0, participant2, listOf(participant1))
         val purchase3 = Purchase(3, "Notebook", 200.0, participant3, listOf(participant1, participant2, participant4))
         val purchase4 = Purchase(4, "Laptop", 1000.0, participant4, listOf(participant3, participant5))
@@ -52,7 +55,7 @@ class CalculateManagerTest {
             participants = listOf(participant1, participant2, participant3),
             sum = 150,
             owner = participant1,
-            listPurchases = listOf(purchase1)
+            listPurchases = mutableListOf(purchase1)
         )
 
         val event2 = Event(
@@ -61,7 +64,7 @@ class CalculateManagerTest {
             participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 1700,
             owner = participant3,
-            listPurchases = listOf(purchase3, purchase4)
+            listPurchases = mutableListOf(purchase3, purchase4)
         )
 
         val event3 = Event(
@@ -70,7 +73,7 @@ class CalculateManagerTest {
             participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 4300,
             owner = participant4,
-            listPurchases = listOf(purchase1, purchase3, purchase5, purchase6)
+            listPurchases = mutableListOf(purchase1, purchase3, purchase5, purchase6)
         )
 
         val event4 = Event(
@@ -79,7 +82,7 @@ class CalculateManagerTest {
             participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 1550,
             owner = participant5,
-            listPurchases = listOf(purchase2, purchase4, purchase5)
+            listPurchases = mutableListOf(purchase2, purchase4, purchase5)
         )
 
         val event5 = Event(
@@ -88,7 +91,7 @@ class CalculateManagerTest {
             participants = listOf(participant1, participant2, participant3, participant4, participant5),
             sum = 800,
             owner = participant1,
-            listPurchases = listOf(purchase1, purchase3, purchase5)
+            listPurchases = mutableListOf(purchase1, purchase3, purchase5)
         )
 
         return listOf(event1, event2, event3, event4, event5)

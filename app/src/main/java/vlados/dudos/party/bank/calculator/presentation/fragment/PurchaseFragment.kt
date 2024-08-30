@@ -12,15 +12,13 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
-import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
+import vlados.dudos.domain.utils.ListOperationsSupport.setFullTransList
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
 import vlados.dudos.party.bank.calculator.R
-import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentPurchaseBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
@@ -68,7 +66,6 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         putNavigateId()
-        hostViewModel.generatePurchase()
         applyTextWatcher(binding.costEditText, this)
         setObservers()
         setupView()
@@ -131,8 +128,10 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
                 this@PurchaseFragment,
                 participants.indexOf(hostViewModel.getCurrentPurchase().buyer)
             )
-
             debtorsRecycler.layoutManager = GridLayoutManager(context(), 2)
+
+            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) setFullTransList(hostViewModel.getCurrentPurchase().additionalDebts.map { it.debtor })
+
             debtorsRecycler.adapter =
                 UserSelectAdapter(context(), participants)
         }
@@ -144,7 +143,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
             val name = purchaseNameEditText.text.toString()
             when {
                 name.isEmpty() -> showToast(getString(R.string.enter_name_of_purchase))
-                cost == 0 -> showToast(getString(R.string.enter_cost_of_the_purchase))
+                cost < 0 -> showToast(getString(R.string.enter_cost_of_the_purchase))
                 !hostViewModel.isNewPurchaseFilled() -> showToast(getString(R.string.purchase_must_have_buyer_and_debtors))
                 else -> {
                     return true

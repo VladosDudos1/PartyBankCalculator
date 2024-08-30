@@ -2,6 +2,7 @@ package vlados.dudos.domain.system
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import vlados.dudos.domain.R
@@ -24,13 +25,23 @@ class SharedManager(val baseContext: Context) {
         return shared.getString("Locale", "ru-RU") ?: "ru-RU"
     }
 
+    fun saveThemePreference(isDarkTheme: Boolean) {
+        shared.edit().putBoolean("isDarkTheme", isDarkTheme).apply()
+    }
+
+    fun loadThemePreference() {
+        val isDarkTheme = shared.getBoolean("isDarkTheme", false)
+        AppCompatDelegate.setDefaultNightMode(if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+    }
+
     fun saveNewEvent(newEvent: Event) {
         val listEvents = getListEvents()
         listEvents.add(newEvent)
         val saveString = Gson().toJson(listEvents)
         shared.edit().putString("EventList", saveString).apply()
     }
-    fun deleteEvent(event: Event){
+
+    fun deleteEvent(event: Event) {
         val listEvents = getListEvents()
         listEvents.remove(event)
         val saveString = Gson().toJson(listEvents)

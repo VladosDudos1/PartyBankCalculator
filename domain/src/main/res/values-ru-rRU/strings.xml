@@ -6,4 +6,6 @@
     <string name="Pound">Фунт</string>
     <string name="Euro">Евро</string>
     <string name="Yen">Йена</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
 </resources>

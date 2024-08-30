@@ -7,7 +7,10 @@ import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.model.Purchase
 import java.text.DecimalFormat
 
-class CalculateManager() {
+class CalculateManager {
+
+    private val decimalFormat = DecimalFormat("#.##")
+
     fun calculateDebts(event: Event): List<EventResult> {
         var result = event.participants.map { participant ->
             EventResult(participant, mutableListOf())
@@ -29,11 +32,12 @@ class CalculateManager() {
         joinDebts(result)
         sortDebts(result)
         result = cleanDebts(result.toMutableList())
+        result = addAdditionalDebtsToResult(result, event)
+
         return result
     }
 
     private fun getCostForPerson(purchase: Purchase): Double {
-        val decimalFormat = DecimalFormat("#.##")
         return decimalFormat.format((purchase.cost / purchase.listDebtors.size)).toDouble()
     }
 
@@ -44,7 +48,7 @@ class CalculateManager() {
         }
     }
 
-    private fun cleanDebts(listEventResult: MutableList<EventResult>) : MutableList<EventResult>{
+    private fun cleanDebts(listEventResult: MutableList<EventResult>): MutableList<EventResult> {
         val debtMap = mutableMapOf<Pair<Participant, Participant>, Double>()
         val consolidatedMap = mutableMapOf<Pair<Participant, Participant>, Double>()
         val consolidatedResults = mutableMapOf<Participant, MutableList<DebtPair>>()
@@ -68,7 +72,8 @@ class CalculateManager() {
         }
         for ((key, sum) in consolidatedMap) {
             val (participant1, participant2) = key
-            consolidatedResults.computeIfAbsent(participant1) { mutableListOf() }.add(DebtPair(sum, participant2))
+            consolidatedResults.computeIfAbsent(participant1) { mutableListOf() }
+                .add(DebtPair(sum, participant2))
         }
         return consolidatedResults.map { (participant, debts) ->
             EventResult(participant, debts)
@@ -77,5 +82,22 @@ class CalculateManager() {
 
     private fun sortDebts(listEventResult: List<EventResult>): List<EventResult> {
         return listEventResult.sortedBy { it.participant.name }
+    }
+
+    private fun addAdditionalDebtsToResult(
+        listEventResult: MutableList<EventResult>,
+        event: Event
+    ): MutableList<EventResult> {
+        event.listPurchases.forEach { purchase ->
+            val currentEventResult = listEventResult.first { it.participant == purchase.buyer }
+            purchase.additionalDebts.forEach { additionalDebt ->
+                if (purchase.buyer != additionalDebt.debtor){
+                    val debt = currentEventResult.listDebts.first { it.debtor == additionalDebt.debtor }
+                    debt.moneySum = decimalFormat.format((debt.moneySum + additionalDebt.moneySum)).toDouble()
+                }
+
+            }
+        }
+        return listEventResult
     }
 }

@@ -43,8 +43,15 @@
     <string name="Next">Next</string>
     <string name="enter_name_of_purchase">Enter name of purchase</string>
     <string name="enter_cost_of_the_purchase">Enter cost of the purchase</string>
-    <string name="purchase_must_have_buyer_and_debtors">Purchase must have buyer and debtors</string>
+    <string name="purchase_must_have_buyer_and_debtors">Purchase must have debtors</string>
     <string name="skip">Skip</string>
     <string name="additional_cost">Additional spending</string>
     <string name="delete_event">Delete event</string>
+    <string name="cancel">Cancel</string>
+    <string name="more_details">More details</string>
+    <string name="delete_purchase">Delete purchase?</string>
+    <string name="go_back">Go Back</string>
+    <string name="theme_choose">Theme choose</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

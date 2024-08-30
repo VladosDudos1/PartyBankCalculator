@@ -35,7 +35,6 @@ class BuyerSelectAdapter(
             holder.setItem(list[position], selectedPosition, context)
             if (position == 0){
                 holder.setItem(list[position], selectedPosition, context)
-                onClick.selectParticipant(buyer = list[position])
             }
             root.setOnClickListener {
                 onClick.selectParticipant(buyer = list[position])

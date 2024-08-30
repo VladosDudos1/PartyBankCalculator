@@ -12,9 +12,12 @@ import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.launch
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
+import vlados.dudos.domain.model.Purchase
 import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
@@ -33,11 +36,20 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.EventViewModel
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 
 
-class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
+class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, PurchaseAdapter.OnClick {
 
     private val binding: FragmentEventBinding by lazy { FragmentEventBinding.inflate(layoutInflater) }
     private val viewModel: EventViewModel by viewModels()
     private val hostViewModel: HostViewModel by activityViewModels()
+
+    override fun deletePurchase(purchase: Purchase) {
+        viewModel.deletePurchase(purchase, context(), layoutInflater, getCurrentEvent())
+    }
+
+    override fun redactPurchase(purchase: Purchase) {
+        hostViewModel.setNewPurchase(purchase)
+        navigate(R.id.action_eventFragment_to_purchaseFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,9 +61,9 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         putNavigateId()
-        setupEvent(getCurrentEvent())
         applyClick()
         setObservers()
+        setupEvent(getCurrentEvent())
     }
 
     override fun putNavigateId() {
@@ -90,25 +102,36 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
         }
     }
 
-    private fun addPurchase(){
+    private fun addPurchase() {
+        hostViewModel.generatePurchase()
         navigate(R.id.action_eventFragment_to_purchaseFragment)
     }
-    override fun setObservers() {}
+
+    override fun setObservers() {
+        viewModel.purchaseDeleted.observe(viewLifecycleOwner) {
+            updateAdapter()
+        }
+    }
+
     override fun updateUi() {
         setupEvent(getCurrentEvent())
     }
+
     private fun setAdapter(event: Event) {
         with(binding) {
             listPurchasesRecycler.layoutManager = LinearLayoutManager(context())
-            listPurchasesRecycler.adapter = PurchaseAdapter(context(), getCurrentEvent().listPurchases)
+            listPurchasesRecycler.adapter =
+                PurchaseAdapter(context(), event.listPurchases, this@EventFragment)
         }
     }
+
     private fun updateAdapter() {
         with(binding) {
             listPurchasesRecycler.adapter?.notifyDataSetChanged()
         }
     }
-    private fun openParticipantDialog(){
+
+    private fun openParticipantDialog() {
         val listParticipant = getCurrentEvent().participants.toMutableList()
         val dialogBinding = ListParticipantDialogBinding.inflate(layoutInflater)
         val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
@@ -136,7 +159,8 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
         }
         dialog.show()
     }
-    private fun openChangeNameDialog(){
+
+    private fun openChangeNameDialog() {
         val event = getCurrentEvent()
         val dialogBinding = ChangeEventNameDialogBinding.inflate(layoutInflater)
         val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
@@ -157,12 +181,12 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
         dialog.show()
     }
 
-    private fun deleteCurrentEvent(){
+    private fun deleteCurrentEvent() {
         App.sharedManager.deleteEvent(getCurrentEvent())
         navigate(R.id.action_eventFragment_to_listEventFragment)
     }
 
-    private fun openPopupMenuOptions(){
+    private fun openPopupMenuOptions() {
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.popupMenuStyle)
         val popup = PopupMenu(wrapper, binding.optionsEventButton)
 
@@ -173,8 +197,9 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange {
         }
         popup.show()
     }
-    private fun optionProcessing(option: String){
-        when(option){
+
+    private fun optionProcessing(option: String) {
+        when (option) {
             getString(R.string.change_event_name) -> openChangeNameDialog()
             getString(R.string.delete_event) -> deleteCurrentEvent()
         }

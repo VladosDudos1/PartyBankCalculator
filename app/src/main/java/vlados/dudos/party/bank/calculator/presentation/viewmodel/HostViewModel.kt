@@ -1,5 +1,8 @@
 package vlados.dudos.party.bank.calculator.presentation.viewmodel
 
+import android.app.Dialog
+import android.content.Context
+import android.view.LayoutInflater
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,13 +16,14 @@ import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
 import vlados.dudos.domain.utils.MapHolder.clearMapAdditionalSpend
 import vlados.dudos.domain.utils.MapHolder.getMapAdditionalSpending
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewPurchase
+import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
+import vlados.dudos.party.bank.calculator.databinding.DeletePurchaseDialogBinding
+import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
 
 class HostViewModel : ViewModel() {
     private val currentEvent = MutableLiveData<Event>()
     private val newPurchase = MutableLiveData<Purchase>()
-    private var predName: String = ""
-    private var predCost: Int = 0
     val selectedItem: LiveData<Event> get() = currentEvent
 
     fun selectItem(event: Event) {
@@ -35,15 +39,32 @@ class HostViewModel : ViewModel() {
     }
 
     fun addBuyerToPurchase(buyer: Participant) {
-        newPurchase.value!!.buyer = buyer
+        val transition = newPurchase.value!!
+        transition.buyer = buyer
+        newPurchase.value = transition
     }
 
-    private fun addPurchaseToEvent(cost: Double, name: String) {
-        newPurchase.value!!.cost = cost
-        newPurchase.value!!.name = name
-        newPurchase.value!!.listDebtors = getTransList()
-        newPurchase.value!!.additionalDebts = getMapAdditionalSpending()
-        currentEvent.value!!.listPurchases.add(newPurchase.value!!)
+    private fun addPurchaseToEvent(costNew: Double, nameNew: String) {
+        if (currentEvent.value!!.listPurchases.map { it.id }.contains(newPurchase.value!!.id)) {
+            currentEvent.value!!.listPurchases.first { it.id == newPurchase.value!!.id }.apply {
+                cost = costNew
+                name = nameNew
+                listDebtors = getTransList()
+                additionalDebts = getMapAdditionalSpending()
+            }
+        } else {
+            val transit = newPurchase.value!!
+            transit.apply {
+                cost = costNew
+                name = nameNew
+                listDebtors = getTransList()
+                additionalDebts = getMapAdditionalSpending()
+            }
+            newPurchase.value = transit
+            val newTransit = currentEvent.value!!
+            newTransit.listPurchases.add(newPurchase.value!!)
+            currentEvent.value = newTransit
+        }
     }
 
     fun savePurchase(cost: Double, name: String) {
@@ -54,19 +75,28 @@ class HostViewModel : ViewModel() {
         App.sharedManager.changeCurrentEvent(currentEvent.value!!)
         clearMapAdditionalSpend()
         cleanTransList()
+        currentEvent.value = App.sharedManager.getEvent(currentEvent.value!!.id)
     }
 
     fun getCurrentPurchase(): Purchase = newPurchase.value!!
     fun isNewPurchaseFilled(): Boolean =
-        newPurchase.value!!.buyer.id != -1 && getTransList().isNotEmpty()
+        getTransList().isNotEmpty()
 
-    fun getCost(): Int = predCost
+    fun getCost(): Int = getCurrentPurchase().cost.toInt()
     fun setCost(value: Int) {
-        predCost = value
+        val transition = newPurchase.value!!
+        transition.cost = value.toDouble()
+        newPurchase.value = transition
     }
 
-    fun getName(): String = predName
+    fun getName(): String = getCurrentPurchase().name
     fun setName(name: String) {
-        predName = name
+        val transition = newPurchase.value!!
+        transition.name = name
+        newPurchase.value = transition
+    }
+
+    fun setNewPurchase(purchase: Purchase) {
+        newPurchase.value = purchase
     }
 }

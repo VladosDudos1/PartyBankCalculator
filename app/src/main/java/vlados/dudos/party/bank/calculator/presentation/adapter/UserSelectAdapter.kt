@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ListOperationsSupport.changeListParticipant
 import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
