@@ -52,4 +52,6 @@
     <string name="delete_purchase">Удалить покупку?</string>
     <string name="go_back">Назад</string>
     <string name="theme_choose">Выбор темы</string>
+    <string name="light_theme">Светлая</string>
+    <string name="dark_theme">Тёмная</string>
 </resources>

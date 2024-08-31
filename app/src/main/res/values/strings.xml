@@ -51,7 +51,7 @@
     <string name="more_details">More details</string>
     <string name="delete_purchase">Delete purchase?</string>
     <string name="go_back">Go Back</string>
-    <string name="theme_choose">Theme choose</string>
-    <string name="light_theme">Light theme</string>
-    <string name="dark_theme">Dark theme</string>
+    <string name="theme_choose">Theme selection</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
 </resources>
