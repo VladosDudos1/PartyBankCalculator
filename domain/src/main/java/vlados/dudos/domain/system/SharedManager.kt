@@ -17,17 +17,20 @@ class SharedManager(private val baseContext: Context) {
             Context.MODE_PRIVATE
         )
 
-    fun setLocale(locale: String) {
-        shared.edit().putString("Locale", locale).apply()
-    }
-
-    fun getLocale(): String {
-        return shared.getString("Locale", "ru-RU") ?: "ru-RU"
-    }
-
     fun saveThemePreference(themeMode: Int) {
         shared.edit().putInt("isDarkTheme", themeMode).apply()
         shared.edit().putBoolean("isThemeChanged", true).apply()
+    }
+
+    fun saveLanguagePreference(languageCode: String) {
+        with(shared.edit()) {
+            putString("AppLanguage", languageCode)
+            apply()
+        }
+    }
+
+    fun loadLanguagePreference(): String? {
+        return shared.getString("AppLanguage", "ru")
     }
 
     fun isThemeChanged() : Boolean {
@@ -111,7 +114,7 @@ class SharedManager(private val baseContext: Context) {
     }
 
     fun setBaseValue(valueName: String) {
-        shared.edit().putString("value", getValueSign(baseContext, valueName)).apply()
+        shared.edit().putString("value", valueName).apply()
     }
 
     fun setBaseValue() {

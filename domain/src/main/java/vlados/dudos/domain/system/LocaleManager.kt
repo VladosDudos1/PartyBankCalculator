@@ -1,5 +1,6 @@
 package vlados.dudos.domain.system
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -10,31 +11,36 @@ import java.util.Locale
 
 
 class LocaleManager(private val baseContext: Context) {
+    val sharedManager = SharedManager(baseContext)
     private val resources: Resources = baseContext.resources
-    private val config: Configuration = resources.configuration
-    private val locale = Locale(getLanguageCode())
-    private val languageList = listOf(baseContext.getString(R.string.russian), baseContext.getString(R.string.english))
+    private var config: Configuration = resources.configuration
+    private var locale: Locale = Locale(sharedManager.loadLanguagePreference() ?: "ru-RU")
+    private var languageList = listOf(
+        baseContext.getString(R.string.russian) to "ru-RU",
+        baseContext.getString(R.string.english) to "en-EN"
+    ).toMap()
 
-    fun setLocaleCurrentLanguage() {
+    fun setLocaleCurrentLanguage(activity: Activity) {
+        updateLocale(sharedManager.loadLanguagePreference() ?: "en-EN", activity)
+    }
+
+    fun setLanguage(languageCode: String, activity: Activity) {
+        updateLocale(languageCode, activity)
+        sharedManager.saveLanguagePreference(languageCode)
+    }
+
+    fun getMapOfLanguages(): Map<String, String> = languageList
+
+    fun getLanguageName(context: Context): String {
+        val country = locale.country.ifEmpty { "RU" }
+        return languageList.entries.firstOrNull { it.value == "${locale.language}-$country" }?.key ?: context.getString(R.string.english)
+    }
+
+    private fun updateLocale(languageCode: String, activity: Activity) {
+        locale = Locale(languageCode)
         Locale.setDefault(locale)
         config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
-    }
-    fun getLanguageCode(languageName: String) : String {
-        val mapOfLanguage = mapOf(
-            languageList[0] to "ru-RU",
-            languageList[1] to "en-EN"
-        )
-        return mapOfLanguage.getValue(languageName)
-    }
-
-
-
-
-    private fun getLanguageCode(): String {
-        return when (Locale.getDefault().language) {
-            "ru-RU" -> "ru-RU"
-            else -> "en-EN"
-        }
+        activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
+        activity.recreate()
     }
 }

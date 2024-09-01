@@ -32,7 +32,7 @@ class StartFragment : BaseFragment() {
         if (App.sharedManager.isThemeChanged()){
             App.sharedManager.loadThemePreference()
         }
-        App.localeManager.setLocaleCurrentLanguage()
+        App.localeManager.setLocaleCurrentLanguage(activity())
         goNextPage()
     }
     private fun goNextPage(){

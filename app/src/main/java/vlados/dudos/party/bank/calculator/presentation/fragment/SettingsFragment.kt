@@ -7,17 +7,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.utils.ActionHolder.setActionId
+import vlados.dudos.domain.utils.MapHolder.getMapOfValues
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentSettingsBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
+import vlados.dudos.party.bank.calculator.presentation.adapter.LanguageAdapter
+import vlados.dudos.party.bank.calculator.presentation.adapter.ValueAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 
-class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange {
+class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange, LanguageAdapter.OnClick, ValueAdapter.OnClick {
+
+    override fun clickLanguage(language: String) {
+        App.localeManager.setLanguage(language, activity())
+        changeViewVisibility(binding.languageRecycler)
+    }
+
+    override fun clickValue(value: String) {
+        App.sharedManager.setBaseValue(value)
+        changeViewVisibility(binding.valueRecycler)
+    }
 
     private val binding: FragmentSettingsBinding by lazy {
         FragmentSettingsBinding.inflate(
@@ -35,8 +49,9 @@ class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         putNavigateId()
-        setupUi()
         applyClick()
+        setupUi()
+        setAdapter()
         setObservers()
     }
 
@@ -74,30 +89,35 @@ class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange {
 
     private fun setLanguage() {
         with(binding){
-            when (languageRecycler.visibility){
-                View.GONE ->  languageRecycler.visibility = View.VISIBLE
-                View.VISIBLE ->  languageRecycler.visibility = View.GONE
-            }
+            changeViewVisibility(languageRecycler)
         }
     }
 
     private fun setValue() {
         with(binding){
-            when (valueRecycler.visibility){
-                View.GONE ->  valueRecycler.visibility = View.VISIBLE
-                View.VISIBLE ->  valueRecycler.visibility = View.GONE
-            }
+            changeViewVisibility(valueRecycler)
         }
     }
 
-    override fun updateUi() {}
+    override fun updateUi() {
+        with(binding){
+            languageName.text = App.localeManager.getLanguageName(context())
+            valueName.text = App.sharedManager.getBaseValue()
+        }
+    }
 
     private fun setupUi() {
         with(binding) {
             toggleGroup.check(if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
                 Configuration.UI_MODE_NIGHT_YES) R.id.darkThemeBtn else R.id.lightThemeBtn)
-            languageLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-            valueLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+            languageLayout.layoutTransition = LayoutTransition().apply {
+                enableTransitionType(LayoutTransition.CHANGING)
+            }
+            valueLayout.layoutTransition = LayoutTransition().apply {
+                enableTransitionType(LayoutTransition.CHANGING)
+            }
+            languageName.text = App.localeManager.getLanguageName(context())
+            valueName.text = App.sharedManager.getBaseValue()
         }
     }
 
@@ -121,12 +141,17 @@ class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange {
         }
     }
 
+    private fun changeViewVisibility(view: View) {
+        view.visibility = if (view.visibility == View.GONE) View.VISIBLE else View.GONE
+        updateUi()
+    }
+
     override fun setAdapter() {
         with(binding){
             languageRecycler.layoutManager = LinearLayoutManager(context())
-            languageRecycler.adapter
+            languageRecycler.adapter = LanguageAdapter(context(), App.localeManager.getMapOfLanguages(), this@SettingsFragment)
             valueRecycler.layoutManager = LinearLayoutManager(context())
-            valueRecycler.adapter
+            valueRecycler.adapter = ValueAdapter(context(), getMapOfValues(context()), this@SettingsFragment)
         }
     }
 
