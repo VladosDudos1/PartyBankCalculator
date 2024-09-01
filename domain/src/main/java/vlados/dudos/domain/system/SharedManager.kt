@@ -10,7 +10,7 @@ import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.MapHolder.getValueSign
 
-class SharedManager(val baseContext: Context) {
+class SharedManager(private val baseContext: Context) {
     private val shared: SharedPreferences =
         baseContext.getSharedPreferences(
             "PartyBankCalculatorSharedPreferences",
@@ -25,13 +25,18 @@ class SharedManager(val baseContext: Context) {
         return shared.getString("Locale", "ru-RU") ?: "ru-RU"
     }
 
-    fun saveThemePreference(isDarkTheme: Boolean) {
-        shared.edit().putBoolean("isDarkTheme", isDarkTheme).apply()
+    fun saveThemePreference(themeMode: Int) {
+        shared.edit().putInt("isDarkTheme", themeMode).apply()
+        shared.edit().putBoolean("isThemeChanged", true).apply()
+    }
+
+    fun isThemeChanged() : Boolean {
+        return shared.getBoolean("isThemeChanged", false)
     }
 
     fun loadThemePreference() {
-        val isDarkTheme = shared.getBoolean("isDarkTheme", false)
-        AppCompatDelegate.setDefaultNightMode(if (isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+        val themeMode = shared.getInt("isDarkTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(themeMode)
     }
 
     fun saveNewEvent(newEvent: Event) {

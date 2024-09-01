@@ -135,7 +135,7 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
 
     protected fun showAddEventDialog() {
         val listParticipant =
-            mutableListOf<Participant>(Participant(0, App.sharedManager.getOwnerName()))
+            mutableListOf(Participant(0, App.sharedManager.getOwnerName()))
         val dialogBinding = AddEventLayoutBinding.inflate(layoutInflater)
         val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
             setCancelable(true)
@@ -201,6 +201,10 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
     protected fun navigate(action: Int) {
         findNavController().navigate(action)
     }
+
+    open fun setAdapter(){}
+    open fun setAdapter(event: Event){}
+    open fun setAdapter(events: List<Event>){}
 
     protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher) {
         editText.addTextChangedListener(textWatcher)

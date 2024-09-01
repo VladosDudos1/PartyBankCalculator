@@ -48,7 +48,7 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
             }
         }
     }
-    private fun setAdapter(){
+    override fun setAdapter(){
         with(binding){
             additionalSpendRecycler.layoutManager = LinearLayoutManager(context())
             if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) setFullMapAdditionalSpending(hostViewModel.getCurrentPurchase().additionalDebts)

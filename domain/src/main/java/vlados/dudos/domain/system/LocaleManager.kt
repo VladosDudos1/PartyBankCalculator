@@ -1,8 +1,10 @@
 package vlados.dudos.domain.system
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
+import org.intellij.lang.annotations.Language
 import vlados.dudos.domain.R
 import java.util.Locale
 
@@ -17,7 +19,6 @@ class LocaleManager(private val baseContext: Context) {
         Locale.setDefault(locale)
         config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
-        saveLocaleInShared()
     }
     fun getLanguageCode(languageName: String) : String {
         val mapOfLanguage = mapOf(
@@ -27,14 +28,13 @@ class LocaleManager(private val baseContext: Context) {
         return mapOfLanguage.getValue(languageName)
     }
 
+
+
+
     private fun getLanguageCode(): String {
         return when (Locale.getDefault().language) {
             "ru-RU" -> "ru-RU"
             else -> "en-EN"
         }
-    }
-
-    private fun saveLocaleInShared() {
-        SharedManager(baseContext).setLocale(getLanguageCode())
     }
 }

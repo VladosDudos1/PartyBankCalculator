@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.fragment.ListEventFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eventRecyclerView"
-        style="@style/RecyclerBase"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineRecyclerTop"
-        tools:listitem="@layout/event_list_item" />
-
     <TextView
         android:id="@+id/noEventsTxt"
         android:layout_width="0dp"
@@ -81,6 +71,19 @@
             android:textSize="18sp" />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventRecyclerView"
+        style="@style/RecyclerBase"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/transparent"
+        android:fadingEdgeLength="16dp"
+        android:requiresFadingEdge="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineRecyclerTop"
+        tools:listitem="@layout/event_list_item" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addEventButton"

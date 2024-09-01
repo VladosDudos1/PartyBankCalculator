@@ -28,7 +28,10 @@ class StartFragment : BaseFragment() {
         setSettings()
     }
 
-    private fun setSettings(){
+    private fun setSettings() {
+        if (App.sharedManager.isThemeChanged()){
+            App.sharedManager.loadThemePreference()
+        }
         App.localeManager.setLocaleCurrentLanguage()
         goNextPage()
     }

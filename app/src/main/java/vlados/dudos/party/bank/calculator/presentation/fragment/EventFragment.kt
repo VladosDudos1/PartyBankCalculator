@@ -117,7 +117,7 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
         setupEvent(getCurrentEvent())
     }
 
-    private fun setAdapter(event: Event) {
+    override fun setAdapter(event: Event) {
         with(binding) {
             listPurchasesRecycler.layoutManager = LinearLayoutManager(context())
             listPurchasesRecycler.adapter =

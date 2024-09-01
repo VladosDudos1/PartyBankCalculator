@@ -16,6 +16,8 @@
     <color name="textColor">#5E5E5E</color>
     <color name="textColorAlternative">@color/white</color>
 
+    <color name="cardViewColor">@color/white</color>
+
     <color name="vectorImageSoftColor">#BB222222</color>
 
     <color name="eventCardColor">#BBF2F2F2</color>

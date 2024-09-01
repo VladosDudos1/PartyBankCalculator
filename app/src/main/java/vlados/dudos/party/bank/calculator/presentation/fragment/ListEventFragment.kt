@@ -59,7 +59,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
             }
         }
     }
-    private fun setAdapter(events: List<Event>) {
+    override fun setAdapter(events: List<Event>) {
         with(binding) {
             eventRecyclerView.layoutManager = LinearLayoutManager(context())
             eventRecyclerView.adapter = EventAdapter(context(), events, this@ListEventFragment)

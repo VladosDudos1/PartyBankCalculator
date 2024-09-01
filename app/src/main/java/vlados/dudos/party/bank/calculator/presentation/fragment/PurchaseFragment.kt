@@ -69,7 +69,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
         applyTextWatcher(binding.costEditText, this)
         setObservers()
         setupView()
-        setAdapters()
+        setAdapter()
         applyClick()
     }
 
@@ -118,7 +118,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
         }
     }
 
-    private fun setAdapters() {
+    override fun setAdapter() {
         with(binding) {
             val participants = getCurrentEvent().participants
             buyerRecycler.layoutManager = GridLayoutManager(context(), 2)

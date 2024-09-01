@@ -54,4 +54,6 @@
     <string name="theme_choose">Theme selection</string>
     <string name="light_theme">Light</string>
     <string name="dark_theme">Dark</string>
+    <string name="language_selection">Language selection</string>
+    <string name="value_selection">Value selection</string>
 </resources>

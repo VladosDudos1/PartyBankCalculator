@@ -16,6 +16,8 @@
     <color name="textColor">@color/white</color>
     <color name="textColorAlternative">@color/softMainColor</color>
 
+    <color name="cardViewColor">#CC4A4A4A</color>
+
     <color name="alternative">@color/mainColor</color>
     <color name="alternativeMain">@color/secondColor</color>
     <color name="vectorImageSoftColor">#BBFAFAFA</color>
