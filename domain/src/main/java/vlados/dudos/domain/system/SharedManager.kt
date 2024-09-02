@@ -85,6 +85,10 @@ class SharedManager(private val baseContext: Context) {
         val listFriends = getFriendsList()
         if (isDelete) listFriends.remove(listFriends.first { it.name == friend.name })
         else if (!listFriends.map { it.name }.contains(friend.name)) listFriends.add(friend)
+        else if (listFriends.map { it.name }.contains(friend.name)){
+            val friendEdit = listFriends.first { it.name == friend.name }
+            friendEdit.name = friend.name
+        }
         val saveString = Gson().toJson(listFriends)
         shared.edit().putString("FriendsList", saveString).apply()
     }

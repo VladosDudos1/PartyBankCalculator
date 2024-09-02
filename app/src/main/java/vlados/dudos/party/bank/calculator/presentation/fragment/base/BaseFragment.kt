@@ -121,6 +121,10 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
                         if (it.id == participant.id) {
                             it.name = participantNameEdited
                         }
+                        if (it in listOfFriends){
+                            App.sharedManager.saveFriends(it, false)
+                        }
+
                     }
                     dismiss()
                 } else dialogBinding.inputLayout.helperText =
