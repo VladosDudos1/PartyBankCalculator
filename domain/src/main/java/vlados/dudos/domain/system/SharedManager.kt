@@ -83,10 +83,12 @@ class SharedManager(private val baseContext: Context) {
 
     fun saveFriends(friend: Participant, isDelete: Boolean) {
         val listFriends = getFriendsList()
-        if (isDelete) listFriends.remove(listFriends.first { it.name == friend.name })
-        else if (!listFriends.map { it.name }.contains(friend.name)) listFriends.add(friend)
-        else if (listFriends.map { it.name }.contains(friend.name)){
-            val friendEdit = listFriends.first { it.name == friend.name }
+        println(listFriends)
+        println(friend)
+        if (isDelete) listFriends.remove(listFriends.first { it.id == friend.id })
+        else if (!listFriends.map { it.id }.contains(friend.id)) listFriends.add(friend)
+        else if (listFriends.map { it.id }.contains(friend.id)){
+            val friendEdit = listFriends.first { it.id == friend.id }
             friendEdit.name = friend.name
         }
         val saveString = Gson().toJson(listFriends)

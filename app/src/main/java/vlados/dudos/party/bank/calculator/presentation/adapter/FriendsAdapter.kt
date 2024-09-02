@@ -27,10 +27,10 @@ class FriendsAdapter(
             participantNameTxt.text = list[position].name
 
             editBtn.setOnClickListener {
-                onClick.clickEdit(list, rv, list[position])
+                onClick.clickEdit(list, rv, position)
             }
             deleteBtn.setOnClickListener {
-                onClick.clickDelete(list.toMutableList(), rv, list[position])
+                onClick.clickDelete(list.toMutableList(), rv, position)
             }
         }
     }
@@ -38,8 +38,8 @@ class FriendsAdapter(
     override fun getItemCount(): Int = list.size
 
     interface OnClick {
-        fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant)
-        fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, participant: Participant)
+        fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, position: Int)
+        fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, position: Int)
     }
 
     class FriendsViewHolder(val binding: FriendViewBinding) : RecyclerView.ViewHolder(binding.root)

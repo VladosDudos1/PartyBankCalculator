@@ -108,8 +108,7 @@ abstract class BaseFragment : Fragment(), ParticipantAdapter.OnClick, IUpdateUi 
                     if (dialogBinding.addFriendCheckBox.isChecked && !isInFriends) {
                         App.sharedManager.saveFriends(
                             friend = Participant(
-                                getMaxId(
-                                    listOfFriends.map { it.id }),
+                                it.id,
                                 participantNameEdited
                             ),
                             isDelete = false

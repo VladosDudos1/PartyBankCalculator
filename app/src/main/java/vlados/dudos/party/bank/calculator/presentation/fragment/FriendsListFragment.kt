@@ -27,19 +27,19 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
     override fun clickDelete(
         list: MutableList<Participant>,
         recyclerView: RecyclerView,
-        participant: Participant
+        position: Int
     ) {
-        list.remove(participant)
-        App.sharedManager.saveFriends(participant, true)
-        updateUi()
+        App.sharedManager.saveFriends(list[position], true)
+        setAdapter()
     }
 
     override fun clickEdit(
         list: List<Participant>,
         recyclerView: RecyclerView,
-        participant: Participant
+        position: Int
     ) {
-        showEditFriendDialog(list.toMutableList(), recyclerView, participant)
+        showEditFriendDialog(list.toMutableList(), recyclerView, list[position])
+        binding.friendsRecycler.adapter?.notifyItemChanged(position)
     }
 
     private val binding: FragmentFriendsListBinding by lazy {
@@ -87,16 +87,13 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
     }
 
     override fun updateUi() {
-        with(binding){
-            if (App.sharedManager.getFriendsList().size > 0) friendsRecycler.adapter?.notifyDataSetChanged()
-        }
     }
 
     override fun putNavigateId() {
         setActionId(R.id.action_friendsListFragment_to_listEventFragment)
     }
 
-    fun showEditFriendDialog(
+    private fun showEditFriendDialog(
         listParticipant: MutableList<Participant>,
         recyclerView: RecyclerView,
         participant: Participant
@@ -114,7 +111,7 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
                         if (it.id == participant.id) {
                             it.name = participantNameEdited
                         }
-                        if (it in listOfFriends){
+                        if (listOfFriends.map { f-> f.id == participant.id}.isNotEmpty()){
                             App.sharedManager.saveFriends(it, false)
                         }
                     }
