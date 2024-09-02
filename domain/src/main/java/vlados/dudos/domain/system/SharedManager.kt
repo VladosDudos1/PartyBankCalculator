@@ -83,8 +83,6 @@ class SharedManager(private val baseContext: Context) {
 
     fun saveFriends(friend: Participant, isDelete: Boolean) {
         val listFriends = getFriendsList()
-        println(listFriends)
-        println(friend)
         if (isDelete) listFriends.remove(listFriends.first { it.id == friend.id })
         else if (!listFriends.map { it.id }.contains(friend.id)) listFriends.add(friend)
         else if (listFriends.map { it.id }.contains(friend.id)){

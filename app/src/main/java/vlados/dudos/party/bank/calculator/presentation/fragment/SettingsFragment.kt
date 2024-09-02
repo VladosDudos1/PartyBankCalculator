@@ -101,7 +101,7 @@ class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange, Langu
 
     override fun updateUi() {
         with(binding){
-            languageName.text = App.localeManager.getLanguageName(context())
+            languageName.text = getString(App.localeManager.getLanguageName())
             valueName.text = App.sharedManager.getBaseValue()
         }
     }
@@ -116,7 +116,7 @@ class SettingsFragment : BaseFragment(), IActiveFragment, INavigateChange, Langu
             valueLayout.layoutTransition = LayoutTransition().apply {
                 enableTransitionType(LayoutTransition.CHANGING)
             }
-            languageName.text = App.localeManager.getLanguageName(context())
+            languageName.text = getString(App.localeManager.getLanguageName())
             valueName.text = App.sharedManager.getBaseValue()
         }
     }

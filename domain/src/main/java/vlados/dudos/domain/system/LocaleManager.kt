@@ -16,8 +16,8 @@ class LocaleManager(private val baseContext: Context) {
     private var config: Configuration = resources.configuration
     private var locale: Locale = Locale(sharedManager.loadLanguagePreference() ?: "ru-RU")
     private var languageList = listOf(
-        baseContext.getString(R.string.russian) to "ru-RU",
-        baseContext.getString(R.string.english) to "en-EN"
+        R.string.russian to "ru-RU",
+        R.string.english to "en-EN"
     ).toMap()
 
     fun setLocaleCurrentLanguage(activity: Activity) {
@@ -29,11 +29,11 @@ class LocaleManager(private val baseContext: Context) {
         sharedManager.saveLanguagePreference(languageCode)
     }
 
-    fun getMapOfLanguages(): Map<String, String> = languageList
+    fun getMapOfLanguages(): Map<Int, String> = languageList
 
-    fun getLanguageName(context: Context): String {
+    fun getLanguageName(): Int {
         val country = locale.country.ifEmpty { "RU" }
-        return languageList.entries.firstOrNull { it.value == "${locale.language}-$country" }?.key ?: context.getString(R.string.english)
+        return languageList.entries.firstOrNull { it.value == "${locale.language}-$country" }?.key ?: R.string.english
     }
 
     private fun updateLocale(languageCode: String, activity: Activity) {
