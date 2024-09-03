@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
-import vlados.dudos.domain.utils.ListOperationsSupport.setFullTransList
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.databinding.FragmentPurchaseBinding
@@ -30,7 +29,10 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.PurchaseViewMod
 
 
 class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
-    BuyerSelectAdapter.OnClick, INavigateChange {
+    BuyerSelectAdapter.OnClick, INavigateChange, UserSelectAdapter.OnClick {
+    override fun click(isActive: Boolean, participant: Participant) {
+        hostViewModel.changeListParticipant(isActive, participant)
+    }
 
     override fun selectParticipant(buyer: Participant) {
         hostViewModel.addBuyerToPurchase(buyer)
@@ -93,12 +95,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
                 costEditText.clearFocus()
             }
             confirmButton.setOnClickListener {
-                if (checkAllInfoFilled()) {
-                    val cost = costEditText.text.toString().toInt().toDouble()
-                    val name = purchaseNameEditText.text.toString()
-                    hostViewModel.savePurchase(cost, name)
-                    navigate(R.id.action_purchaseFragment_to_eventFragment)
-                }
+                savePurchase()
             }
             costBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -130,10 +127,10 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
             )
             debtorsRecycler.layoutManager = GridLayoutManager(context(), 2)
 
-            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) setFullTransList(hostViewModel.getCurrentPurchase().additionalDebts.map { it.debtor })
+            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) hostViewModel.setListDebtors(hostViewModel.getCurrentPurchase().additionalDebts.map { it.debtor })
 
             debtorsRecycler.adapter =
-                UserSelectAdapter(context(), participants)
+                UserSelectAdapter(context(), participants, hostViewModel.getCurrentPurchase().listDebtors,this@PurchaseFragment)
         }
     }
 
@@ -169,6 +166,17 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
             hostViewModel.setCost(cost)
             hostViewModel.setName(name)
             navigate(R.id.action_purchaseFragment_to_additionalPriceFragment)
+        }
+    }
+
+    private fun savePurchase(){
+        with(binding){
+            if (checkAllInfoFilled()) {
+                val cost = costEditText.text.toString().toInt().toDouble()
+                val name = purchaseNameEditText.text.toString()
+                hostViewModel.savePurchase(cost, name)
+                navigate(R.id.action_purchaseFragment_to_eventFragment)
+            }
         }
     }
 

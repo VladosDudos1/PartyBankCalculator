@@ -10,16 +10,9 @@ import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.model.Purchase
-import vlados.dudos.domain.utils.ListOperationsSupport.cleanTransList
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
-import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
-import vlados.dudos.domain.utils.MapHolder.clearMapAdditionalSpend
-import vlados.dudos.domain.utils.MapHolder.getMapAdditionalSpending
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewPurchase
-import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
-import vlados.dudos.party.bank.calculator.databinding.DeletePurchaseDialogBinding
-import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
 
 class HostViewModel : ViewModel() {
     private val currentEvent = MutableLiveData<Event>()
@@ -33,9 +26,9 @@ class HostViewModel : ViewModel() {
 
     fun generatePurchase() {
         newPurchase.value = createNewPurchase(
-            if (currentEvent.value?.listPurchases!!.isNotEmpty()) getMaxId(currentEvent.value!!.listPurchases!!.map { it.id }) else 1,
-            currentEvent.value!!.owner,
-            listOf()
+            if (selectedItem.value?.listPurchases!!.isNotEmpty()) getMaxId(selectedItem.value!!.listPurchases.map { it.id }) else 1,
+            selectedItem.value!!.owner,
+            mutableListOf()
         )
     }
 
@@ -50,21 +43,21 @@ class HostViewModel : ViewModel() {
             currentEvent.value!!.listPurchases.first { it.id == newPurchase.value!!.id }.apply {
                 cost = costNew
                 name = nameNew
-                listDebtors = getTransList()
-                additionalDebts = getMapAdditionalSpending()
+                listDebtors = getCurrentPurchase().listDebtors
+                additionalDebts = getCurrentPurchase().additionalDebts
             }
         } else {
             val transit = newPurchase.value!!
             transit.apply {
                 cost = costNew
                 name = nameNew
-                listDebtors = getTransList()
-                additionalDebts = getMapAdditionalSpending()
+                listDebtors = getCurrentPurchase().listDebtors
+                additionalDebts = getCurrentPurchase().additionalDebts
             }
             newPurchase.value = transit
-            val newTransit = currentEvent.value!!
-            newTransit.listPurchases.add(newPurchase.value!!)
-            currentEvent.value = newTransit
+            val newTransit = selectedItem.value!!
+            newTransit.listPurchases.add(getCurrentPurchase())
+            selectItem(newTransit)
         }
     }
 
@@ -74,14 +67,10 @@ class HostViewModel : ViewModel() {
             currentEvent.value!!.listPurchases.sumOf { it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum } }
                 .toInt()
         App.sharedManager.changeCurrentEvent(currentEvent.value!!)
-        clearMapAdditionalSpend()
-        cleanTransList()
-        currentEvent.value = App.sharedManager.getEvent(currentEvent.value!!.id)
+        selectItem(App.sharedManager.getEvent(currentEvent.value!!.id))
     }
 
     fun getCurrentPurchase(): Purchase = newPurchase.value!!
-    fun isNewPurchaseFilled(): Boolean =
-        getTransList().isNotEmpty()
 
     fun getCost(): Int = getCurrentPurchase().cost.toInt()
     fun setCost(value: Int) {
@@ -100,8 +89,45 @@ class HostViewModel : ViewModel() {
     fun setNewPurchase(purchase: Purchase) {
         newPurchase.value = purchase
     }
+
     fun isEventExist() = isEventExist.value!!
-    fun setEventExistValue(value: Boolean){
+    fun setEventExistValue(value: Boolean) {
         isEventExist.value = value
     }
+
+    fun changeListParticipant(isDelete: Boolean, participant: Participant) {
+        if (isDelete) {
+            newPurchase.value!!.listDebtors.remove(participant)
+            removeDebtorFromAdditional(participant)
+        } else {
+            newPurchase.value!!.listDebtors.add(participant)
+            addToAdditionalSpend(participant, 0.0)
+        }
+    }
+
+    fun setListDebtors(list: List<Participant>) {
+        newPurchase.value!!.listDebtors = list.toMutableList()
+    }
+    fun setListAdditionalSpending(list: List<DebtPair>) {
+        newPurchase.value!!.additionalDebts = list.toMutableList()
+    }
+    fun addToAdditionalSpend(
+        participant: Participant,
+        price: Double
+    ) {
+        if (participant !in getCurrentPurchase().additionalDebts.map { it.debtor }) getCurrentPurchase().additionalDebts.add(DebtPair(price, participant))
+        else {
+            getCurrentPurchase().additionalDebts.forEach {
+                if (it.debtor == participant) it.moneySum = price
+            }
+        }
+    }
+
+    private fun removeDebtorFromAdditional(participant: Participant) {
+        getCurrentPurchase().additionalDebts.removeIf {
+            it.debtor == participant
+        }
+    }
+
+    fun isNewPurchaseFilled(): Boolean = newPurchase.value!!.listDebtors.isNotEmpty()
 }

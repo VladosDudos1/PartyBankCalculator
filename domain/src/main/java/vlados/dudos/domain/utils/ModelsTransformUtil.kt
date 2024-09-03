@@ -47,7 +47,7 @@ object ModelsTransformUtil {
     fun createNewPurchase(
         id: Int,
         buyer: Participant,
-        listDebtors: List<Participant>
+        listDebtors: MutableList<Participant>
     ): Purchase {
         return Purchase(
             id = id,

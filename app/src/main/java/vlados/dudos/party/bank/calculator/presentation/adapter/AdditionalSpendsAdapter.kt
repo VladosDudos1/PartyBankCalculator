@@ -10,11 +10,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Participant
-import vlados.dudos.domain.utils.MapHolder.addToMapAdditionalSpend
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
 import vlados.dudos.party.bank.calculator.databinding.AdditionalSpendItemBinding
 
-class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>) : RecyclerView.Adapter<AdditionalSpendsAdapter.AdditionalViewHolder>() {
+class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>, private val onClick: OnClick) : RecyclerView.Adapter<AdditionalSpendsAdapter.AdditionalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdditionalViewHolder {
         return AdditionalViewHolder(
@@ -43,7 +42,7 @@ class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>) : 
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    addToMapAdditionalSpend(list[holder.adapterPosition].debtor, costEditText.text.toString().toDouble())
+                    onClick.click(list[holder.adapterPosition].debtor, costEditText.text.toString().toDouble())
                 }
             })
         }
@@ -64,5 +63,8 @@ class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>) : 
                 costEditText.setSelection(correctedText.length)
             }
         }
+    }
+    interface OnClick{
+        fun click(participant: Participant, cost: Double)
     }
 }

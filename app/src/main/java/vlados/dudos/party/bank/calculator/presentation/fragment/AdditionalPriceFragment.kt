@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.model.DebtPair
+import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
-import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
-import vlados.dudos.domain.utils.MapHolder.getMapAdditionalSpending
-import vlados.dudos.domain.utils.MapHolder.setFullMapAdditionalSpending
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentAdditionalPriceBinding
@@ -20,8 +18,13 @@ import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.AdditionalSpendsAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
+import kotlin.math.cos
 
-class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange {
+class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange, AdditionalSpendsAdapter.OnClick {
+
+    override fun click(participant: Participant, cost: Double) {
+        hostViewModel.addToAdditionalSpend(participant, cost)
+    }
 
     private val binding: FragmentAdditionalPriceBinding by lazy { FragmentAdditionalPriceBinding.inflate(layoutInflater) }
     private val hostViewModel: HostViewModel by activityViewModels()
@@ -51,9 +54,9 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
     override fun setAdapter(){
         with(binding){
             additionalSpendRecycler.layoutManager = LinearLayoutManager(context())
-            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) setFullMapAdditionalSpending(hostViewModel.getCurrentPurchase().additionalDebts)
+            if (hostViewModel.getCurrentPurchase().additionalDebts.isNotEmpty()) hostViewModel.setListAdditionalSpending(hostViewModel.getCurrentPurchase().additionalDebts)
             additionalSpendRecycler.adapter =
-                AdditionalSpendsAdapter(context(), getMapAdditionalSpending())
+                AdditionalSpendsAdapter(context(), hostViewModel.getCurrentPurchase().additionalDebts, this@AdditionalPriceFragment)
         }
     }
 

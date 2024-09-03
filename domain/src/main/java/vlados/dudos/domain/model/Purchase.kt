@@ -5,6 +5,6 @@ data class Purchase(
     var name: String,
     var cost: Double,
     var buyer: Participant,
-    var listDebtors: List<Participant>,
+    var listDebtors: MutableList<Participant>,
     var additionalDebts: MutableList<DebtPair> = mutableListOf()
 )

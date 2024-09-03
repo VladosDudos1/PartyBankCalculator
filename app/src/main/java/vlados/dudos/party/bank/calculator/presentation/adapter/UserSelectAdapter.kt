@@ -1,7 +1,6 @@
 package vlados.dudos.party.bank.calculator.presentation.adapter
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -9,14 +8,14 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Participant
-import vlados.dudos.domain.utils.ListOperationsSupport.changeListParticipant
-import vlados.dudos.domain.utils.ListOperationsSupport.getTransList
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.databinding.SelectUserLayoutBinding
 
 class UserSelectAdapter(
-    val context: Context,
-    val list: List<Participant>
+    private val context: Context,
+    private val list: List<Participant>,
+    private val listDebtors: MutableList<Participant>,
+    private val onClick: OnClick
 ) :
     RecyclerView.Adapter<UserSelectAdapter.UserSelectViewHolder>() {
 
@@ -33,15 +32,15 @@ class UserSelectAdapter(
     override fun onBindViewHolder(holder: UserSelectViewHolder, position: Int) {
         with(holder.binding) {
             nameParticipant.text = list[position].name
-            if (list[position] in getTransList()){
+            if (list[position] in listDebtors){
                 holder.setColors(false, root, nameParticipant, context)
             }
             root.setOnClickListener {
-                if (list[position] in getTransList()) {
-                    changeListParticipant(true, list[position])
+                if (list[position] in listDebtors) {
+                    onClick.click(true, list[position])
                     holder.setColors(true, root, nameParticipant, context)
                 } else {
-                    changeListParticipant(false, list[position])
+                    onClick.click(false, list[position])
                     holder.setColors(false, root, nameParticipant, context)
                 }
             }
@@ -49,6 +48,9 @@ class UserSelectAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+    interface OnClick{
+        fun click(isActive: Boolean, participant: Participant)
+    }
 
     class UserSelectViewHolder(val binding: SelectUserLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -85,7 +85,7 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
                 addPurchase()
             }
             calculateBtn.setOnClickListener {
-//                openParticipantDialog()
+
             }
             optionsEventButton.setOnClickListener {
                 openPopupMenuOptions()
