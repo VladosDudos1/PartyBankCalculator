@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
@@ -20,6 +21,7 @@ import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.FriendsInEventAdapter
 import vlados.dudos.party.bank.calculator.presentation.adapter.ParticipantAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
+import vlados.dudos.party.bank.calculator.presentation.viewmodel.AddEventViewModel
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 
 
@@ -34,6 +36,7 @@ class AddEventFragment : BaseFragment(), IActiveFragment,
         }
     }
 
+    private val viewModel: AddEventViewModel by viewModels()
     private val hostViewModel: HostViewModel by activityViewModels()
     private val listParticipant =
         mutableListOf(Participant(0, App.sharedManager.getOwnerName()))
@@ -61,9 +64,7 @@ class AddEventFragment : BaseFragment(), IActiveFragment,
         setupView()
     }
 
-    override fun setObservers() {
-
-    }
+    override fun setObservers() {}
 
     override fun applyClick() {
         with(binding) {
