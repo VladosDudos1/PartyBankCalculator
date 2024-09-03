@@ -25,6 +25,7 @@ class HostViewModel : ViewModel() {
     private val currentEvent = MutableLiveData<Event>()
     private val newPurchase = MutableLiveData<Purchase>()
     val selectedItem: LiveData<Event> get() = currentEvent
+    private val isEventExist = MutableLiveData(false)
 
     fun selectItem(event: Event) {
         currentEvent.value = event
@@ -98,5 +99,9 @@ class HostViewModel : ViewModel() {
 
     fun setNewPurchase(purchase: Purchase) {
         newPurchase.value = purchase
+    }
+    fun isEventExist() = isEventExist.value!!
+    fun setEventExistValue(value: Boolean){
+        isEventExist.value = value
     }
 }

@@ -7,6 +7,7 @@
     <string name="sum">Sum: %1$s %2$s</string>
     <string name="organizer">Organizer: %1$s</string>
     <string name="participants">Participants: %1$s</string>
+    <string name="participants_clear">Participants</string>
     <string name="ok">OK</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="enter_event_name">Enter event name</string>
@@ -18,7 +19,7 @@
     <string name="event_name_cant_be_empty">Event name could`t be empty</string>
     <string name="enter_participant_name">Enter name of participant</string>
     <string name="add_participant">Add participant</string>
-    <string name="add_to_friends_list">Add to friends list</string>
+    <string name="add_to_friends_list">Add a friends</string>
     <string name="start">Start</string>
     <string name="settings">Settings</string>
     <string name="friends">Friends</string>
@@ -47,6 +48,7 @@
     <string name="skip">Skip</string>
     <string name="additional_cost">Additional spending</string>
     <string name="delete_event">Delete event</string>
+    <string name="redact_event">Redact event</string>
     <string name="cancel">Cancel</string>
     <string name="more_details">More details</string>
     <string name="delete_purchase">Delete purchase?</string>
@@ -56,4 +58,5 @@
     <string name="dark_theme">Dark</string>
     <string name="language_selection">Language selection</string>
     <string name="value_selection">Value selection</string>
+    <string name="calculate">Calculate</string>
 </resources>

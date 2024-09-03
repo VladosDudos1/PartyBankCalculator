@@ -4,32 +4,22 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.ContextThemeWrapper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.launch
 import vlados.dudos.domain.model.Event
-import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.model.Purchase
 import vlados.dudos.domain.utils.ActionHolder.setActionId
-import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.domain.utils.ModelsTransformUtil.listParticipantsToString
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
-import vlados.dudos.party.bank.calculator.databinding.AddEventLayoutBinding
-import vlados.dudos.party.bank.calculator.databinding.ChangeEventNameDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
-import vlados.dudos.party.bank.calculator.databinding.ListParticipantDialogBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
-import vlados.dudos.party.bank.calculator.presentation.adapter.ParticipantAdapter
 import vlados.dudos.party.bank.calculator.presentation.adapter.PurchaseAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.EventViewModel
@@ -64,6 +54,7 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
         applyClick()
         setObservers()
         setupEvent(getCurrentEvent())
+        hostViewModel.setEventExistValue(true)
     }
 
     override fun putNavigateId() {
@@ -93,8 +84,8 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
             addPurchaseBtn.setOnClickListener {
                 addPurchase()
             }
-            addParticipantBtn.setOnClickListener {
-                openParticipantDialog()
+            calculateBtn.setOnClickListener {
+//                openParticipantDialog()
             }
             optionsEventButton.setOnClickListener {
                 openPopupMenuOptions()
@@ -131,54 +122,8 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
         }
     }
 
-    private fun openParticipantDialog() {
-        val listParticipant = getCurrentEvent().participants.toMutableList()
-        val dialogBinding = ListParticipantDialogBinding.inflate(layoutInflater)
-        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
-            setCancelable(true)
-            setContentView(dialogBinding.root)
-            with(dialogBinding) {
-                participantRecycler.layoutManager = LinearLayoutManager(context())
-                participantRecycler.adapter =
-                    ParticipantAdapter(
-                        listParticipant,
-                        context(),
-                        this@EventFragment,
-                        participantRecycler
-                    )
-                addParticipantBtn.setOnClickListener {
-                    showAddParticipantDialog(listParticipant, participantRecycler)
-                }
-            }
-        }
-        dialog.setOnDismissListener {
-            val event = getCurrentEvent()
-            event.participants = listParticipant
-            App.sharedManager.changeCurrentEvent(event)
-            updateUi()
-        }
-        dialog.show()
-    }
-
-    private fun openChangeNameDialog() {
-        val event = getCurrentEvent()
-        val dialogBinding = ChangeEventNameDialogBinding.inflate(layoutInflater)
-        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
-            setCancelable(true)
-            setContentView(dialogBinding.root)
-            with(dialogBinding) {
-                positiveButton.setOnClickListener {
-                    if (nameEditText.text.toString().isNotEmpty()) {
-                        event.name = dialogBinding.nameEditText.text.toString()
-                        App.sharedManager.changeCurrentEvent(event)
-                        updateUi()
-                        dismiss()
-                    } else dialogBinding.inputLayout.helperText =
-                        context().getString(R.string.name_cant_be_empty)
-                }
-            }
-        }
-        dialog.show()
+    private fun redactEvent() {
+        navigate(R.id.action_eventFragment_to_addEventFragment)
     }
 
     private fun deleteCurrentEvent() {
@@ -200,7 +145,7 @@ class EventFragment : BaseFragment(), IActiveFragment, INavigateChange, Purchase
 
     private fun optionProcessing(option: String) {
         when (option) {
-            getString(R.string.change_event_name) -> openChangeNameDialog()
+            getString(R.string.redact_event) -> redactEvent()
             getString(R.string.delete_event) -> deleteCurrentEvent()
         }
     }

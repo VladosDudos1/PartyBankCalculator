@@ -113,14 +113,14 @@
             app:icon="@drawable/add_purchase_24" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addParticipantBtn"
+            android:id="@+id/calculateBtn"
             style="@style/ConstantButtonStyle2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/participant_list"
+            android:text="@string/calculate"
             android:textAlignment="center"
-            app:icon="@drawable/baseline_add_24" />
+            app:icon="@drawable/baseline_calculate_24" />
     </LinearLayout>
 
 

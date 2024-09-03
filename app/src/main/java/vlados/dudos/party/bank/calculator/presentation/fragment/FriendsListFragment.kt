@@ -15,7 +15,6 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentFriendsListBinding
-import vlados.dudos.party.bank.calculator.databinding.FriendAddLayoutBinding
 import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.FriendsAdapter
@@ -60,6 +59,7 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
         applyClick()
         setAdapter()
         setObservers()
+        putNavigateId()
     }
 
     override fun setObservers() {
@@ -70,6 +70,9 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
         with(binding) {
             goBackLayout.setOnClickListener {
                 activity().onBackPressed()
+            }
+            addButton.setOnClickListener {
+                addFriend()
             }
         }
     }
@@ -111,7 +114,7 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
                         if (it.id == participant.id) {
                             it.name = participantNameEdited
                         }
-                        if (listOfFriends.map { f-> f.id == participant.id}.isNotEmpty()){
+                        if (listOfFriends.map { f -> f.id == participant.id }.isNotEmpty()) {
                             App.sharedManager.saveFriends(it, false)
                         }
                     }
@@ -122,6 +125,27 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
         }
         dialog.setOnDismissListener {
             recyclerView.adapter?.notifyDataSetChanged()
+        }
+        dialog.show()
+    }
+
+    private fun addFriend() {
+        val dialogBinding = EditFriendDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setContentView(dialogBinding.root)
+            dialogBinding.okButton.setOnClickListener {
+                val participantNameEdited = dialogBinding.nameEditText.text.toString()
+                if (participantNameEdited.isNotEmpty()) {
+                    App.sharedManager.saveFriends(Participant(getMaxId(App.sharedManager.getFriendsList().map { it.id }), participantNameEdited), false)
+                    dismiss()
+                }
+                else dialogBinding.inputLayout.helperText =
+                    context().getString(R.string.name_cant_be_empty)
+            }
+        }
+        dialog.setOnDismissListener{
+            setAdapter()
         }
         dialog.show()
     }

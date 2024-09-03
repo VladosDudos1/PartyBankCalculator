@@ -54,4 +54,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingText" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/softMainColor"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:text="@string/add_to_friends_list"
+        android:textColor="@color/alternative"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:icon="@drawable/baseline_add_24"
+        app:iconGravity="textEnd"
+        app:iconSize="32dp"
+        app:iconTint="@color/alternative"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/alternativeMain" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/changeName"
-        android:title="@string/change_event_name"/>
+        android:title="@string/redact_event"/>
     <item android:id="@+id/deleteEvent"
         android:title="@string/delete_event"/>
 </menu>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Калькулятор общака</string>
+    <string name="app_name">Раздельный счёт</string>
     <string name="hello_blank_fragment">Пустой фрагмент</string>
     <string name="add_event">Добавить собитие</string>
     <string name="no_active_events">У вас пока нет активных событий</string>
@@ -18,7 +18,7 @@
     <string name="event_name_cant_be_empty">Название не может быть пустым</string>
     <string name="enter_participant_name">Введите имя участника</string>
     <string name="add_participant">Добавить участника</string>
-    <string name="add_to_friends_list">Добавить в друзья</string>
+    <string name="add_to_friends_list">Добавить друга</string>
     <string name="start">Начать</string>
     <string name="settings">Настройки</string>
     <string name="friends">Друзья</string>
@@ -27,6 +27,7 @@
     <string name="add_purchase">Добавить покупку</string>
     <string name="purchases">Покупки:</string>
     <string name="options">Опции</string>
+    <string name="redact_event">Редактировать событие</string>
     <string name="debtors">Должники:</string>
     <string name="purchase_name">Название покупки:</string>
     <string name="purchase_name_no_ending">Название покупки</string>
@@ -55,5 +56,7 @@
     <string name="light_theme">Светлая</string>
     <string name="dark_theme">Тёмная</string>
     <string name="language_selection">Выбор языка</string>
+    <string name="participants_clear">Участники</string>
     <string name="value_selection">Выбор валюты</string>
+    <string name="calculate">Расситать</string>
 </resources>

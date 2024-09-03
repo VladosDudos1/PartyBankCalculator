@@ -20,6 +20,11 @@
             app:destination="@id/listEventFragment"
             app:popUpTo="@id/navigation_graph"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_eventFragment_to_addEventFragment"
+            app:destination="@id/addEventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/listEventFragment"
@@ -37,6 +42,11 @@
         <action
             android:id="@+id/action_listEventFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_listEventFragment_to_addEventFragment"
+            app:destination="@id/addEventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -93,6 +103,23 @@
         <action
             android:id="@+id/action_additionalPriceFragment_to_purchaseFragment"
             app:destination="@id/purchaseFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEventFragment"
+        android:name="vlados.dudos.party.bank.calculator.presentation.fragment.AddEventFragment"
+        android:label="AddEventFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true">
+        <action
+            android:id="@+id/action_addEventFragment_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:popUpTo="@id/navigation_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addEventFragment_to_listEventFragment"
+            app:destination="@id/listEventFragment"
             app:popUpTo="@id/navigation_graph"
             app:popUpToInclusive="true" />
     </fragment>

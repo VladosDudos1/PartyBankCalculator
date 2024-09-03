@@ -58,10 +58,13 @@ class SharedManager(private val baseContext: Context) {
 
     fun changeCurrentEvent(event: Event) {
         val listEvents = getListEvents()
-        listEvents.forEachIndexed { index, nEvent ->
-            if (nEvent.id == event.id) {
-                listEvents[index] = event
-            }
+        val eventEdited = listEvents.first { it.id == event.id }
+        eventEdited.apply {
+            name = event.name
+            participants = event.participants
+            listPurchases = event.listPurchases
+            owner = event.owner
+            sum = event.sum
         }
         val saveString = Gson().toJson(listEvents)
         shared.edit().putString("EventList", saveString).apply()

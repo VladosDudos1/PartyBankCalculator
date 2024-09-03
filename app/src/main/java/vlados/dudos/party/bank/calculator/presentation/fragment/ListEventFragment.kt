@@ -44,12 +44,13 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
         applyClick()
         setObservers()
         binding.eventRecyclerView.clearFocus()
+        hostViewModel.setEventExistValue(false)
     }
 
     override fun applyClick() {
         with(binding) {
             addEventButton.setOnClickListener {
-                showAddEventDialog()
+                navigate(R.id.action_listEventFragment_to_addEventFragment)
             }
             settingsOpenLayout.setOnClickListener {
                 navigate(R.id.action_listEventFragment_to_settingsFragment)
@@ -62,7 +63,7 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
     override fun setAdapter(events: List<Event>) {
         with(binding) {
             eventRecyclerView.layoutManager = LinearLayoutManager(context())
-            eventRecyclerView.adapter = EventAdapter(context(), events, this@ListEventFragment)
+            eventRecyclerView.adapter = EventAdapter(context(), events.reversed(), this@ListEventFragment)
         }
     }
 

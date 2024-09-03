@@ -31,4 +31,13 @@ object ListOperationsSupport {
     fun setFullTransList(list: List<Participant>) {
         transitList = list.toMutableList()
     }
+    fun <T> mergingLists(vararg list: List<T>) : List<T>{
+        val resultList = mutableListOf<T>()
+        list.forEach {
+            it.forEach { element ->
+                resultList.add(element)
+            }
+        }
+        return resultList
+    }
 }

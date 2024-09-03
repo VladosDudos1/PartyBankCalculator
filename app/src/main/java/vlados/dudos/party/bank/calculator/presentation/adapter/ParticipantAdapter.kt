@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Participant
+import vlados.dudos.party.bank.calculator.databinding.FriendViewBinding
 import vlados.dudos.party.bank.calculator.databinding.ParticipantElementBinding
 
 class ParticipantAdapter(
@@ -17,7 +18,7 @@ class ParticipantAdapter(
     RecyclerView.Adapter<ParticipantAdapter.ParticipantViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantViewHolder {
         return ParticipantViewHolder(
-            ParticipantElementBinding.inflate(
+            FriendViewBinding.inflate(
                 LayoutInflater.from(context),
                 parent,
                 false
@@ -39,7 +40,7 @@ class ParticipantAdapter(
 
     override fun getItemCount(): Int = list.size - 1
 
-    class ParticipantViewHolder(val binding: ParticipantElementBinding) :
+    class ParticipantViewHolder(val binding: FriendViewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     interface OnClick {
