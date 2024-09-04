@@ -63,9 +63,9 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
                 AdditionalSpendsAdapter(context(), hostViewModel.getCurrentPurchase().additionalDebts, this@AdditionalPriceFragment)
         }
     }
+    override fun setObservers() {
 
-    override fun updateUi() {}
-    override fun setObservers() {}
+    }
     override fun putNavigateId() {
         setActionId(R.id.action_additionalPriceFragment_to_purchaseFragment)
     }

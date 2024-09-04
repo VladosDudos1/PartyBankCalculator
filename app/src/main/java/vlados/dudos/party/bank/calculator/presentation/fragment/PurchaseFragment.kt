@@ -78,8 +78,6 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
     override fun putNavigateId() {
         setActionId(R.id.action_purchaseFragment_to_eventFragment)
     }
-
-    override fun updateUi() {}
     override fun setObservers() {
         with(binding) {
             viewModel.progress.observe(viewLifecycleOwner) {
@@ -172,6 +170,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
     private fun savePurchase(){
         with(binding){
             if (checkAllInfoFilled()) {
+                costEditText.clearFocus()
                 val cost = costEditText.text.toString().toInt().toDouble()
                 val name = purchaseNameEditText.text.toString()
                 hostViewModel.savePurchase(cost, name)

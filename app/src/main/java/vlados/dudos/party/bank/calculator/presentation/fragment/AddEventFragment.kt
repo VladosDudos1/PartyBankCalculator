@@ -122,8 +122,6 @@ class AddEventFragment : BaseFragment(), IActiveFragment,
             )
         }
     }
-
-    override fun updateUi() {}
     override fun clickDelete(
         list: MutableList<Participant>,
         recyclerView: RecyclerView,

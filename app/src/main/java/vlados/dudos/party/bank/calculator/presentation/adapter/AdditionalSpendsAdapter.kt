@@ -13,7 +13,11 @@ import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
 import vlados.dudos.party.bank.calculator.databinding.AdditionalSpendItemBinding
 
-class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>, private val onClick: OnClick) : RecyclerView.Adapter<AdditionalSpendsAdapter.AdditionalViewHolder>() {
+class AdditionalSpendsAdapter(
+    val context: Context,
+    val list: List<DebtPair>,
+    private val onClick: OnClick
+) : RecyclerView.Adapter<AdditionalSpendsAdapter.AdditionalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdditionalViewHolder {
         return AdditionalViewHolder(
@@ -30,7 +34,29 @@ class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>, pr
             nameParticipantText.text = list[position].debtor.name
             costBar.progress = list[position].moneySum.toInt()
             costEditText.setText(list[position].moneySum.toInt().toString())
-            costBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+            costEditText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun afterTextChanged(s: Editable?) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val maxProgress = costBar.max
+                    val correctedText =
+                        correctTextAsCounter(
+                            costEditText.text.toString()
+                        )
+                    if (costEditText.text.toString() != correctedText) costEditText.setText(
+                        correctedText
+                    )
+                    if (correctedText.toInt() <= maxProgress) {
+                        costBar.progress = correctedText.toInt()
+                    } else costBar.progress = maxProgress
+                    costEditText.setSelection(correctedText.length)
+                    onClick.click(
+                        list[holder.adapterPosition].debtor,
+                        costEditText.text.toString().toDouble()
+                    )
+                }
+            })
+            costBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
@@ -40,31 +66,24 @@ class AdditionalSpendsAdapter(val context: Context, val list: List<DebtPair>, pr
                             .toInt() || fromUser
                     ) costEditText.setText(seekBar.progress.toString())
                 }
+
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    onClick.click(list[holder.adapterPosition].debtor, costEditText.text.toString().toDouble())
+                    onClick.click(
+                        list[holder.adapterPosition].debtor,
+                        costEditText.text.toString().toDouble()
+                    )
                 }
             })
         }
     }
+
     override fun getItemCount(): Int = list.size
 
-    class AdditionalViewHolder(val binding: AdditionalSpendItemBinding) : RecyclerView.ViewHolder(binding.root), TextWatcher{
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-        override fun afterTextChanged(s: Editable?) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            with(binding) {
-                val maxProgress = costBar.max
-                val correctedText = correctTextAsCounter(costEditText.text.toString())
-                if (costEditText.text.toString() != correctedText) costEditText.setText(correctedText)
-                if (correctedText.toInt() <= maxProgress) {
-                    costBar.progress = correctedText.toInt()
-                } else costBar.progress = maxProgress
-                costEditText.setSelection(correctedText.length)
-            }
-        }
-    }
-    interface OnClick{
+    class AdditionalViewHolder(val binding: AdditionalSpendItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    interface OnClick {
         fun click(participant: Participant, cost: Double)
     }
 }

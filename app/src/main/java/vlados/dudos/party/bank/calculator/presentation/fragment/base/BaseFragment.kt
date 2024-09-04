@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
@@ -18,9 +17,8 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
-import vlados.dudos.party.bank.calculator.interfaces.IUpdateUi
 
-abstract class BaseFragment : Fragment(), IUpdateUi {
+abstract class BaseFragment : Fragment() {
     protected fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
@@ -116,7 +114,5 @@ abstract class BaseFragment : Fragment(), IUpdateUi {
         editText.addTextChangedListener(textWatcher)
     }
 
-    override fun updateUi() {
-
-    }
+    open fun updateUi() {}
 }

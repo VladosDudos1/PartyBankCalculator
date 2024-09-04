@@ -88,10 +88,6 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
             )
         }
     }
-
-    override fun updateUi() {
-    }
-
     override fun putNavigateId() {
         setActionId(R.id.action_friendsListFragment_to_listEventFragment)
     }

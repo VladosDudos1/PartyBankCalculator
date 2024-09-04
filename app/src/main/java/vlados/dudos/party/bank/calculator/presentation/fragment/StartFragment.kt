@@ -38,5 +38,4 @@ class StartFragment : BaseFragment() {
     private fun goNextPage(){
         findNavController().navigate(R.id.action_startFragment_to_listEventFragment)
     }
-    override fun updateUi() {}
 }
