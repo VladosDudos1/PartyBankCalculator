@@ -38,9 +38,9 @@ class SharedManager(private val baseContext: Context) {
         return shared.getBoolean("isThemeChanged", false)
     }
 
-    fun loadThemePreference() {
+    fun loadThemePreference() : Int {
         val themeMode = shared.getInt("isDarkTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        AppCompatDelegate.setDefaultNightMode(themeMode)
+        return themeMode
     }
 
     fun saveNewEvent(newEvent: Event) {

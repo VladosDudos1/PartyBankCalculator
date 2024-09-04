@@ -18,6 +18,7 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
+import vlados.dudos.party.bank.calculator.presentation.activity.base.BaseActivity
 
 abstract class BaseFragment : Fragment() {
 
@@ -34,7 +35,7 @@ abstract class BaseFragment : Fragment() {
 
     protected fun context(): Context = requireContext()
 
-    protected fun activity(): Activity = requireActivity()
+    protected fun activity(): BaseActivity = requireActivity() as BaseActivity
 
     protected fun showEnterNameDialog() {
         val dialogBinding = NameInputLayoutBinding.inflate(layoutInflater)

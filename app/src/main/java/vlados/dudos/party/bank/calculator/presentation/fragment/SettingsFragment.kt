@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import vlados.dudos.domain.model.enums.ThemeMode
 import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.MapHolder.getMapOfValues
 import vlados.dudos.party.bank.calculator.R
@@ -26,7 +27,7 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.SettingsViewMod
 class SettingsFragment : BaseFragment(), INavigateChange, LanguageAdapter.OnClick, ValueAdapter.OnClick {
 
     override fun clickLanguage(language: String) {
-        App.settingsManager.setLanguage(language, activity())
+        activity().setLanguage(language)
         changeViewVisibility(binding.languageRecycler)
     }
 
@@ -82,7 +83,7 @@ class SettingsFragment : BaseFragment(), INavigateChange, LanguageAdapter.OnClic
         when (currentNightMode) {
             Configuration.UI_MODE_NIGHT_NO -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                App.settingsManager.saveThemePreference(AppCompatDelegate.MODE_NIGHT_YES)
+                App.settingsManager.setTheme(ThemeMode.DARK)
             }
         }
     }
@@ -92,7 +93,7 @@ class SettingsFragment : BaseFragment(), INavigateChange, LanguageAdapter.OnClic
         when (currentNightMode) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                App.settingsManager.saveThemePreference(AppCompatDelegate.MODE_NIGHT_NO)
+                App.settingsManager.setTheme(ThemeMode.LIGHT)
             }
         }
     }
@@ -111,7 +112,7 @@ class SettingsFragment : BaseFragment(), INavigateChange, LanguageAdapter.OnClic
 
     override fun updateUi() {
         with(binding){
-            languageName.text = getString(App.settingsManager.getLanguageName())
+            languageName.text = getString(activity().getLanguageName())
             valueName.text = App.sharedManager.getBaseValue()
         }
     }
@@ -126,7 +127,7 @@ class SettingsFragment : BaseFragment(), INavigateChange, LanguageAdapter.OnClic
             valueLayout.layoutTransition = LayoutTransition().apply {
                 enableTransitionType(LayoutTransition.CHANGING)
             }
-            languageName.text = getString(App.settingsManager.getLanguageName())
+            languageName.text = getString(activity().getLanguageName())
             valueName.text = App.sharedManager.getBaseValue()
         }
     }
