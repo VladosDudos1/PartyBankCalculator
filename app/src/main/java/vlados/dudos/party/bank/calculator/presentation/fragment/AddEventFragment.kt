@@ -16,7 +16,6 @@ import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentAddEventBinding
-import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.FriendsInEventAdapter
 import vlados.dudos.party.bank.calculator.presentation.adapter.ParticipantAdapter
@@ -25,7 +24,7 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.AddEventViewMod
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 
 
-class AddEventFragment : BaseFragment(), IActiveFragment,
+class AddEventFragment : BaseFragment(),
     ParticipantAdapter.OnClick, FriendsInEventAdapter.OnClick, INavigateChange {
 
     override fun click(list: MutableList<Participant>, position: Int, isChecked: Boolean) {
@@ -58,14 +57,9 @@ class AddEventFragment : BaseFragment(), IActiveFragment,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyClick()
-        setObservers()
         putNavigateId()
         setupView()
     }
-
-    override fun setObservers() {}
-
     override fun applyClick() {
         with(binding) {
             addParticipantToEventButton.setOnClickListener {

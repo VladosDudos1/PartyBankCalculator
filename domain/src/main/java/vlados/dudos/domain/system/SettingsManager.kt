@@ -2,26 +2,21 @@ package vlados.dudos.domain.system
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.content.res.Resources
-import org.intellij.lang.annotations.Language
 import vlados.dudos.domain.R
 import java.util.Locale
 
-
-class LocaleManager(private val baseContext: Context) {
+class SettingsManager(private val baseContext: Context) {
     val sharedManager = SharedManager(baseContext)
-    private val resources: Resources = baseContext.resources
-    private var config: Configuration = resources.configuration
+    private var resources = baseContext.resources
+    private var config = resources.configuration
     private var locale: Locale = Locale(sharedManager.loadLanguagePreference() ?: "ru-RU")
     private var languageList = listOf(
         R.string.russian to "ru-RU",
         R.string.english to "en-EN"
     ).toMap()
 
-    fun setLocaleCurrentLanguage(activity: Activity) {
-        updateLocale(sharedManager.loadLanguagePreference() ?: "en-EN", activity)
+    fun setLocaleCurrentLanguage() {
+        updateLocale(sharedManager.loadLanguagePreference() ?: "en-EN")
     }
 
     fun setLanguage(languageCode: String, activity: Activity) {
@@ -42,5 +37,21 @@ class LocaleManager(private val baseContext: Context) {
         config.setLocale(locale)
         activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
         activity.recreate()
+    }
+    private fun updateLocale(languageCode: String) {
+        locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+    fun saveThemePreference(themeMode: Int) {
+        sharedManager.saveThemePreference(themeMode)
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+    fun loadThemePreference() {
+        sharedManager.loadThemePreference()
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

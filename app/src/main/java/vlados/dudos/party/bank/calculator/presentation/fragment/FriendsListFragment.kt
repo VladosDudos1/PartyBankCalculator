@@ -2,7 +2,6 @@ package vlados.dudos.party.bank.calculator.presentation.fragment
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,11 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentFriendsListBinding
-import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.FriendsAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 
-class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
+class FriendsListFragment : BaseFragment(), INavigateChange,
     FriendsAdapter.OnClick {
 
     override fun clickDelete(
@@ -56,14 +54,7 @@ class FriendsListFragment : BaseFragment(), IActiveFragment, INavigateChange,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyClick()
-        setAdapter()
-        setObservers()
         putNavigateId()
-    }
-
-    override fun setObservers() {
-
     }
 
     override fun applyClick() {

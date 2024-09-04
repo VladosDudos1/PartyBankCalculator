@@ -13,8 +13,6 @@ import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentAdditionalPriceBinding
-import vlados.dudos.party.bank.calculator.databinding.FragmentEventBinding
-import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.AdditionalSpendsAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
@@ -23,7 +21,7 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.AdditionalSpend
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 import kotlin.math.cos
 
-class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange, AdditionalSpendsAdapter.OnClick {
+class AdditionalPriceFragment : BaseFragment(), INavigateChange, AdditionalSpendsAdapter.OnClick {
 
     override fun click(participant: Participant, cost: Double) {
         hostViewModel.addToAdditionalSpend(participant, cost)
@@ -43,9 +41,6 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         putNavigateId()
-        applyClick()
-        setObservers()
-        setAdapter()
     }
 
     override fun applyClick() {
@@ -62,9 +57,6 @@ class AdditionalPriceFragment : BaseFragment(), IActiveFragment, INavigateChange
             additionalSpendRecycler.adapter =
                 AdditionalSpendsAdapter(context(), hostViewModel.getCurrentPurchase().additionalDebts, this@AdditionalPriceFragment)
         }
-    }
-    override fun setObservers() {
-
     }
     override fun putNavigateId() {
         setActionId(R.id.action_additionalPriceFragment_to_purchaseFragment)

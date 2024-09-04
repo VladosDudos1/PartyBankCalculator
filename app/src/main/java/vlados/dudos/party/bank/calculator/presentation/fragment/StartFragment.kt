@@ -1,6 +1,6 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
-import vlados.dudos.domain.system.LocaleManager
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,16 +25,9 @@ class StartFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSettings()
-    }
-
-    private fun setSettings() {
-        if (App.sharedManager.isThemeChanged()){
-            App.sharedManager.loadThemePreference()
-        }
-        App.localeManager.setLocaleCurrentLanguage(activity())
         goNextPage()
     }
+
     private fun goNextPage(){
         findNavController().navigate(R.id.action_startFragment_to_listEventFragment)
     }
