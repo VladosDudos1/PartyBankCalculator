@@ -6,19 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.model.Event
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentListEventBinding
-import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.presentation.adapter.EventAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.ListEventViewModel
 
-class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment {
+class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
     override fun clickOnEvent(event: Event) {
         hostViewModel.selectItem(event)
         navigate(R.id.action_listEventFragment_to_eventFragment)
@@ -41,8 +39,6 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick, IActiveFragment 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyClick()
-        setObservers()
         binding.eventRecyclerView.clearFocus()
         hostViewModel.setEventExistValue(false)
     }

@@ -1,6 +1,5 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,7 +18,6 @@ import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.databinding.FragmentPurchaseBinding
-import vlados.dudos.party.bank.calculator.interfaces.IActiveFragment
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.BuyerSelectAdapter
 import vlados.dudos.party.bank.calculator.presentation.adapter.UserSelectAdapter
@@ -28,7 +26,7 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.PurchaseViewModel
 
 
-class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
+class PurchaseFragment : BaseFragment(), TextWatcher,
     BuyerSelectAdapter.OnClick, INavigateChange, UserSelectAdapter.OnClick {
     override fun click(isActive: Boolean, participant: Participant) {
         hostViewModel.changeListParticipant(isActive, participant)
@@ -69,10 +67,7 @@ class PurchaseFragment : BaseFragment(), IActiveFragment, TextWatcher,
         super.onViewCreated(view, savedInstanceState)
         putNavigateId()
         applyTextWatcher(binding.costEditText, this)
-        setObservers()
         setupView()
-        setAdapter()
-        applyClick()
     }
 
     override fun putNavigateId() {

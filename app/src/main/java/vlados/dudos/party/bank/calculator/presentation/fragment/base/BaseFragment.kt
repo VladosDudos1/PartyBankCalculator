@@ -3,6 +3,7 @@ package vlados.dudos.party.bank.calculator.presentation.fragment.base
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
@@ -17,15 +18,24 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
+import vlados.dudos.party.bank.calculator.presentation.activity.base.BaseActivity
 
 abstract class BaseFragment : Fragment() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        applyClick()
+        setObservers()
+        setAdapter()
+    }
+
     protected fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     protected fun context(): Context = requireContext()
 
-    protected fun activity(): Activity = requireActivity()
+    protected fun activity(): BaseActivity = requireActivity() as BaseActivity
 
     protected fun showEnterNameDialog() {
         val dialogBinding = NameInputLayoutBinding.inflate(layoutInflater)
@@ -113,6 +123,11 @@ abstract class BaseFragment : Fragment() {
     protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher) {
         editText.addTextChangedListener(textWatcher)
     }
+    open fun setObservers(){
 
+    }
+    open fun applyClick(){
+
+    }
     open fun updateUi() {}
 }
