@@ -1,8 +1,8 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment.base
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.View
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
+import vlados.dudos.domain.utils.ModelsTransformUtil.listEventResultToString
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
@@ -122,10 +123,23 @@ abstract class BaseFragment : Fragment() {
             setCancelable(true)
             setContentView(dialogBinding.root)
             dialogBinding.debtorsRecycler.layoutManager = LinearLayoutManager(context())
-            dialogBinding.debtorsRecycler.adapter = EventResultAdapter(context(), listEventResult)
+            dialogBinding.debtorsRecycler.adapter = EventResultAdapter(
+                context(),
+                listEventResult,
+                object : EventResultAdapter.ShareEvent {
+                    override fun share(resString: String) {
+                        shareText(resString)
+                    }
+                })
 
             dialogBinding.shareBtn.setOnClickListener {
-
+                shareText(
+                    listEventResultToString(
+                        context().getString(R.string.debtors),
+                        listEventResult,
+                        App.sharedManager.getBaseValue()
+                    )
+                )
             }
         }
         dialog.show()
@@ -142,11 +156,28 @@ abstract class BaseFragment : Fragment() {
     protected fun applyTextWatcher(editText: EditText, textWatcher: TextWatcher) {
         editText.addTextChangedListener(textWatcher)
     }
-    open fun setObservers(){
+
+    open fun setObservers() {
 
     }
-    open fun applyClick(){
+
+    open fun applyClick() {
 
     }
+
     open fun updateUi() {}
+
+    private fun shareText(string: String) {
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, string)
+            type = "text/plain"
+        }
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                getString(R.string.share_calculation)
+            )
+        )
+    }
 }

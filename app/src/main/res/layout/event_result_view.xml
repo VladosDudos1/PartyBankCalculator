@@ -22,9 +22,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="John Doe"
+            app:layout_constraintBottom_toBottomOf="@+id/shareBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/shareBtn" />
 
+        <ImageView
+            android:id="@+id/shareBtn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/share_vector"
+            app:layout_constraintEnd_toEndOf="@+id/debtsText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/alternative" />
 
         <TextView
             android:id="@+id/debtsText"
@@ -33,7 +43,7 @@
             android:layout_marginTop="4dp"
             android:text="Vlad - 500Р, Andrey - 236P, Gena Bukin - 931P, Maybe Baybie - 300P"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buyerText"
+            app:layout_constraintTop_toBottomOf="@+id/shareBtn"
             tools:layout_editor_absoluteX="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

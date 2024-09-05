@@ -26,6 +26,7 @@ class PurchaseAdapter(private val context: Context, private val list: List<Purch
     override fun onBindViewHolder(holder: PurchaseViewHolder, position: Int) {
         with(holder.binding){
             purchaseNameText.text = list[position].name
+            buyerNameText.text = list[position].buyer.name
             listParticipantsText.text = listParticipantsToStringWithAdditionalDebts(list[position].listDebtors, list[position].additionalDebts)
             costText.text = list[position].cost.toInt().toString()
             root.setOnClickListener {

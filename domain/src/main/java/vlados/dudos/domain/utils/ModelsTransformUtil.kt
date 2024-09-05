@@ -1,7 +1,5 @@
 package vlados.dudos.domain.utils
 
-import android.content.Context
-import vlados.dudos.domain.R
 import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.EventResult
@@ -51,12 +49,23 @@ object ModelsTransformUtil {
         )
     }
 
-    fun listEventResultToString(debtors: String, eventResult: EventResult, value: String) : String{
-        var debtString = debtors
+    fun eventResultToString(debtors: String, eventResult: EventResult, value: String): String {
+        var debtString = "$debtors "
+        val lastDebt = eventResult.listDebts.last()
         eventResult.listDebts.forEach {
-            debtString += "${it.debtor} - ${it.moneySum}$value"
+            debtString += "${it.debtor.name} - ${it.moneySum.toInt()}$value"
+            if (it != lastDebt) debtString += ", "
         }
         return debtString
+    }
+
+    fun listEventResultToString(debtors: String, list: List<EventResult>, value: String) : String {
+        var resultString = ""
+        list.forEach {
+            resultString += "${it.participant.name.uppercase()}\n"
+            resultString += eventResultToString(debtors, it, value) + "\n\n"
+        }
+        return resultString
     }
 
     fun createNewPurchase(

@@ -31,14 +31,14 @@ class CalculateManager {
         }
         joinDebts(result)
         sortDebts(result)
-        result = cleanDebts(result.toMutableList())
         result = addAdditionalDebtsToResult(result, event)
+        result = cleanDebts(result.toMutableList())
 
         return result
     }
 
     private fun getCostForPerson(purchase: Purchase): Double {
-        return decimalFormat.format((purchase.cost / purchase.listDebtors.size)).toDouble()
+        return (purchase.cost / purchase.listDebtors.size)
     }
 
     private fun joinDebts(listEventResult: MutableList<EventResult>) {
@@ -93,9 +93,8 @@ class CalculateManager {
             purchase.additionalDebts.forEach { additionalDebt ->
                 if (purchase.buyer != additionalDebt.debtor){
                     val debt = currentEventResult.listDebts.first { it.debtor == additionalDebt.debtor }
-                    debt.moneySum = decimalFormat.format((debt.moneySum + additionalDebt.moneySum)).toDouble()
+                    debt.moneySum = (debt.moneySum + additionalDebt.moneySum)
                 }
-
             }
         }
         return listEventResult

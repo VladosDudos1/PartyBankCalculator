@@ -61,4 +61,6 @@
     <string name="calculate">Calculate</string>
     <string name="results">Result</string>
     <string name="share">Share</string>
+    <string name="buyer">Buyer:</string>
+    <string name="share_calculation">Share calculation</string>
 </resources>
