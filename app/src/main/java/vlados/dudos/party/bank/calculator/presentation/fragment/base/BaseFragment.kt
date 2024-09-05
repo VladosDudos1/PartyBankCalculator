@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
@@ -18,7 +19,9 @@ import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
+import vlados.dudos.party.bank.calculator.databinding.ResultDialogBinding
 import vlados.dudos.party.bank.calculator.presentation.activity.base.BaseActivity
+import vlados.dudos.party.bank.calculator.presentation.adapter.EventResultAdapter
 
 abstract class BaseFragment : Fragment() {
 
@@ -108,6 +111,22 @@ abstract class BaseFragment : Fragment() {
         }
         dialog.setOnDismissListener {
             recyclerView.adapter?.notifyDataSetChanged()
+        }
+        dialog.show()
+    }
+
+    open fun showEventResultDialog(event: Event) {
+        val listEventResult = App.calculateManager.calculateDebts(event)
+        val dialogBinding = ResultDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setContentView(dialogBinding.root)
+            dialogBinding.debtorsRecycler.layoutManager = LinearLayoutManager(context())
+            dialogBinding.debtorsRecycler.adapter = EventResultAdapter(context(), listEventResult)
+
+            dialogBinding.shareBtn.setOnClickListener {
+
+            }
         }
         dialog.show()
     }

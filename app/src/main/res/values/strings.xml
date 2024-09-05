@@ -59,4 +59,6 @@
     <string name="language_selection">Language selection</string>
     <string name="value_selection">Value selection</string>
     <string name="calculate">Calculate</string>
+    <string name="results">Result</string>
+    <string name="share">Share</string>
 </resources>
