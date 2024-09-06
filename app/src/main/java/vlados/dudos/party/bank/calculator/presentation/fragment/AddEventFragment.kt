@@ -35,6 +35,7 @@ class AddEventFragment : BaseFragment(),
             listFriendsInEvent.add(list[position])
         } else {
             listFriendsInEvent.remove(list[position])
+            hostViewModel.deleteParticipantFromEvent(list[position])
         }
     }
 
@@ -97,10 +98,9 @@ class AddEventFragment : BaseFragment(),
     override fun setAdapter(event: Event) {
         super.setAdapter(event)
         val friends = App.sharedManager.getFriendsList()
-        val friendsIds = friends.map { it.id }
         event.participants.forEach {
-            if (it.id !in friendsIds && it.id != event.owner.id) listParticipant.add(it)
-            else if (it.id != event.owner.id) listFriendsInEvent.add(it)
+            if (it !in friends && it != event.owner) listParticipant.add(it)
+            else if (it != event.owner) listFriendsInEvent.add(it)
         }
         with(binding) {
             participantRecycler.layoutManager = LinearLayoutManager(context())
@@ -116,7 +116,7 @@ class AddEventFragment : BaseFragment(),
                 context(),
                 friends,
                 this@AddEventFragment,
-                event.participants.filter {it.id in friendsIds}
+                event.participants.filter {it in friends}.map { it.id }
             )
         }
     }

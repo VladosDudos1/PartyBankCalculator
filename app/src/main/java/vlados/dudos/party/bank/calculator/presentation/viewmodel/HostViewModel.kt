@@ -12,32 +12,42 @@ import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.model.Purchase
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewPurchase
+import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
+import vlados.dudos.party.bank.calculator.databinding.DeletePurchaseDialogBinding
 
 class HostViewModel : ViewModel() {
     private val currentEvent = MutableLiveData<Event>()
     private val newPurchase = MutableLiveData<Purchase>()
     val selectedItem: LiveData<Event> get() = currentEvent
     private val isEventExist = MutableLiveData(false)
+    private val _sum = MutableLiveData<Int?>(null)
+    val sum: LiveData<Int?> get() = _sum
+    private val _purchaseDeleted = MutableLiveData<Unit>()
+    val purchaseDeleted: LiveData<Unit> get() = _purchaseDeleted
 
     fun selectItem(event: Event) {
         currentEvent.value = event
     }
 
-    fun deleteParticipantFromEvent(participant: Participant){
+    fun deleteParticipantFromEvent(participant: Participant) {
         val transition = currentEvent.value!!
         transition.listPurchases.forEach { purchase ->
-            val debtorIds = purchase.listDebtors.map { it.id }
-            val additionalIds = purchase.additionalDebts.map { it.debtor.id }
-            if (participant.id in debtorIds)
-                purchase.listDebtors.remove(purchase.listDebtors.first { it.id == participant.id })
-            if (participant.id in additionalIds)
-                purchase.additionalDebts.remove(purchase.additionalDebts.first { it.debtor.id == participant.id })
+            purchase.listDebtors.removeIf {
+                it.id == participant.id
+            }
+            purchase.additionalDebts.removeIf {
+                it.debtor.id == participant.id
+            }
+            if (participant.id == purchase.buyer.id) {
+                deletePurchaseCore(selectedItem.value!!, purchase)
+            }
         }
     }
-    fun editParticipantInEvent(participant: Participant, name: String){
+
+    fun editParticipantInEvent(participant: Participant, name: String) {
         val transition = currentEvent.value!!
-        transition.listPurchases.forEach {  purchase ->
+        transition.listPurchases.forEach { purchase ->
             if (purchase.buyer.id == participant.id) purchase.buyer.name = name
             purchase.listDebtors.forEach { debtor ->
                 if (debtor.id == participant.id) debtor.name = name
@@ -49,7 +59,7 @@ class HostViewModel : ViewModel() {
         selectItem(transition)
     }
 
-    fun setEventSum(sum: Int){
+    fun setEventSum(sum: Int) {
         val transition = currentEvent.value!!
         transition.sum = sum
         currentEvent.value = transition
@@ -165,4 +175,42 @@ class HostViewModel : ViewModel() {
     }
 
     fun isNewPurchaseFilled(): Boolean = newPurchase.value!!.listDebtors.isNotEmpty()
+
+    fun deletePurchase(
+        purchase: Purchase,
+        context: Context,
+        layoutInflater: LayoutInflater,
+        event: Event
+    ) {
+        val dialogBinding = DeletePurchaseDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context, R.style.CustomDialogTheme).apply {
+            setCancelable(false)
+            setContentView(dialogBinding.root)
+            dialogBinding.positiveButton.setOnClickListener {
+                deletePurchaseCore(event, purchase)
+                this.dismiss()
+            }
+            dialogBinding.negativeButton.setOnClickListener {
+                this.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun deletePurchaseCore(event: Event, purchase: Purchase) {
+        event.listPurchases.remove(purchase)
+        event.sum =
+            event.listPurchases.sumOf { it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum } }
+                .toInt()
+        _sum.value = event.sum
+        App.sharedManager.changeCurrentEvent(event)
+        _sum.value =
+            event.listPurchases.sumOf { it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum } }
+                .toInt()
+        _purchaseDeleted.postValue(Unit)
+    }
+
+    fun setupSumLiveData(summ: Int) {
+        _sum.value = summ
+    }
 }

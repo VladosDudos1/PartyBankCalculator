@@ -73,4 +73,6 @@
     <string name="additional_example_title">Additional debts example</string>
     <string name="you_don_t_have_any_purchases_for_this_event_yet">You don\'t have any purchases for this event yet</string>
     <string name="purchase">Purchase</string>
+    <string name="event_calculator_techhelp_gmail_com">event.calculator.techhelp@gmail.com</string>
+    <string name="tech_support">Tech support:</string>
 </resources>

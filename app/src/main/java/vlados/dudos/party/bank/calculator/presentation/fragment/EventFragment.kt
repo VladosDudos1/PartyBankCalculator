@@ -31,7 +31,7 @@ class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
     private val viewModel: EventViewModel by viewModels()
 
     override fun deletePurchase(purchase: Purchase) {
-        viewModel.deletePurchase(purchase, context(), layoutInflater, getCurrentEvent())
+        hostViewModel.deletePurchase(purchase, context(), layoutInflater, getCurrentEvent())
     }
 
     override fun redactPurchase(purchase: Purchase) {
@@ -48,7 +48,7 @@ class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.setupSumLiveData(getCurrentEvent().sum)
+        hostViewModel.setupSumLiveData(getCurrentEvent().sum)
         putNavigateId()
         setupEvent(getCurrentEvent())
         hostViewModel.setEventExistValue(true)
@@ -96,11 +96,11 @@ class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
     }
 
     override fun setObservers() {
-        viewModel.purchaseDeleted.observe(viewLifecycleOwner) {
+        hostViewModel.purchaseDeleted.observe(viewLifecycleOwner) {
             updateAdapter()
         }
-        viewModel.sum.observe(viewLifecycleOwner) {
-            hostViewModel.setEventSum(viewModel.sum.value!!)
+        hostViewModel.sum.observe(viewLifecycleOwner) {
+            hostViewModel.setEventSum(hostViewModel.sum.value!!)
             binding.sumTxt.text = getString(R.string.sum, getCurrentEvent().sum.toString(), App.sharedManager.getBaseValue())
         }
         hostViewModel.selectedItem.observe(viewLifecycleOwner){

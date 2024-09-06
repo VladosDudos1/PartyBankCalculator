@@ -73,4 +73,6 @@
     <string name="additional_example_title">Пример дополнительных задолженостей</string>
     <string name="you_don_t_have_any_purchases_for_this_event_yet">У вас пока нет покупок для этого события</string>
     <string name="purchase">Покупка</string>
+    <string name="event_calculator_techhelp_gmail_com">event.calculator.techhelp@gmail.com</string>
+    <string name="tech_support">Техподдержка:</string>
 </resources>

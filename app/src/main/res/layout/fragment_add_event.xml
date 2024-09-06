@@ -42,6 +42,7 @@
                 app:counterMaxLength="24"
                 app:endIconDrawable="@drawable/baseline_cancel_24"
                 app:endIconMode="clear_text"
+                android:hint="@string/event_name"
                 app:endIconTint="@color/mainColor"
                 app:helperText="@string/required_field"
                 app:helperTextTextColor="@color/red"
@@ -53,7 +54,6 @@
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/event_name"
                     android:inputType="textPersonName"
                     android:maxLength="24"
                     android:maxLines="1" />
