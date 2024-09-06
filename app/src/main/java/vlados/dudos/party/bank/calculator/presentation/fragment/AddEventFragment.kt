@@ -1,5 +1,6 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
+import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
 import vlados.dudos.party.bank.calculator.databinding.FragmentAddEventBinding
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
 import vlados.dudos.party.bank.calculator.presentation.adapter.FriendsInEventAdapter
@@ -95,9 +97,10 @@ class AddEventFragment : BaseFragment(),
     override fun setAdapter(event: Event) {
         super.setAdapter(event)
         val friends = App.sharedManager.getFriendsList()
+        val friendsIds = friends.map { it.id }
         event.participants.forEach {
-            if (it !in friends && it != event.owner) listParticipant.add(it)
-            else if (it != event.owner) listFriendsInEvent.add(it)
+            if (it.id !in friendsIds && it.id != event.owner.id) listParticipant.add(it)
+            else if (it.id != event.owner.id) listFriendsInEvent.add(it)
         }
         with(binding) {
             participantRecycler.layoutManager = LinearLayoutManager(context())
@@ -113,7 +116,7 @@ class AddEventFragment : BaseFragment(),
                 context(),
                 friends,
                 this@AddEventFragment,
-                event.participants.filter {it in friends}
+                event.participants.filter {it.id in friendsIds}
             )
         }
     }
@@ -123,6 +126,7 @@ class AddEventFragment : BaseFragment(),
         participant: Participant
     ) {
         list.remove(participant)
+        hostViewModel.deleteParticipantFromEvent(participant)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
@@ -152,7 +156,7 @@ class AddEventFragment : BaseFragment(),
                     mergingLists(
                         listFriendsInEvent,
                         listParticipant
-                    ).sortedByDescending { it.name == listParticipant[0].name },
+                    ).sortedByDescending { it.id == listParticipant[0].id },
                     listParticipant[0]
                 )
             )
@@ -180,5 +184,34 @@ class AddEventFragment : BaseFragment(),
 
     override fun putNavigateId() {
         setActionId(if (isRedactMode) R.id.action_addEventFragment_to_eventFragment else R.id.action_addEventFragment_to_listEventFragment)
+    }
+    private fun showEditParticipantDialog(
+        listParticipant: MutableList<Participant>,
+        recyclerView: RecyclerView,
+        participant: Participant
+    ) {
+        val dialogBinding = EditFriendDialogBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(true)
+            setContentView(dialogBinding.root)
+            dialogBinding.nameEditText.setText(participant.name)
+            dialogBinding.okButton.setOnClickListener {
+                val participantNameEdited = dialogBinding.nameEditText.text.toString()
+                if (!participantNameEdited.isOnlySpace()) {
+                    listParticipant.forEach {
+                        if (it.id == participant.id) {
+                            hostViewModel.editParticipantInEvent(it, participantNameEdited)
+                            it.name = participantNameEdited
+                        }
+                    }
+                    dismiss()
+                } else dialogBinding.inputLayout.helperText =
+                    context().getString(R.string.name_cant_be_empty)
+            }
+        }
+        dialog.setOnDismissListener {
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+        dialog.show()
     }
 }

@@ -24,6 +24,31 @@ class HostViewModel : ViewModel() {
         currentEvent.value = event
     }
 
+    fun deleteParticipantFromEvent(participant: Participant){
+        val transition = currentEvent.value!!
+        transition.listPurchases.forEach { purchase ->
+            val debtorIds = purchase.listDebtors.map { it.id }
+            val additionalIds = purchase.additionalDebts.map { it.debtor.id }
+            if (participant.id in debtorIds)
+                purchase.listDebtors.remove(purchase.listDebtors.first { it.id == participant.id })
+            if (participant.id in additionalIds)
+                purchase.additionalDebts.remove(purchase.additionalDebts.first { it.debtor.id == participant.id })
+        }
+    }
+    fun editParticipantInEvent(participant: Participant, name: String){
+        val transition = currentEvent.value!!
+        transition.listPurchases.forEach {  purchase ->
+            if (purchase.buyer.id == participant.id) purchase.buyer.name = name
+            purchase.listDebtors.forEach { debtor ->
+                if (debtor.id == participant.id) debtor.name = name
+            }
+            purchase.additionalDebts.forEach { debtPair ->
+                if (debtPair.debtor.id == participant.id) debtPair.debtor.name = name
+            }
+        }
+        selectItem(transition)
+    }
+
     fun setEventSum(sum: Int){
         val transition = currentEvent.value!!
         transition.sum = sum

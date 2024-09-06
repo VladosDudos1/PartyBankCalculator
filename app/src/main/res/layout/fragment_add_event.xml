@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="4dp"
-                android:hint="@string/event_name"
                 app:counterEnabled="true"
                 app:counterMaxLength="24"
                 app:endIconDrawable="@drawable/baseline_cancel_24"
@@ -54,6 +53,7 @@
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/event_name"
                     android:inputType="textPersonName"
                     android:maxLength="24"
                     android:maxLines="1" />

@@ -20,6 +20,7 @@
     <color name="statusBarColor">#FF1f1f1f</color>
 
     <color name="alternative">@color/mainColor</color>
+    <color name="alternativeSoft">#BBadff54</color>
     <color name="alternativeMain">@color/secondColor</color>
     <color name="vectorImageSoftColor">#BBFAFAFA</color>
     <color name="softMainColor">#CC222222</color>

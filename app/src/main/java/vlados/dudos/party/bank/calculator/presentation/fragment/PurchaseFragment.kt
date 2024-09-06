@@ -29,6 +29,7 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.PurchaseViewMod
 
 class PurchaseFragment : BaseFragment(), TextWatcher,
     BuyerSelectAdapter.OnClick, INavigateChange, UserSelectAdapter.OnClick {
+
     override fun click(isActive: Boolean, participant: Participant) {
         hostViewModel.changeListParticipant(isActive, participant)
     }

@@ -27,6 +27,7 @@
     <color name="softMainColor">#CCFFFFFF</color>
 
     <color name="alternative">@color/secondColor</color>
+    <color name="alternativeSoft">#99FF4B21</color>
     <color name="alternativeMain">@color/mainColor</color>
     <color name="thumb_stroke_color">#99FFFFFF</color>
 

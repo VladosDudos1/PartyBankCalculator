@@ -13,9 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
@@ -90,35 +88,6 @@ abstract class BaseFragment : Fragment() {
                             participantName
                         )
                     )
-                    dismiss()
-                } else dialogBinding.inputLayout.helperText =
-                    context().getString(R.string.name_cant_be_empty)
-            }
-        }
-        dialog.setOnDismissListener {
-            recyclerView.adapter?.notifyDataSetChanged()
-        }
-        dialog.show()
-    }
-
-    protected fun showEditParticipantDialog(
-        listParticipant: MutableList<Participant>,
-        recyclerView: RecyclerView,
-        participant: Participant
-    ) {
-        val dialogBinding = EditFriendDialogBinding.inflate(layoutInflater)
-        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
-            setCancelable(true)
-            setContentView(dialogBinding.root)
-            dialogBinding.nameEditText.setText(participant.name)
-            dialogBinding.okButton.setOnClickListener {
-                val participantNameEdited = dialogBinding.nameEditText.text.toString()
-                if (participantNameEdited.isNotEmpty()) {
-                    listParticipant.forEach {
-                        if (it.id == participant.id) {
-                            it.name = participantNameEdited
-                        }
-                    }
                     dismiss()
                 } else dialogBinding.inputLayout.helperText =
                     context().getString(R.string.name_cant_be_empty)

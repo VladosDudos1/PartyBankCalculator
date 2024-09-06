@@ -12,6 +12,8 @@ class FriendsInEventAdapter(
 ) : RecyclerView.Adapter<FriendsInEventAdapter.FriendsViewHolder>() {
     private var listSelected = listOf<Participant>()
 
+    val listIds = list.map { it.id }
+
     constructor(
         context: Context,
         list: MutableList<Participant>,
@@ -33,7 +35,7 @@ class FriendsInEventAdapter(
 
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
         with(holder.binding) {
-            if (listSelected.contains(list[position])) checkbox.isChecked = true
+            if (listIds.contains(list[position].id)) checkbox.isChecked = true
             participantNameTxt.text = list[position].name
             root.setOnClickListener {
                 checkbox.isChecked = !checkbox.isChecked
