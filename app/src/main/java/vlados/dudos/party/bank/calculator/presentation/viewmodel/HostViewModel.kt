@@ -24,6 +24,12 @@ class HostViewModel : ViewModel() {
         currentEvent.value = event
     }
 
+    fun setEventSum(sum: Int){
+        val transition = currentEvent.value!!
+        transition.sum = sum
+        currentEvent.value = transition
+    }
+
     fun generatePurchase() {
         newPurchase.value = createNewPurchase(
             if (selectedItem.value?.listPurchases!!.isNotEmpty()) getMaxId(selectedItem.value!!.listPurchases.map { it.id }) else 1,
@@ -108,14 +114,18 @@ class HostViewModel : ViewModel() {
     fun setListDebtors(list: List<Participant>) {
         newPurchase.value!!.listDebtors = list.toMutableList()
     }
+
     fun setListAdditionalSpending(list: List<DebtPair>) {
         newPurchase.value!!.additionalDebts = list.toMutableList()
     }
+
     fun addToAdditionalSpend(
         participant: Participant,
         price: Double
     ) {
-        if (participant !in getCurrentPurchase().additionalDebts.map { it.debtor }) getCurrentPurchase().additionalDebts.add(DebtPair(price, participant))
+        if (participant !in getCurrentPurchase().additionalDebts.map { it.debtor }) getCurrentPurchase().additionalDebts.add(
+            DebtPair(price, participant)
+        )
         else {
             getCurrentPurchase().additionalDebts.forEach {
                 if (it.debtor == participant) it.moneySum = price

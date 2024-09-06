@@ -9,7 +9,7 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/softMainColor"
@@ -23,5 +23,5 @@
             android:text="English"
             android:textAlignment="center"
             android:textSize="20sp" />
-    </LinearLayout>
+    </FrameLayout>
 </androidx.cardview.widget.CardView>

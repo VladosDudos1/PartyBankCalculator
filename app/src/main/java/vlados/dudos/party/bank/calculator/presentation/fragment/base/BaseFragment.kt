@@ -8,14 +8,20 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
 import vlados.dudos.domain.utils.ModelsTransformUtil.listEventResultToString
+import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
+import vlados.dudos.domain.utils.StringOperationsSupport.removeSpaces
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.EditFriendDialogBinding
@@ -48,12 +54,20 @@ abstract class BaseFragment : Fragment() {
             setContentView(dialogBinding.root)
             dialogBinding.positiveButton.setOnClickListener {
                 val ownerName = dialogBinding.nameEditText.text.toString()
-                if (ownerName.isNotEmpty()) {
-                    App.sharedManager.endFirstLaunch(ownerName)
+                if (ownerName.isOnlySpace()) {
+                    dialogBinding.inputLayout.helperText =
+                        context().getString(R.string.name_cant_be_empty)
+
+                }
+                else if (ownerName.length < 2){
+                    dialogBinding.inputLayout.helperText =
+                        context().getString(R.string.name_cant_be_1_digit)
+                }
+                else {
+                    App.sharedManager.endFirstLaunch(ownerName.removeSpaces())
                     updateUi()
                     dismiss()
-                } else dialogBinding.inputLayout.helperText =
-                    context().getString(R.string.name_cant_be_empty)
+                }
             }
         }
         dialog.show()
@@ -142,7 +156,10 @@ abstract class BaseFragment : Fragment() {
                 )
             }
         }
-        dialog.show()
+        if (listEventResult.isEmpty()){
+            dialog.dismiss()
+            showToast(context().getString(R.string.nothing_to_calculate))
+        } else  dialog.show()
     }
 
     protected fun navigate(action: Int) {
@@ -166,6 +183,14 @@ abstract class BaseFragment : Fragment() {
     }
 
     open fun updateUi() {}
+
+    protected fun showFAQ(title: String, message: String){
+        val dialog = MaterialAlertDialogBuilder(activity())
+            .setTitle(title)
+            .setMessage(message)
+            .setBackground(AppCompatResources.getDrawable(context(), R.drawable.card_form_no_transperency))
+            .show()
+    }
 
     private fun shareText(string: String) {
         val shareIntent = Intent().apply {

@@ -35,7 +35,7 @@
     <string name="change_event_name">Change event name</string>
     <string name="accept">Accept</string>
     <string name="choose_buyer">Select buyer</string>
-    <string name="purchase_creating">Purchase creation</string>
+    <string name="purchase_creating">Purchase</string>
     <string name="select_debtors_multiple_choice">Select debtors (multiple choice)</string>
     <string name="cost">Cost (max 99999)</string>
     <string name="zero">0</string>
@@ -63,4 +63,14 @@
     <string name="share">Share</string>
     <string name="buyer">Buyer:</string>
     <string name="share_calculation">Share calculation</string>
+    <string name="cost_purchase">Cost:</string>
+    <string name="name_cant_be_1_digit">Name must contains at least 2 letters</string>
+    <string name="ru_en_digits">qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMйцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ</string>
+    <string name="nothing_to_calculate">Nothing to calculate</string>
+    <string name="debtors_example_message">Select the participants who should split the purchase amount.\nExample: Participant A ordered sushi for 999 currency units. Participant A, Participant B and Participant C ate sushi.\nThen you need to select all participants from A to C, as a result, Participant B and C will owe Participant A 333 units of currency.</string>
+    <string name="debtors_example_title">Select debtors example</string>
+    <string name="additional_example_message">Here you can add individual additional expenses.\nExample: If you took a set of 5 pizzas for the company for 1000 currency units, but Participant A chose a pizza that increases the price of the set by 100 currency units, then when calculating 1000 currency units will be divided among all debtors, and 100 currency units will be added to Participant A`s debt individually.\nYou can also leave the total amount zero and enter the debt amounts individually for each participant.</string>
+    <string name="additional_example_title">Additional debts example</string>
+    <string name="you_don_t_have_any_purchases_for_this_event_yet">You don\'t have any purchases for this event yet</string>
+    <string name="purchase">Purchase</string>
 </resources>

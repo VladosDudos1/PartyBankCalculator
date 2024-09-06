@@ -17,6 +17,7 @@
     <color name="textColorAlternative">@color/softMainColor</color>
 
     <color name="cardViewColor">#CC4A4A4A</color>
+    <color name="statusBarColor">#FF1f1f1f</color>
 
     <color name="alternative">@color/mainColor</color>
     <color name="alternativeMain">@color/secondColor</color>

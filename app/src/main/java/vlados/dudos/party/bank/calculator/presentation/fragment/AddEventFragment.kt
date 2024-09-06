@@ -13,6 +13,7 @@ import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.ListOperationsSupport.mergingLists
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
+import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentAddEventBinding
@@ -143,7 +144,7 @@ class AddEventFragment : BaseFragment(),
     }
 
     private fun saveNewEvent() {
-        if (binding.nameEditText.text.toString().isNotEmpty()) {
+        if (!binding.nameEditText.text.toString().isOnlySpace()) {
             App.sharedManager.saveNewEvent(
                 createNewEvent(
                     App.sharedManager.getListEvents().map { it.id },
@@ -161,7 +162,7 @@ class AddEventFragment : BaseFragment(),
     }
 
     private fun saveExistedEvent() {
-        if (binding.nameEditText.text.toString().isNotEmpty()) {
+        if (!binding.nameEditText.text.toString().isOnlySpace()) {
             App.sharedManager.changeCurrentEvent(changeExistingEvent())
             activity().onBackPressed()
         } else binding.inputLayout.helperText =

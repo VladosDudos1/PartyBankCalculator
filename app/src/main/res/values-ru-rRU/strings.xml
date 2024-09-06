@@ -35,7 +35,7 @@
     <string name="change_event_name">Сменить название</string>
     <string name="accept">Подтвердить</string>
     <string name="choose_buyer">Выберите оплатившего участника</string>
-    <string name="purchase_creating">Создание покупки</string>
+    <string name="purchase_creating">Покупка</string>
     <string name="select_debtors_multiple_choice">Укажите должников (множественный выбор)</string>
     <string name="cost">Цена (макс. 99999)</string>
     <string name="zero">0</string>
@@ -63,4 +63,14 @@
     <string name="share">Поделиться</string>
     <string name="buyer">Купил:</string>
     <string name="share_calculation">Поделиться рассчётом</string>
+    <string name="name_cant_be_1_digit">В имени должно быть хотя бы 2 буквы</string>
+    <string name="ru_en_digits">qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMйцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ</string>
+    <string name="cost_purchase">Цена:</string>
+    <string name="nothing_to_calculate">Нечего рассчитывать</string>
+    <string name="debtors_example_message">Выберите участников, которые должны поделить сумму покупки.\nПример: Участник А заказал суши за 999 единиц валюты. Суши ели Участник А, Участник Б и Участник С.\nТогда нужно выбрать всех участников от А до С, в итоге участни Б  и С будут должны участнику А 333 единицы валюты.</string>
+    <string name="debtors_example_title">Пример выбора должников</string>
+    <string name="additional_example_message">Тут вы можете добавить индивидуальные дополнительные траты.\nПример: Если вы взяли на компанию набор из 5 пицц за 1000 единиц валюты, но Участник А выбрал пиццу, повышающую цену копмлекта на 100 единиц валюты, тогда при подсчёте 1000 единиц валюты поделиться на всех должников, а 100 единиц валюты добавится к долгу Участника А индивидуально.\nТакже можно оставить общую сумму нулевой и ввести суммы долгов индивидуально для кажного участника.</string>
+    <string name="additional_example_title">Пример дополнительных задолженостей</string>
+    <string name="you_don_t_have_any_purchases_for_this_event_yet">У вас пока нет покупок для этого события</string>
+    <string name="purchase">Покупка</string>
 </resources>

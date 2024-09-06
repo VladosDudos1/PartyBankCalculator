@@ -1,6 +1,7 @@
 [versions]
 agp = "8.4.1"
 chipNavigationBar = "1.4.0"
+core = "3.1.1"
 gson = "2.10.1"
 gsonVersion = "2.8.9"
 kotlin = "1.9.0"
@@ -18,6 +19,7 @@ navigationUiKtx = "2.7.7"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 chip-navigation-bar = { module = "com.github.ismaeldivita:chip-navigation-bar", version.ref = "chipNavigationBar" }
+core = { module = "com.afollestad.material-dialogs:core", version.ref = "core" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 gson-v289 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.party.bank.calculator.databinding.FriendViewBinding
-import vlados.dudos.party.bank.calculator.databinding.ParticipantElementBinding
 
 class ParticipantAdapter(
     private val list: MutableList<Participant>,

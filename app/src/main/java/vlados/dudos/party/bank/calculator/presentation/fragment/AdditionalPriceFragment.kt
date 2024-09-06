@@ -48,6 +48,9 @@ class AdditionalPriceFragment : BaseFragment(), INavigateChange, AdditionalSpend
             confirmButton.setOnClickListener {
                 navigate(R.id.action_additionalPriceFragment_to_purchaseFragment)
             }
+            faqImg.setOnClickListener {
+                showFAQ(context().getString(R.string.additional_example_title), context().getString(R.string.additional_example_message))
+            }
         }
     }
     override fun setAdapter(){

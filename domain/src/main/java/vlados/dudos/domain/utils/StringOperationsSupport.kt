@@ -1,6 +1,5 @@
 package vlados.dudos.domain.utils
 
-import android.util.Log
 
 object StringOperationsSupport {
     fun correctTextAsCounter(text: String): String {
@@ -13,4 +12,9 @@ object StringOperationsSupport {
         }
         return resultString.toInt().toString()
     }
+    fun String.isOnlySpace() : Boolean {
+        val marker = this.replace(" ", "")
+        return marker.isEmpty()
+    }
+    fun String.removeSpaces() : String = this.replace(" ", "")
 }

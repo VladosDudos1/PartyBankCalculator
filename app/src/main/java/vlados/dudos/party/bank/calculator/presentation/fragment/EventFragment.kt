@@ -27,8 +27,8 @@ import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
 class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
 
     private val binding: FragmentEventBinding by lazy { FragmentEventBinding.inflate(layoutInflater) }
-    private val viewModel: EventViewModel by viewModels()
     private val hostViewModel: HostViewModel by activityViewModels()
+    private val viewModel: EventViewModel by viewModels()
 
     override fun deletePurchase(purchase: Purchase) {
         viewModel.deletePurchase(purchase, context(), layoutInflater, getCurrentEvent())
@@ -48,6 +48,7 @@ class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setupSumLiveData(getCurrentEvent().sum)
         putNavigateId()
         setupEvent(getCurrentEvent())
         hostViewModel.setEventExistValue(true)
@@ -97,6 +98,13 @@ class EventFragment : BaseFragment(), INavigateChange, PurchaseAdapter.OnClick {
     override fun setObservers() {
         viewModel.purchaseDeleted.observe(viewLifecycleOwner) {
             updateAdapter()
+        }
+        viewModel.sum.observe(viewLifecycleOwner) {
+            hostViewModel.setEventSum(viewModel.sum.value!!)
+            binding.sumTxt.text = getString(R.string.sum, getCurrentEvent().sum.toString(), App.sharedManager.getBaseValue())
+        }
+        hostViewModel.selectedItem.observe(viewLifecycleOwner){
+            binding.noPurchaseTxt.visibility = if (it.listPurchases.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 

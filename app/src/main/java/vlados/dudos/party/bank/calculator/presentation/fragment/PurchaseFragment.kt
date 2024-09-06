@@ -16,6 +16,7 @@ import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
 import vlados.dudos.domain.utils.StringOperationsSupport.correctTextAsCounter
+import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.databinding.FragmentPurchaseBinding
 import vlados.dudos.party.bank.calculator.interfaces.INavigateChange
@@ -90,6 +91,11 @@ class PurchaseFragment : BaseFragment(), TextWatcher,
             confirmButton.setOnClickListener {
                 savePurchase()
             }
+            faqImg.setOnClickListener {
+                showFAQ(
+                    getString(R.string.debtors_example_title),
+                        getString(R.string.debtors_example_message))
+            }
             costBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
                 }
@@ -132,7 +138,9 @@ class PurchaseFragment : BaseFragment(), TextWatcher,
             val cost = costEditText.text.toString().toInt()
             val name = purchaseNameEditText.text.toString()
             when {
-                name.isEmpty() -> showToast(getString(R.string.enter_name_of_purchase))
+                name.isOnlySpace() -> {
+                    showToast(context().getString(R.string.enter_name_of_purchase))
+                }
                 cost < 0 -> showToast(getString(R.string.enter_cost_of_the_purchase))
                 !hostViewModel.isNewPurchaseFilled() -> showToast(getString(R.string.purchase_must_have_buyer_and_debtors))
                 else -> {
