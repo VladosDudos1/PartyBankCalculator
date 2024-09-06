@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Event Calculator</string>
+    <string name="app_name">Split Check: Calculator</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_event">Add event</string>
     <string name="no_active_events">You don`t have any active events yet</string>
