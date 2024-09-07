@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 data class Event(
     var id: Int,
     var name: String,
-    var participants: List<Participant>,
+    var participants: MutableList<Participant>,
     var sum: Int,
     var owner: Participant,
     var listPurchases: MutableList<Purchase>,

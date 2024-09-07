@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ActionHolder.setActionId
-import vlados.dudos.domain.utils.ListOperationsSupport.mergingLists
+import vlados.dudos.domain.utils.ListOperationsSupport.mergingMutableLists
 import vlados.dudos.domain.utils.ModelsTransformUtil.createNewEvent
 import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
 import vlados.dudos.party.bank.calculator.R
@@ -41,7 +41,7 @@ class AddEventFragment : BaseFragment(),
 
     private val viewModel: AddEventViewModel by viewModels()
     private val hostViewModel: HostViewModel by activityViewModels()
-    private val listParticipant =
+    private var listParticipant =
         mutableListOf(Participant(0, App.sharedManager.getOwnerName()))
     private val listFriendsInEvent =
         mutableListOf<Participant>()
@@ -99,7 +99,7 @@ class AddEventFragment : BaseFragment(),
         super.setAdapter(event)
         val friends = App.sharedManager.getFriendsList()
         event.participants.forEach {
-            if (it !in friends && it != event.owner) listParticipant.add(it)
+            if (it.id >= 0 && it != event.owner) listParticipant.add(it)
             else if (it != event.owner) listFriendsInEvent.add(it)
         }
         with(binding) {
@@ -120,6 +120,7 @@ class AddEventFragment : BaseFragment(),
             )
         }
     }
+
     override fun clickDelete(
         list: MutableList<Participant>,
         recyclerView: RecyclerView,
@@ -127,15 +128,15 @@ class AddEventFragment : BaseFragment(),
     ) {
         list.remove(participant)
         hostViewModel.deleteParticipantFromEvent(participant)
-        recyclerView.adapter?.notifyDataSetChanged()
+        recyclerView.adapter!!.notifyDataSetChanged()
     }
 
     override fun clickEdit(
-        list: List<Participant>,
+        list: MutableList<Participant>,
         recyclerView: RecyclerView,
         participant: Participant
     ) {
-        showEditParticipantDialog(list.toMutableList(), recyclerView, participant)
+        showEditParticipantDialog(list, recyclerView, participant)
     }
 
     private fun setupView() {
@@ -153,10 +154,10 @@ class AddEventFragment : BaseFragment(),
                 createNewEvent(
                     App.sharedManager.getListEvents().map { it.id },
                     binding.nameEditText.text.toString(),
-                    mergingLists(
+                    mergingMutableLists(
                         listFriendsInEvent,
                         listParticipant
-                    ).sortedByDescending { it.id == listParticipant[0].id },
+                    ).sortedByDescending { it.id == listParticipant[0].id }.toMutableList(),
                     listParticipant[0]
                 )
             )
@@ -175,10 +176,10 @@ class AddEventFragment : BaseFragment(),
 
     private fun changeExistingEvent(): Event {
         hostViewModel.selectedItem.value!!.name = binding.nameEditText.text.toString()
-        hostViewModel.selectedItem.value!!.participants = mergingLists(
+        hostViewModel.selectedItem.value!!.participants = mergingMutableLists(
             listFriendsInEvent,
             listParticipant
-        ).sortedByDescending { it.name == listParticipant[0].name }
+        ).sortedByDescending { it.name == listParticipant[0].name }.toMutableList()
         return hostViewModel.selectedItem.value!!
     }
 

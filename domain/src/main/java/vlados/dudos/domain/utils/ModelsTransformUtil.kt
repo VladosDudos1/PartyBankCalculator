@@ -36,7 +36,7 @@ object ModelsTransformUtil {
     fun createNewEvent(
         listIds: List<Int>,
         name: String,
-        listParticipant: List<Participant>,
+        listParticipant: MutableList<Participant>,
         owner: Participant
     ): Event {
         return Event(

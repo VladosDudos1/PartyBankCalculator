@@ -44,6 +44,6 @@ class ParticipantAdapter(
 
     interface OnClick {
         fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant)
-        fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, participant: Participant)
+        fun clickEdit(list: MutableList<Participant>, recyclerView: RecyclerView, participant: Participant)
     }
 }

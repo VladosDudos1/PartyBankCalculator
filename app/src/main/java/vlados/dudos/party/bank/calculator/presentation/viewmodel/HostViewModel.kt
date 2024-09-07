@@ -2,10 +2,14 @@ package vlados.dudos.party.bank.calculator.presentation.viewmodel
 
 import android.app.Dialog
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.runBlocking
 import vlados.dudos.domain.model.DebtPair
 import vlados.dudos.domain.model.Event
 import vlados.dudos.domain.model.Participant
@@ -18,8 +22,8 @@ import vlados.dudos.party.bank.calculator.databinding.DeletePurchaseDialogBindin
 
 class HostViewModel : ViewModel() {
     private val currentEvent = MutableLiveData<Event>()
-    private val newPurchase = MutableLiveData<Purchase>()
     val selectedItem: LiveData<Event> get() = currentEvent
+    private val newPurchase = MutableLiveData<Purchase>()
     private val isEventExist = MutableLiveData(false)
     private val _sum = MutableLiveData<Int?>(null)
     val sum: LiveData<Int?> get() = _sum
@@ -30,33 +34,45 @@ class HostViewModel : ViewModel() {
         currentEvent.value = event
     }
 
-    fun deleteParticipantFromEvent(participant: Participant) {
-        val transition = currentEvent.value!!
-        transition.listPurchases.forEach { purchase ->
-            purchase.listDebtors.removeIf {
-                it.id == participant.id
-            }
-            purchase.additionalDebts.removeIf {
-                it.debtor.id == participant.id
-            }
+    fun deleteParticipantFromEvent(participant: Participant, event: Event = currentEvent.value!!) {
+        val listDeletePurchases = mutableListOf<Purchase>()
+        event.participants.remove(participant)
+        event.listPurchases.forEach { purchase ->
             if (participant.id == purchase.buyer.id) {
-                deletePurchaseCore(selectedItem.value!!, purchase)
+                listDeletePurchases.add(purchase)
+                return@forEach
             }
+            purchase.listDebtors.removeIf { it.id == participant.id }
+            purchase.additionalDebts.removeIf { it.debtor.id == participant.id }
         }
+        listDeletePurchases.forEach {
+            deletePurchaseCore(event, it)
+        }
+        Handler(Looper.getMainLooper()).post{
+            selectItem(event)
+        }
+        App.sharedManager.changeCurrentEvent(event)
     }
 
-    fun editParticipantInEvent(participant: Participant, name: String) {
-        val transition = currentEvent.value!!
-        transition.listPurchases.forEach { purchase ->
-            if (purchase.buyer.id == participant.id) purchase.buyer.name = name
-            purchase.listDebtors.forEach { debtor ->
-                if (debtor.id == participant.id) debtor.name = name
+    fun editParticipantInEvent(
+        participant: Participant,
+        name: String,
+        event: Event = currentEvent.value!!
+    ) {
+        if (participant.id < 0) event.participants.first { it.id == participant.id }.name = name
+        event.listPurchases.forEach { purchase ->
+            when (participant.id) {
+                purchase.buyer.id -> purchase.buyer.name = name
             }
-            purchase.additionalDebts.forEach { debtPair ->
-                if (debtPair.debtor.id == participant.id) debtPair.debtor.name = name
-            }
+            purchase.listDebtors
+                .filter { it.id == participant.id }
+                .forEach { it.name = name }
+
+            purchase.additionalDebts
+                .filter { it.debtor.id == participant.id }
+                .forEach { it.debtor.name = name }
         }
-        selectItem(transition)
+        App.sharedManager.changeCurrentEvent(event)
     }
 
     fun setEventSum(sum: Int) {
@@ -199,15 +215,33 @@ class HostViewModel : ViewModel() {
 
     private fun deletePurchaseCore(event: Event, purchase: Purchase) {
         event.listPurchases.remove(purchase)
-        event.sum =
-            event.listPurchases.sumOf { it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum } }
-                .toInt()
-        _sum.value = event.sum
-        App.sharedManager.changeCurrentEvent(event)
-        _sum.value =
-            event.listPurchases.sumOf { it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum } }
-                .toInt()
+        val totalSum = event.listPurchases.sumOf {
+            it.cost + it.additionalDebts.sumOf { additional -> additional.moneySum }
+        }.toInt()
+        Handler(Looper.getMainLooper()).post {
+            event.sum = totalSum
+            _sum.value = totalSum
+            App.sharedManager.changeCurrentEvent(event)
+        }
         _purchaseDeleted.postValue(Unit)
+    }
+
+    fun deleteFriendFromEvents(friend: Participant) {
+        val listEvents = App.sharedManager.getListEvents()
+        Thread{
+            listEvents.forEach { event ->
+                if (friend in event.participants) deleteParticipantFromEvent(participant = friend, event = event)
+            }
+        }.start()
+    }
+
+    fun editFriendInEvents(friend: Participant, name: String) {
+        val listEvents = App.sharedManager.getListEvents()
+        Thread{
+            listEvents.forEach { event ->
+                if (friend in event.participants) editParticipantInEvent(participant = friend, name = name, event = event)
+            }
+        }.start()
     }
 
     fun setupSumLiveData(summ: Int) {
