@@ -127,7 +127,7 @@ class AddEventFragment : BaseFragment(),
         participant: Participant
     ) {
         list.remove(participant)
-        hostViewModel.deleteParticipantFromEvent(participant)
+        if (isRedactMode) hostViewModel.deleteParticipantFromEvent(participant)
         recyclerView.adapter!!.notifyDataSetChanged()
     }
 
