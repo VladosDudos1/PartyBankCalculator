@@ -116,7 +116,7 @@ class AddEventFragment : BaseFragment(),
                 context(),
                 friends,
                 this@AddEventFragment,
-                event.participants.filter {it in friends}.map { it.id }
+                event.participants.filter {it in friends}
             )
         }
     }

@@ -84,6 +84,7 @@ class FriendsListFragment : BaseFragment(), INavigateChange,
             )
         }
     }
+
     override fun putNavigateId() {
         setActionId(R.id.action_friendsListFragment_to_listEventFragment)
     }
@@ -96,18 +97,24 @@ class FriendsListFragment : BaseFragment(), INavigateChange,
             dialogBinding.okButton.setOnClickListener {
                 val participantNameEdited = dialogBinding.nameEditText.text.toString()
                 if (participantNameEdited.isNotEmpty()) {
-                    App.sharedManager.saveFriends(Participant(getMinId(App.sharedManager.getFriendsList().map { it.id }), participantNameEdited), false)
+                    App.sharedManager.saveFriends(
+                        Participant(
+                            getMinId(
+                                App.sharedManager.getFriendsList().map { it.id }),
+                            participantNameEdited
+                        ), false
+                    )
                     dismiss()
-                }
-                else dialogBinding.inputLayout.helperText =
+                } else dialogBinding.inputLayout.helperText =
                     context().getString(R.string.name_cant_be_empty)
             }
         }
-        dialog.setOnDismissListener{
+        dialog.setOnDismissListener {
             setAdapter()
         }
         dialog.show()
     }
+
     private fun showEditFriendDialog(
         listParticipant: MutableList<Participant>,
         recyclerView: RecyclerView,
@@ -125,10 +132,8 @@ class FriendsListFragment : BaseFragment(), INavigateChange,
                     listParticipant.forEach {
                         if (it.id == participant.id) {
                             it.name = participantNameEdited
-                        }
-                        if (listOfFriends.map { f -> f.id == participant.id }.isNotEmpty()) {
-                            App.sharedManager.saveFriends(it, false)
                             hostViewModel.editFriendInEvents(participant, participantNameEdited)
+                            App.sharedManager.saveFriends(it, false)
                         }
                     }
                     dismiss()

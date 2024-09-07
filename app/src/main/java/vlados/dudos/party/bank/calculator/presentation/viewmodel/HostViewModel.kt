@@ -239,7 +239,7 @@ class HostViewModel : ViewModel() {
         val listEvents = App.sharedManager.getListEvents()
         Thread{
             listEvents.forEach { event ->
-                if (friend in event.participants) editParticipantInEvent(participant = friend, name = name, event = event)
+                if (friend.id in event.participants.map { it.id }) editParticipantInEvent(participant = friend, name = name, event = event)
             }
         }.start()
     }

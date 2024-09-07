@@ -24,7 +24,12 @@ open class BaseActivity : AppCompatActivity() {
         val actionId = getActionId()
         if (actionId != -1) {
             setActionId(-1)
-            navigate(actionId)
+            try {
+                navigate(actionId)
+            }
+            catch (e: Exception){
+                super.onBackPressed()
+            }
         } else super.onBackPressed()
     }
 
