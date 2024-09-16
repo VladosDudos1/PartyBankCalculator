@@ -8,8 +8,7 @@ import vlados.dudos.domain.model.Participant
 import vlados.dudos.party.bank.calculator.databinding.FriendViewBinding
 
 class FriendsAdapter(
-    val context: Context, val list: List<Participant>, val onClick: OnClick,
-    private val rv: RecyclerView
+    val context: Context, val list: List<Participant>, val onClick: OnClick
 ) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
@@ -27,10 +26,10 @@ class FriendsAdapter(
             participantNameTxt.text = list[position].name
 
             editBtn.setOnClickListener {
-                onClick.clickEdit(list, rv, position)
+                onClick.clickEdit(list, position)
             }
             deleteBtn.setOnClickListener {
-                onClick.clickDelete(list.toMutableList(), rv, position)
+                onClick.clickDelete(list.toMutableList(), position)
             }
         }
     }
@@ -38,8 +37,8 @@ class FriendsAdapter(
     override fun getItemCount(): Int = list.size
 
     interface OnClick {
-        fun clickDelete(list: MutableList<Participant>, recyclerView: RecyclerView, position: Int)
-        fun clickEdit(list: List<Participant>, recyclerView: RecyclerView, position: Int)
+        fun clickDelete(list: MutableList<Participant>, position: Int)
+        fun clickEdit(list: List<Participant>, position: Int)
     }
 
     class FriendsViewHolder(val binding: FriendViewBinding) : RecyclerView.ViewHolder(binding.root)
