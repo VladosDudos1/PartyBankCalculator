@@ -11,8 +11,8 @@ android {
         applicationId = "vlados.dudos.party.bank.calculator"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.01"
+        versionCode = 4
+        versionName = "1.02"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
