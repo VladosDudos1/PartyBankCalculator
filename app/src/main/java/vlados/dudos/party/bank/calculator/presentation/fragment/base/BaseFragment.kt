@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import vlados.dudos.domain.model.Event
+import vlados.dudos.domain.model.EventResult
 import vlados.dudos.domain.model.Participant
 import vlados.dudos.domain.utils.ListOperationsSupport.getMaxId
 import vlados.dudos.domain.utils.ModelsTransformUtil.listEventResultToString
@@ -29,6 +30,9 @@ import vlados.dudos.party.bank.calculator.presentation.activity.base.BaseActivit
 import vlados.dudos.party.bank.calculator.presentation.adapter.EventResultAdapter
 
 abstract class BaseFragment : Fragment() {
+
+    private lateinit var listEventResult: List<EventResult>
+    private val dialogEventResult : Dialog by lazy { createEventResultDialog() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -99,8 +103,7 @@ abstract class BaseFragment : Fragment() {
         dialog.show()
     }
 
-    open fun showEventResultDialog(event: Event) {
-        val listEventResult = App.calculateManager.calculateDebts(event)
+    private fun createEventResultDialog() : Dialog{
         val dialogBinding = ResultDialogBinding.inflate(layoutInflater)
         val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
             setCancelable(true)
@@ -125,10 +128,15 @@ abstract class BaseFragment : Fragment() {
                 )
             }
         }
+        return dialog
+    }
+
+    open fun showEventResultDialog(event: Event) {
+        listEventResult = App.calculateManager.calculateDebts(event)
         if (listEventResult.isEmpty()){
-            dialog.dismiss()
+            dialogEventResult.dismiss()
             showToast(context().getString(R.string.nothing_to_calculate))
-        } else  dialog.show()
+        } else  dialogEventResult.show()
     }
 
     protected fun navigate(action: Int) {
