@@ -1,5 +1,6 @@
 package vlados.dudos.party.bank.calculator.presentation.fragment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import vlados.dudos.domain.model.Event
+import vlados.dudos.domain.utils.StringOperationsSupport.isOnlySpace
+import vlados.dudos.domain.utils.StringOperationsSupport.removeSpaces
 import vlados.dudos.party.bank.calculator.R
 import vlados.dudos.party.bank.calculator.app.App
 import vlados.dudos.party.bank.calculator.databinding.FragmentListEventBinding
+import vlados.dudos.party.bank.calculator.databinding.NameInputLayoutBinding
 import vlados.dudos.party.bank.calculator.presentation.adapter.EventAdapter
 import vlados.dudos.party.bank.calculator.presentation.fragment.base.BaseFragment
 import vlados.dudos.party.bank.calculator.presentation.viewmodel.HostViewModel
@@ -83,5 +87,30 @@ class ListEventFragment : BaseFragment(), EventAdapter.OnClick {
         viewModel.isFirstLaunch.value = App.sharedManager.isFirstLaunch()
         App.sharedManager.setBaseValue()
         viewModel.updateEventList()
+    }
+    private fun showEnterNameDialog() {
+        val dialogBinding = NameInputLayoutBinding.inflate(layoutInflater)
+        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
+            setCancelable(false)
+            setContentView(dialogBinding.root)
+            dialogBinding.positiveButton.setOnClickListener {
+                val ownerName = dialogBinding.nameEditText.text.toString()
+                if (ownerName.isOnlySpace()) {
+                    dialogBinding.inputLayout.helperText =
+                        context().getString(R.string.name_cant_be_empty)
+
+                }
+                else if (ownerName.length < 2){
+                    dialogBinding.inputLayout.helperText =
+                        context().getString(R.string.name_cant_be_1_digit)
+                }
+                else {
+                    App.sharedManager.endFirstLaunch(ownerName.removeSpaces())
+                    updateUi()
+                    dismiss()
+                }
+            }
+        }
+        dialog.show()
     }
 }

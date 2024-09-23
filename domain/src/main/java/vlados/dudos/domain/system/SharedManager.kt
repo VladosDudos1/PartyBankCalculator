@@ -3,6 +3,7 @@ package vlados.dudos.domain.system
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.provider.Telephony.Mms.Part
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -34,11 +35,11 @@ class SharedManager(private val baseContext: Context) {
         return shared.getString("AppLanguage", "ru")
     }
 
-    fun isThemeChanged() : Boolean {
+    fun isThemeChanged(): Boolean {
         return shared.getBoolean("isThemeChanged", false)
     }
 
-    fun loadThemePreference() : Int {
+    fun loadThemePreference(): Int {
         val themeMode = shared.getInt("isDarkTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         return themeMode
     }
@@ -89,7 +90,7 @@ class SharedManager(private val baseContext: Context) {
         val listFriends = getFriendsList()
         if (isDelete) listFriends.remove(listFriends.first { it.id == friend.id })
         else if (!listFriends.map { it.id }.contains(friend.id)) listFriends.add(friend)
-        else if (listFriends.map { it.id }.contains(friend.id)){
+        else if (listFriends.map { it.id }.contains(friend.id)) {
             val friendEdit = listFriends.first { it.id == friend.id }
             friendEdit.name = friend.name
         }
@@ -113,7 +114,29 @@ class SharedManager(private val baseContext: Context) {
 
     fun endFirstLaunch(ownerName: String) {
         shared.edit().putBoolean("isFirstLaunch", false).apply()
-        shared.edit().putString("ownerName", ownerName).apply()
+        setOwner(name = ownerName)
+        changeOwnerName(ownerName)
+    }
+
+    fun changeOwnerName(name: String) {
+        shared.edit().putString("ownerName", name).apply()
+    }
+
+    fun setOwner(name: String) {
+        val owner = Gson().toJson(Participant(10000000, name))
+        shared.edit().putString("owner", owner).apply()
+        changeOwnerName(name)
+    }
+
+    fun getOwner(): Participant {
+        val ownerType = object : TypeToken<Participant>() {}.type
+        val owner = Gson().fromJson<Participant>(
+            shared.getString("owner", null) ?: Participant(
+                10000000,
+                getOwnerName()
+            ).toString(), ownerType
+        )
+        return owner
     }
 
     fun getOwnerName(): String {

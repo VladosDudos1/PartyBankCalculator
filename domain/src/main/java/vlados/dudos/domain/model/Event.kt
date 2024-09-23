@@ -9,5 +9,5 @@ data class Event(
     var sum: Int,
     var owner: Participant,
     var listPurchases: MutableList<Purchase>,
-    var image: Bitmap? = null
+    var isOnline: Boolean = false
 )

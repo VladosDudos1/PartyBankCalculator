@@ -49,31 +49,6 @@ abstract class BaseFragment : Fragment() {
 
     protected fun activity(): BaseActivity = requireActivity() as BaseActivity
 
-    protected fun showEnterNameDialog() {
-        val dialogBinding = NameInputLayoutBinding.inflate(layoutInflater)
-        val dialog = Dialog(context(), R.style.CustomDialogTheme).apply {
-            setCancelable(false)
-            setContentView(dialogBinding.root)
-            dialogBinding.positiveButton.setOnClickListener {
-                val ownerName = dialogBinding.nameEditText.text.toString()
-                if (ownerName.isOnlySpace()) {
-                    dialogBinding.inputLayout.helperText =
-                        context().getString(R.string.name_cant_be_empty)
-
-                }
-                else if (ownerName.length < 2){
-                    dialogBinding.inputLayout.helperText =
-                        context().getString(R.string.name_cant_be_1_digit)
-                }
-                else {
-                    App.sharedManager.endFirstLaunch(ownerName.removeSpaces())
-                    updateUi()
-                    dismiss()
-                }
-            }
-        }
-        dialog.show()
-    }
 
     protected fun showAddParticipantDialog(
         listParticipant: MutableList<Participant>,
